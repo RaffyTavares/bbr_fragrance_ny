@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalle del producto - Bbr_Fragance">
+    <title>Producto - Bbr_Fragance</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-black text-white">
+    
+    <!-- Navegación -->
+    <nav class="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-amber-900/20">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="logo">
+                    <a href="../index.html">
+                        <h1 class="text-3xl font-serif text-amber-400">Bbr_Fragance</h1>
+                    </a>
+                </div>
+                <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
+                    <li><a href="../index.html" class="hover:text-amber-400 transition">Inicio</a></li>
+                    <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorías</a></li>
+                    <li><a href="productos.html" class="hover:text-amber-400 transition">Productos</a></li>
+                    <li><a href="../index.html#sobre-nosotros" class="hover:text-amber-400 transition">Nosotros</a></li>
+                    <li><a href="../index.html#contacto" class="hover:text-amber-400 transition">Contacto</a></li>
+                </ul>
+                <div class="flex items-center space-x-4">
+                    <button id="search-btn" class="hover:text-amber-400 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button id="cart-btn" class="hover:text-amber-400 transition relative">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-500 text-black text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <section class="pt-32 pb-8 bg-black">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center space-x-2 text-sm text-gray-400">
+                <a href="../index.html" class="hover:text-amber-400">Inicio</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="productos.html" class="hover:text-amber-400">Productos</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-white">Dior Sauvage</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detalle del producto -->
+    <section class="py-8 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- Galería de imágenes -->
+                <div>
+                    <div class="sticky top-24">
+                        <!-- Imagen principal -->
+                        <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-96 md:h-[500px] flex items-center justify-center mb-4 relative overflow-hidden group">
+                            <i class="fas fa-wine-bottle text-9xl text-white/30"></i>
+                            <div class="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                -20% OFF
+                            </div>
+                            <button class="absolute top-4 left-4 w-12 h-12 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                                <i class="fas fa-heart text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Miniaturas -->
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-amber-500">
+                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
+                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
+                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
+                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información del producto -->
+                <div>
+                    <div class="mb-6">
+                        <span class="text-sm text-amber-400 uppercase tracking-wider font-semibold">Dior</span>
+                        <h1 class="text-4xl md:text-5xl font-serif mt-2 mb-4">Sauvage</h1>
+                        
+                        <!-- Rating -->
+                        <div class="flex items-center mb-6">
+                            <div class="flex text-amber-400 text-lg">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 ml-3">(128 reseñas)</span>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="text-4xl font-bold text-amber-400">$120</span>
+                            <span class="text-2xl text-gray-400 line-through">$150</span>
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Ahorra $30</span>
+                        </div>
+
+                        <!-- Disponibilidad -->
+                        <div class="flex items-center gap-2 mb-6">
+                            <i class="fas fa-check-circle text-green-400"></i>
+                            <span class="text-green-400 font-semibold">En stock</span>
+                            <span class="text-gray-400 ml-2">• Últimas 8 unidades</span>
+                        </div>
+                    </div>
+
+                    <!-- Descripción breve -->
+                    <div class="mb-8 pb-8 border-b border-gray-800">
+                        <p class="text-gray-300 leading-relaxed">
+                            Sauvage de Dior es una fragancia fresca y amaderada que captura la esencia de la naturaleza salvaje. Una composición masculina y refinada que combina notas cítricas con matices especiados, perfecta para el hombre moderno y audaz.
+                        </p>
+                    </div>
+
+                    <!-- Opciones -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">Tamaño</h3>
+                        <div class="flex gap-3">
+                            <button class="px-6 py-3 border-2 border-amber-500 bg-amber-500/10 text-amber-400 rounded-lg font-semibold hover:bg-amber-500 hover:text-black transition">
+                                60ml - $120
+                            </button>
+                            <button class="px-6 py-3 border-2 border-gray-700 text-gray-300 rounded-lg font-semibold hover:border-amber-500 hover:text-amber-400 transition">
+                                100ml - $180
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">Cantidad</h3>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center border-2 border-gray-700 rounded-lg overflow-hidden">
+                                <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-minus">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" value="1" min="1" class="w-16 text-center bg-transparent py-3 focus:outline-none" id="qty-input">
+                                <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-plus">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <span class="text-gray-400">Disponible: 8 unidades</span>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="flex flex-col md:flex-row gap-4 mb-8">
+                        <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-shopping-cart mr-2"></i>
+                            Agregar al carrito
+                        </button>
+                        <button id="whatsapp-buy" class="flex-1 bg-green-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-600 transition transform hover:scale-105 flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            Comprar por WhatsApp
+                        </button>
+                    </div>
+
+                    <!-- Beneficios -->
+                    <div class="grid grid-cols-2 gap-4 mb-8 pb-8 border-b border-gray-800">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-shipping-fast text-2xl text-amber-400"></i>
+                            <div>
+                                <p class="font-semibold text-sm">Envío Gratis</p>
+                                <p class="text-xs text-gray-400">En compras +$100</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-certificate text-2xl text-amber-400"></i>
+                            <div>
+                                <p class="font-semibold text-sm">100% Original</p>
+                                <p class="text-xs text-gray-400">Garantizado</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-lock text-2xl text-amber-400"></i>
+                            <div>
+                                <p class="font-semibold text-sm">Pago Seguro</p>
+                                <p class="text-xs text-gray-400">SSL protegido</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-undo text-2xl text-amber-400"></i>
+                            <div>
+                                <p class="font-semibold text-sm">Devoluciones</p>
+                                <p class="text-xs text-gray-400">30 días</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compartir -->
+                    <div class="flex items-center gap-4">
+                        <span class="text-gray-400">Compartir:</span>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs de información detallada -->
+    <section class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg border border-gray-700 overflow-hidden">
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-700">
+                    <button class="tab-btn active flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="description">
+                        Descripción
+                    </button>
+                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="notes">
+                        Notas Olfativas
+                    </button>
+                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="info">
+                        Información
+                    </button>
+                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="reviews">
+                        Reseñas (128)
+                    </button>
+                </div>
+
+                <!-- Contenido de tabs -->
+                <div class="p-8">
+                    <!-- Descripción -->
+                    <div id="description" class="tab-content">
+                        <h3 class="text-2xl font-serif text-amber-400 mb-4">Sobre Sauvage</h3>
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            Sauvage es un perfume masculino de Dior que se inspira en los paisajes desérticos y la libertad del hombre salvaje. Lanzado en 2015, esta fragancia se ha convertido en un ícono moderno de la perfumería masculina.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            Su composición fresca y especiada combina notas cítricas vibrantes con un corazón aromático y un fondo amaderado profundo. Es una fragancia versátil que funciona tanto de día como de noche, perfecta para cualquier ocasión.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            El frasco refleja la naturaleza salvaje de la fragancia, con líneas elegantes y un diseño minimalista que evoca la fuerza y masculinidad de quien lo porta.
+                        </p>
+                    </div>
+
+                    <!-- Notas Olfativas -->
+                    <div id="notes" class="tab-content hidden">
+                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Pirámide Olfativa</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Salida -->
+                            <div class="bg-gradient-to-r from-yellow-900/20 to-transparent p-6 rounded-lg border-l-4 border-yellow-500">
+                                <div class="flex items-center mb-3">
+                                    <i class="fas fa-cloud text-2xl text-yellow-400 mr-3"></i>
+                                    <h4 class="text-xl font-semibold">Notas de Salida</h4>
+                                </div>
+                                <p class="text-gray-300 mb-2">Las primeras impresiones frescas y vibrantes:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-yellow-900/30 px-4 py-2 rounded-full text-sm border border-yellow-700">Bergamota de Calabria</span>
+                                    <span class="bg-yellow-900/30 px-4 py-2 rounded-full text-sm border border-yellow-700">Pimienta de Sichuan</span>
+                                </div>
+                            </div>
+
+                            <!-- Corazón -->
+                            <div class="bg-gradient-to-r from-purple-900/20 to-transparent p-6 rounded-lg border-l-4 border-purple-500">
+                                <div class="flex items-center mb-3">
+                                    <i class="fas fa-heart text-2xl text-purple-400 mr-3"></i>
+                                    <h4 class="text-xl font-semibold">Notas de Corazón</h4>
+                                </div>
+                                <p class="text-gray-300 mb-2">El alma de la fragancia, aromática y especiada:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Lavanda</span>
+                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Geranio</span>
+                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Elemi</span>
+                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Pimienta Rosa</span>
+                                </div>
+                            </div>
+
+                            <!-- Fondo -->
+                            <div class="bg-gradient-to-r from-amber-900/20 to-transparent p-6 rounded-lg border-l-4 border-amber-500">
+                                <div class="flex items-center mb-3">
+                                    <i class="fas fa-tree text-2xl text-amber-400 mr-3"></i>
+                                    <h4 class="text-xl font-semibold">Notas de Fondo</h4>
+                                </div>
+                                <p class="text-gray-300 mb-2">La base duradera y profunda:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Ambroxan</span>
+                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Cedro</span>
+                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Vetiver</span>
+                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Pachulí</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información -->
+                    <div id="info" class="tab-content hidden">
+                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Información del Producto</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Marca:</span>
+                                    <span class="font-semibold">Dior</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Tipo:</span>
+                                    <span class="font-semibold">Eau de Toilette (EDT)</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Concentración:</span>
+                                    <span class="font-semibold">5-15%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Duración:</span>
+                                    <span class="font-semibold">6-8 horas</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Estela:</span>
+                                    <span class="font-semibold">Moderada a Fuerte</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Género:</span>
+                                    <span class="font-semibold">Masculino</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Familia:</span>
+                                    <span class="font-semibold">Aromática Fougère</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Año:</span>
+                                    <span class="font-semibold">2015</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Perfumista:</span>
+                                    <span class="font-semibold">François Demachy</span>
+                                </div>
+                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                                    <span class="text-gray-400">Temporada ideal:</span>
+                                    <span class="font-semibold">Primavera/Verano</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-amber-500/10 border border-amber-500/30 rounded-lg p-6">
+                            <h4 class="font-semibold mb-3 flex items-center">
+                                <i class="fas fa-lightbulb text-amber-400 mr-2"></i>
+                                Recomendaciones de uso
+                            </h4>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
+                                    <span>Aplicar sobre puntos de pulso (muñecas, cuello, detrás de las orejas)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
+                                    <span>Perfecto para uso diario y ocasiones especiales</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
+                                    <span>Ideal para climas cálidos y templados</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
+                                    <span>Combina bien con aromas cítricos y amaderados</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Reseñas -->
+                    <div id="reviews" class="tab-content hidden">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-serif text-amber-400 mb-6">Reseñas de clientes</h3>
+                            
+                            <!-- Resumen de calificaciones -->
+                            <div class="bg-gray-800 rounded-lg p-6 mb-8">
+                                <div class="flex flex-col md:flex-row gap-8 items-center">
+                                    <div class="text-center">
+                                        <div class="text-5xl font-bold text-amber-400 mb-2">4.9</div>
+                                        <div class="flex text-amber-400 text-xl mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <p class="text-gray-400">128 reseñas</p>
+                                    </div>
+                                    
+                                    <div class="flex-1 w-full space-y-2">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm w-12">5★</span>
+                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 85%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-400 w-12">109</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm w-12">4★</span>
+                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 10%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-400 w-12">13</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm w-12">3★</span>
+                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 3%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-400 w-12">4</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm w-12">2★</span>
+                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 1%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-400 w-12">1</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm w-12">1★</span>
+                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 1%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-400 w-12">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reseñas individuales -->
+                            <div class="space-y-6">
+                                <div class="bg-gray-800 rounded-lg p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center text-black font-bold mr-4">
+                                                MC
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Miguel Contreras</h4>
+                                                <div class="flex text-amber-400 text-sm">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">Hace 2 días</span>
+                                    </div>
+                                    <p class="text-gray-300 mb-3">
+                                        Excelente perfume, la duración es increíble y el aroma es tal cual como lo esperaba. 100% original, la entrega fue rápida y el empaque muy cuidado. Totalmente recomendado!
+                                    </p>
+                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        Compra verificada
+                                    </span>
+                                </div>
+
+                                <div class="bg-gray-800 rounded-lg p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                                JR
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">José Ramírez</h4>
+                                                <div class="flex text-amber-400 text-sm">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">Hace 5 días</span>
+                                    </div>
+                                    <p class="text-gray-300 mb-3">
+                                        Una de las mejores fragancias que he probado. Fresco pero no abrumador, perfecto para el día a día. La atención al cliente fue excelente, respondieron todas mis dudas por WhatsApp antes de comprar.
+                                    </p>
+                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        Compra verificada
+                                    </span>
+                                </div>
+
+                                <div class="bg-gray-800 rounded-lg p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-700 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                                LG
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Laura González</h4>
+                                                <div class="flex text-amber-400 text-sm">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">Hace 1 semana</span>
+                                    </div>
+                                    <p class="text-gray-300 mb-3">
+                                        Lo compré como regalo para mi esposo y le encantó. El precio es muy bueno comparado con otros sitios. La única observación es que me hubiera gustado que viniera con una bolsa de regalo incluida.
+                                    </p>
+                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        Compra verificada
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos relacionados -->
+    <section class="py-20 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-serif text-amber-400 mb-12">También te puede interesar</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Mini producto cards -->
+                <div class="bg-gray-800/50 backdrop-blur rounded-lg overflow-hidden hover:transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-amber-500">
+                    <div class="h-48 bg-gradient-to-br from-pink-600 to-rose-900 flex items-center justify-center">
+                        <i class="fas fa-wine-bottle text-6xl text-white/30"></i>
+                    </div>
+                    <div class="p-4">
+                        <span class="text-xs text-amber-400">Chanel</span>
+                        <h3 class="font-semibold mb-2">Coco Mademoiselle</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xl font-bold text-amber-400">$185</span>
+                            <button class="bg-amber-500 text-black px-3 py-1 rounded text-sm hover:bg-amber-400 transition">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Repetir para más productos relacionados -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h3 class="text-2xl font-serif text-amber-400 mb-4">Bbr_Fragance</h3>
+                <p class="text-gray-400 text-sm">© 2026 Bbr_Fragance. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón flotante WhatsApp -->
+    <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20perfume%20Dior%20Sauvage" target="_blank" class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-600 transition transform hover:scale-110 z-50 animate-pulse">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Modal de Búsqueda -->
+    <div id="search-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-20">
+        <div class="bg-gray-900 rounded-lg w-full max-w-2xl mx-4 shadow-2xl border border-gray-700">
+            <div class="p-6">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex-1 relative">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Buscar perfumes por nombre o marca..." 
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:border-amber-500 transition"
+                        >
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <button id="close-search" class="text-gray-400 hover:text-white text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="search-results" class="max-h-96 overflow-y-auto">
+                    <p class="text-gray-400 text-center py-8">Escribe para buscar productos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Carrito -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden">
+        <div class="absolute right-0 top-0 h-full w-full md:w-96 bg-gray-900 shadow-2xl transform transition-transform">
+            <div class="p-6 h-full flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-semibold">Tu Carrito</h3>
+                    <button id="close-cart" class="text-gray-400 hover:text-white text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div id="cart-items" class="flex-1 overflow-y-auto mb-6">
+                    <p class="text-gray-400 text-center py-12">Tu carrito está vacío</p>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-4">
+                    <div class="flex justify-between text-xl font-semibold mb-4">
+                        <span>Total:</span>
+                        <span class="text-amber-400" id="cart-total">$0</span>
+                    </div>
+                    <button class="w-full bg-amber-500 text-black font-semibold py-4 rounded-lg hover:bg-amber-400 transition mb-3">
+                        Proceder al pago
+                    </button>
+                    <button id="whatsapp-order" class="w-full bg-green-500 text-white font-semibold py-4 rounded-lg hover:bg-green-600 transition">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Ordenar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/main.js"></script>
+</body>
+</html>
