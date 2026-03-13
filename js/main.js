@@ -8,20 +8,23 @@ const CONFIG = {
     whatsappNumber: '1234567890',
     currency: '$',
     cartStorageKey: 'bbr_cart',
-    productsStorageKey: 'bbr_products'
+    productsStorageKey: 'bbr_products',
+    productsVersion: '2'
 };
 
 // ===================================
 // Gestión de Productos desde localStorage
 // ===================================
 function loadProductsFromStorage() {
+    const storedVersion = localStorage.getItem('bbr_products_version');
     const stored = localStorage.getItem(CONFIG.productsStorageKey);
-    if (stored) {
+    if (stored && storedVersion === CONFIG.productsVersion) {
         return JSON.parse(stored);
     }
     
     // Si no hay productos en localStorage, inicializar con productos por defecto
     const defaultProducts = [
+        // === HOMBRE ===
         {
             id: 1,
             name: "Sauvage",
@@ -31,59 +34,35 @@ function loadProductsFromStorage() {
             price: 145,
             stock: 25,
             status: "active",
-            description: "Un perfume fresco y elegante con notas cítricas y amaderadas",
+            description: "Fresco, potente y noble. Notas de bergamota de Calabria, pimienta de Sichuan y ambroxan que crean un aroma salvaje e irresistible",
             createdAt: new Date().toISOString()
         },
         {
             id: 2,
-            name: "Coco Mademoiselle",
+            name: "Bleu de Chanel",
             brand: "Chanel",
-            category: "mujer",
-            family: "dulce",
-            price: 165,
-            stock: 18,
+            category: "hombre",
+            family: "amaderado",
+            price: 160,
+            stock: 20,
             status: "active",
-            description: "Fragancia dulce y sofisticada con toques orientales",
+            description: "Elegancia amaderada con notas de menta, pomelo, cedro y sándalo. Un aroma sofisticado para el hombre moderno",
             createdAt: new Date().toISOString()
         },
         {
             id: 3,
-            name: "Black Orchid",
-            brand: "Tom Ford",
-            category: "unisex",
-            family: "oriental",
-            price: 165,
-            stock: 12,
+            name: "Acqua di Gio Profumo",
+            brand: "Giorgio Armani",
+            category: "hombre",
+            family: "fresco",
+            price: 130,
+            stock: 22,
             status: "active",
-            description: "Aroma intenso y misterioso con notas de orquídea negra",
+            description: "Frescura acuática refinada con bergamota, romero, incienso y pachulí. Perfecto equilibrio entre frescura y profundidad",
             createdAt: new Date().toISOString()
         },
         {
             id: 4,
-            name: "Y",
-            brand: "Yves Saint Laurent",
-            category: "hombre",
-            family: "amaderado",
-            price: 135,
-            stock: 30,
-            status: "active",
-            description: "Perfume amaderado moderno con toques frutales",
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 5,
-            name: "J'adore",
-            brand: "Dior",
-            category: "mujer",
-            family: "citrico",
-            price: 155,
-            stock: 22,
-            status: "active",
-            description: "Frescura cítrica elegante con notas florales",
-            createdAt: new Date().toISOString()
-        },
-        {
-            id: 6,
             name: "Eros",
             brand: "Versace",
             category: "hombre",
@@ -91,13 +70,400 @@ function loadProductsFromStorage() {
             price: 98,
             stock: 15,
             status: "active",
-            description: "Intensidad seductora con notas dulces y amaderadas",
+            description: "Intensidad seductora con menta, manzana verde, vainilla y cedro. Inspirado en el dios griego del amor",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 5,
+            name: "Y Eau de Parfum",
+            brand: "Yves Saint Laurent",
+            category: "hombre",
+            family: "amaderado",
+            price: 135,
+            stock: 30,
+            status: "active",
+            description: "Amaderado moderno con salvia, jengibre, madera de cedro y bálsamo de abeto. Audaz y sofisticado",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 6,
+            name: "1 Million",
+            brand: "Paco Rabanne",
+            category: "hombre",
+            family: "dulce",
+            price: 105,
+            stock: 28,
+            status: "active",
+            description: "Extravagante y magnético con notas de pomelo, canela, cuero y ámbar dorado. Un aroma que deja huella",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 7,
+            name: "The One",
+            brand: "Dolce & Gabbana",
+            category: "hombre",
+            family: "oriental",
+            price: 110,
+            stock: 18,
+            status: "active",
+            description: "Calidez oriental con notas de jengibre, tabaco, ámbar y cedro. Un clásico atemporal masculino",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 8,
+            name: "Aventus",
+            brand: "Creed",
+            category: "hombre",
+            family: "fresco",
+            price: 380,
+            stock: 8,
+            status: "active",
+            description: "Piña, abedul, almizcle y roble. Inspirado en la vida de un emperador, celebra la fuerza, el poder y el éxito",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 9,
+            name: "Explorer",
+            brand: "Montblanc",
+            category: "hombre",
+            family: "amaderado",
+            price: 75,
+            stock: 35,
+            status: "active",
+            description: "Bergamota italiana, vetiver de Haití y pachulí. Un viaje olfativo de aventura y descubrimiento",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 10,
+            name: "Light Blue",
+            brand: "Dolce & Gabbana",
+            category: "hombre",
+            family: "citrico",
+            price: 88,
+            stock: 24,
+            status: "active",
+            description: "Pomelo siciliano, enebro, romero y madera de roble. Frescura mediterránea vibrante y energética",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 11,
+            name: "Invictus",
+            brand: "Paco Rabanne",
+            category: "hombre",
+            family: "fresco",
+            price: 95,
+            stock: 26,
+            status: "active",
+            description: "Pomelo, hoja de laurel, guayaba y notas amaderadas. Un aroma deportivo y triunfante",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 12,
+            name: "Bad Boy",
+            brand: "Carolina Herrera",
+            category: "hombre",
+            family: "intenso",
+            price: 108,
+            stock: 19,
+            status: "active",
+            description: "Pimienta negra, salvia, cacao y madera de tonka. Un contraste entre lo bueno y lo rebelde",
+            createdAt: new Date().toISOString()
+        },
+        // === MUJER ===
+        {
+            id: 13,
+            name: "Coco Mademoiselle",
+            brand: "Chanel",
+            category: "mujer",
+            family: "dulce",
+            price: 165,
+            stock: 18,
+            status: "active",
+            description: "Irresistiblemente sensual con naranja, jazmín, rosa, pachulí y vainilla. Elegancia parisina en cada gota",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 14,
+            name: "J'adore",
+            brand: "Dior",
+            category: "mujer",
+            family: "citrico",
+            price: 155,
+            stock: 22,
+            status: "active",
+            description: "Bouquet floral luminoso con ylang-ylang, rosa de Damasco y jazmín. Un himno a la feminidad",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 15,
+            name: "La Vie Est Belle",
+            brand: "Lancôme",
+            category: "mujer",
+            family: "dulce",
+            price: 140,
+            stock: 20,
+            status: "active",
+            description: "Iris, pachulí, grosella negra y praliné. Una declaración de felicidad y libertad femenina",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 16,
+            name: "Good Girl",
+            brand: "Carolina Herrera",
+            category: "mujer",
+            family: "oriental",
+            price: 128,
+            stock: 16,
+            status: "active",
+            description: "Jazmín, cacao, tonka y tuberosa. La dualidad de la mujer moderna en su icónico frasco de tacón",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 17,
+            name: "Flowerbomb",
+            brand: "Viktor & Rolf",
+            category: "mujer",
+            family: "dulce",
+            price: 148,
+            stock: 14,
+            status: "active",
+            description: "Explosión floral con jazmín, rosa, orquídea, freesia y pachulí. Una bomba de sensaciones florales",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 18,
+            name: "Black Opium",
+            brand: "Yves Saint Laurent",
+            category: "mujer",
+            family: "intenso",
+            price: 138,
+            stock: 17,
+            status: "active",
+            description: "Café negro, vainilla, flor de azahar y jazmín. Adictivamente intensa y rock & roll",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 19,
+            name: "Miss Dior",
+            brand: "Dior",
+            category: "mujer",
+            family: "fresco",
+            price: 142,
+            stock: 21,
+            status: "active",
+            description: "Rosa centifolia, peonía, iris y notas de almizcle blanco. Romance y frescura floral atemporal",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 20,
+            name: "Chance Eau Tendre",
+            brand: "Chanel",
+            category: "mujer",
+            family: "fresco",
+            price: 152,
+            stock: 15,
+            status: "active",
+            description: "Pomelo, jazmín, jacinto y almizcle blanco. Una fragancia tierna y radiante llena de delicadeza",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 21,
+            name: "Alien",
+            brand: "Thierry Mugler",
+            category: "mujer",
+            family: "oriental",
+            price: 115,
+            stock: 13,
+            status: "active",
+            description: "Jazmín sambac, madera de cachemira y ámbar blanco. Mística, hipnótica y fuera de este mundo",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 22,
+            name: "Daisy",
+            brand: "Marc Jacobs",
+            category: "mujer",
+            family: "fresco",
+            price: 95,
+            stock: 25,
+            status: "active",
+            description: "Fresa silvestre, violeta, jazmín y almizcle. Fresca, femenina y juvenil como un campo de margaritas",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 23,
+            name: "Sí Passione",
+            brand: "Giorgio Armani",
+            category: "mujer",
+            family: "intenso",
+            price: 125,
+            stock: 19,
+            status: "active",
+            description: "Grosella negra, rosa, heliotropo y vainilla. Pasión y feminidad intensa en clave italiana",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 24,
+            name: "Very Good Girl",
+            brand: "Carolina Herrera",
+            category: "mujer",
+            family: "dulce",
+            price: 132,
+            stock: 16,
+            status: "active",
+            description: "Lichi, rosa, vetiver y vainilla. Una fragancia glam y atrevida con corazón goloso",
+            createdAt: new Date().toISOString()
+        },
+        // === UNISEX ===
+        {
+            id: 25,
+            name: "Black Orchid",
+            brand: "Tom Ford",
+            category: "unisex",
+            family: "oriental",
+            price: 165,
+            stock: 12,
+            status: "active",
+            description: "Trufa negra, ylang-ylang, orquídea negra, especias y pachulí. Lujo oscuro y misterioso sin género",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 26,
+            name: "Oud Wood",
+            brand: "Tom Ford",
+            category: "unisex",
+            family: "amaderado",
+            price: 285,
+            stock: 7,
+            status: "active",
+            description: "Oud, palo de rosa, cardamomo, sándalo y vetiver. Sofisticación amaderada oriental premium",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 27,
+            name: "CK One",
+            brand: "Calvin Klein",
+            category: "unisex",
+            family: "citrico",
+            price: 55,
+            stock: 40,
+            status: "active",
+            description: "Bergamota, cardamomo, piña, papaya, jazmín y almizcle. El icono unisex de los años 90, fresco y limpio",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 28,
+            name: "Santal 33",
+            brand: "Le Labo",
+            category: "unisex",
+            family: "amaderado",
+            price: 310,
+            stock: 6,
+            status: "active",
+            description: "Sándalo australiano, cardamomo, iris, violeta y cuero. El perfume nicho más reconocido del mundo",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 29,
+            name: "Baccarat Rouge 540",
+            brand: "Maison Francis Kurkdjian",
+            category: "unisex",
+            family: "dulce",
+            price: 350,
+            stock: 5,
+            status: "active",
+            description: "Azafrán, jazmín, ámbar y cedro. Un aura luminosa y cristalina que se ha convertido en fenómeno global",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 30,
+            name: "Tobacco Vanille",
+            brand: "Tom Ford",
+            category: "unisex",
+            family: "oriental",
+            price: 275,
+            stock: 9,
+            status: "active",
+            description: "Tabaco, vainilla, cacao, frutos secos y especias. Opulencia cálida perfecta para noches de invierno",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 31,
+            name: "Another 13",
+            brand: "Le Labo",
+            category: "unisex",
+            family: "fresco",
+            price: 290,
+            stock: 7,
+            status: "active",
+            description: "Almizcle, ambroxan, pera y musgo. Un aroma limpio y envolvente que se funde con la piel",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 32,
+            name: "Molecule 01",
+            brand: "Escentric Molecules",
+            category: "unisex",
+            family: "amaderado",
+            price: 135,
+            stock: 11,
+            status: "active",
+            description: "Iso E Super puro. Una molécula única que crea un aura aterciopelada y amaderada, diferente en cada piel",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 33,
+            name: "Neroli Portofino",
+            brand: "Tom Ford",
+            category: "unisex",
+            family: "citrico",
+            price: 260,
+            stock: 8,
+            status: "active",
+            description: "Neroli, bergamota, limón, lavanda, ámbar y almizcle. La brisa de la Riviera italiana embotellada",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 34,
+            name: "Wood Sage & Sea Salt",
+            brand: "Jo Malone",
+            category: "unisex",
+            family: "fresco",
+            price: 145,
+            stock: 14,
+            status: "active",
+            description: "Sal marina, salvia, pomelo y madera flotante. La libertad del viento costero y la naturaleza salvaje",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 35,
+            name: "Libre",
+            brand: "Yves Saint Laurent",
+            category: "unisex",
+            family: "oriental",
+            price: 138,
+            stock: 18,
+            status: "active",
+            description: "Lavanda esencial, flor de azahar y vainilla de Madagascar. Libertad audaz que desafía convenciones",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 36,
+            name: "Philosykos",
+            brand: "Diptyque",
+            category: "unisex",
+            family: "fresco",
+            price: 175,
+            stock: 10,
+            status: "active",
+            description: "Hoja de higuera, madera de higuera y fruto de higo. Un paseo por un huerto mediterráneo en verano",
             createdAt: new Date().toISOString()
         }
     ];
     
-    // Guardar productos por defecto
+    // Guardar productos por defecto y versión
     localStorage.setItem(CONFIG.productsStorageKey, JSON.stringify(defaultProducts));
+    localStorage.setItem('bbr_products_version', CONFIG.productsVersion);
     return defaultProducts;
 }
 
@@ -145,8 +511,8 @@ function renderFeaturedProducts() {
         return;
     }
     
-    // Mostrar solo los primeros 4 productos
-    const featured = activeProducts.slice(0, 4);
+    // Mostrar solo los primeros 8 productos
+    const featured = activeProducts.slice(0, 8);
     
     featuredGrid.innerHTML = featured
         .map(product => createFeaturedProductCard(product))
