@@ -8,6 +8,71 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* ===== Logo Styles ===== */
+.nav-logo {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(201, 169, 110, 0.35);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(201, 169, 110, 0.12));
+    flex-shrink: 0;
+}
+
+.logo a:hover .nav-logo {
+    border-color: rgba(201, 169, 110, 0.7);
+    filter: drop-shadow(0 0 12px rgba(201, 169, 110, 0.25));
+}
+
+.logo a:hover span {
+    color: #D4BA85;
+}
+
+.hero-logo {
+    border-radius: 50%;
+    border: 3px solid rgba(201, 169, 110, 0.35);
+    box-shadow:
+        0 0 40px rgba(201, 169, 110, 0.15),
+        0 0 80px rgba(201, 169, 110, 0.05);
+    animation: heroLogoFadeIn 1.2s ease-out;
+}
+
+@keyframes heroLogoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.footer-logo {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(201, 169, 110, 0.25);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    opacity: 1;
+    border-color: rgba(201, 169, 110, 0.5);
+}
+
+.admin-login-logo {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(201, 169, 110, 0.4);
+    box-shadow: 0 4px 30px rgba(201, 169, 110, 0.15);
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
 }
@@ -18,8 +83,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Colores personalizados */
 :root {
-    --color-gold: #F59E0B;
-    --color-gold-dark: #D97706;
+    --color-gold: #C9A96E;
+    --color-gold-light: #D4BA85;
+    --color-gold-dark: #A8884E;
     --color-black: #000000;
     --color-gray-dark: #1F2937;
     --color-purple: #7C3AED;
@@ -28,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Hero Pattern Background */
 .hero-pattern {
     background-image: 
-        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(245, 158, 11, 0.03) 35px, rgba(245, 158, 11, 0.03) 70px);
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(201, 169, 110, 0.03) 35px, rgba(201, 169, 110, 0.03) 70px);
 }
 
 /* Animaciones personalizadas */
@@ -100,7 +166,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .category-card:hover {
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+    box-shadow: 0 10px 30px rgba(201, 169, 110, 0.2);
 }
 
 /* Cards de productos */
@@ -140,7 +206,7 @@ input:focus,
 textarea:focus,
 select:focus {
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
 }
 
 /* Checkbox personalizado */
@@ -215,7 +281,7 @@ a {
 
 .tab-btn.active {
     color: var(--color-gold);
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(201, 169, 110, 0.1);
 }
 
 /* Galería de imágenes */
@@ -262,7 +328,7 @@ a {
 
 /* Loading spinner */
 .spinner {
-    border: 3px solid rgba(245, 158, 11, 0.1);
+    border: 3px solid rgba(201, 169, 110, 0.1);
     border-top-color: var(--color-gold);
     border-radius: 50%;
     width: 40px;
@@ -332,7 +398,7 @@ a {
 
 /* Gradient text */
 .gradient-text {
-    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    background: linear-gradient(135deg, #C9A96E 0%, #A8884E 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -417,7 +483,7 @@ input[type="number"] {
 
 .social-share button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 5px 15px rgba(201, 169, 110, 0.3);
 }
 
 /* Filter sidebar */
@@ -436,11 +502,11 @@ input[type="number"] {
 @keyframes badge-pulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+        box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.7);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+        box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
     }
 }
 

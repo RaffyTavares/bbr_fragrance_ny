@@ -7,6 +7,24 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            300: '#D4BA85',
+                            400: '#C9A96E',
+                            500: '#B89A5D',
+                            600: '#A8884E',
+                            700: '#8F7340',
+                            900: '#5C4A2A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,18 +39,12 @@
     
     <div class="container mx-auto px-4">
         <div class="max-w-md mx-auto">
-            <!-- Logo -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-serif text-amber-400 mb-2">Bbr_Fragance</h1>
-                <p class="text-gray-400">Panel Administrativo</p>
-            </div>
+            
             
             <!-- Login Card -->
             <div class="bg-gray-800/50 backdrop-blur rounded-lg p-8 border border-gray-700 shadow-2xl">
                 <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-user-shield text-4xl text-amber-400"></i>
-                    </div>
+                    <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="admin-login-logo mx-auto mb-4">
                     <h2 class="text-2xl font-semibold mb-2">Iniciar Sesión</h2>
                     <p class="text-gray-400 text-sm">Accede al panel administrativo</p>
                 </div>

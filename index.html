@@ -9,6 +9,24 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            300: '#D4BA85',
+                            400: '#C9A96E',
+                            500: '#B89A5D',
+                            600: '#A8884E',
+                            700: '#8F7340',
+                            900: '#5C4A2A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +46,10 @@
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="logo">
-                    <h1 class="text-3xl font-serif text-amber-400">Bbr_Fragance</h1>
+                    <a href="#inicio" class="flex items-center gap-3">
+                        <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="nav-logo">
+                        <span class="text-xl font-serif text-amber-400 hidden sm:block">Bbr_Fragance</span>
+                    </a>
                 </div>
                 <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
                     <li><a href="#inicio" class="hover:text-amber-400 transition">Inicio</a></li>
@@ -71,6 +92,7 @@
         
         <div class="container mx-auto px-4 relative z-10 text-center">
             <div class="animate-fade-in-up">
+                <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="hero-logo w-40 md:w-56 mx-auto mb-6 drop-shadow-2xl">
                 <h1 class="text-5xl md:text-7xl font-serif text-amber-400 mb-4">Bbr_Fragance</h1>
                 <p class="text-xl md:text-3xl mb-8 text-gray-300 font-light">Perfumes originales que definen tu esencia</p>
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
@@ -516,7 +538,9 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <h3 class="text-2xl font-serif text-amber-400 mb-4">Bbr_Fragance</h3>
+                    <a href="#inicio" class="inline-block mb-4">
+                        <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="footer-logo h-12 w-auto object-contain">
+                    </a>
                     <p class="text-gray-400 text-sm mb-4">Perfumes originales que definen tu esencia</p>
                     <div class="flex space-x-3">
                         <a href="#" class="text-gray-400 hover:text-amber-400 transition">
