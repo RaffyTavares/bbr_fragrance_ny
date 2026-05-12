@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Bbr_Fragance</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,182 +25,276 @@
             }
         }
     </script>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .login-card {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .login-bg {
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(17, 24, 39, 1) 0%, transparent 50%),
+                linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #111827 100%);
+        }
+
+        .input-group input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1.5px solid rgba(75, 85, 99, 0.5);
+            transition: all 0.3s ease;
+            color: #ffffff;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(156, 163, 175, 0.6);
+        }
+
+        .input-group input:focus {
+            border-color: #C9A96E;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15), 0 0 20px rgba(201, 169, 110, 0.05);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .input-group label {
+            color: #d1d5db;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+        }
+
+        .input-group .input-icon {
+            color: rgba(201, 169, 110, 0.6);
+            transition: color 0.3s ease;
+        }
+
+        .input-group input:focus ~ .input-icon,
+        .input-group input:focus + .input-icon {
+            color: #C9A96E;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #C9A96E 0%, #B89A5D 50%, #A8884E 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.2);
+        }
+
+        .login-btn:hover:not(:disabled) {
+            box-shadow: 0 6px 25px rgba(201, 169, 110, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .login-logo {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2.5px solid rgba(201, 169, 110, 0.5);
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.15);
+        }
+
+        .gold-line {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .animate-in-delay {
+            animation: fadeInUp 0.6s ease-out 0.15s forwards;
+            opacity: 0;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen flex items-center justify-center">
-    
-    <div class="container mx-auto px-4">
-        <div class="max-w-md mx-auto">
-            
-            
-            <!-- Login Card -->
-            <div class="bg-gray-800/50 backdrop-blur rounded-lg p-8 border border-gray-700 shadow-2xl">
-                <div class="text-center mb-8">
-                    <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="admin-login-logo mx-auto mb-4">
-                    <h2 class="text-2xl font-semibold mb-2">Iniciar Sesión</h2>
-                    <p class="text-gray-400 text-sm">Accede al panel administrativo</p>
-                </div>
-                
-                <form id="login-form" class="space-y-6">
-                    <!-- Usuario -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Usuario</label>
-                        <div class="relative">
-                            <input 
-                                type="text" 
-                                id="username" 
-                                required
-                                class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:border-amber-500 transition"
-                                placeholder="Ingresa tu usuario"
-                            >
-                            <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Contraseña -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Contraseña</label>
-                        <div class="relative">
-                            <input 
-                                type="password" 
-                                id="password" 
-                                required
-                                class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 pl-12 pr-12 focus:outline-none focus:border-amber-500 transition"
-                                placeholder="Ingresa tu contraseña"
-                            >
-                            <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <button 
-                                type="button" 
-                                id="toggle-password" 
-                                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition"
-                            >
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Recordar sesión -->
-                    <div class="flex items-center">
-                        <input 
-                            type="checkbox" 
-                            id="remember" 
-                            class="w-4 h-4 bg-gray-900 border-gray-700 rounded text-amber-500 focus:ring-amber-500"
+<body class="login-bg min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-[420px]">
+
+        <!-- Login Card -->
+        <div class="login-card rounded-2xl p-8 sm:p-10 border border-gray-700/50 shadow-2xl animate-in">
+
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="login-logo mx-auto mb-5">
+                <h2 class="text-2xl font-semibold text-white mb-1">Bienvenido</h2>
+                <div class="gold-line mx-auto my-3"></div>
+                <p class="text-gray-400 text-sm">Accede al panel administrativo</p>
+            </div>
+
+            <!-- Form -->
+            <form id="login-form" class="space-y-5 animate-in-delay">
+
+                <!-- Username -->
+                <div class="input-group">
+                    <label for="username" class="block text-sm mb-2">Usuario</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 input-icon text-sm pointer-events-none"></i>
+                        <input
+                            type="text"
+                            id="username"
+                            required
+                            class="w-full rounded-xl px-4 py-3.5 pl-11 text-sm focus:outline-none"
+                            placeholder="Ingresa tu usuario"
+                            autocomplete="username"
                         >
-                        <label for="remember" class="ml-2 text-sm text-gray-400">Recordar sesión</label>
                     </div>
-                    
-                    <!-- Error message -->
-                    <div id="error-message" class="hidden bg-red-500/10 border border-red-500 text-red-400 rounded-lg p-3 text-sm">
-                        <i class="fas fa-exclamation-circle mr-2"></i>
-                        <span id="error-text"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="input-group">
+                    <label for="password" class="block text-sm mb-2">Contrasena</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 input-icon text-sm pointer-events-none"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            required
+                            class="w-full rounded-xl px-4 py-3.5 pl-11 pr-12 text-sm focus:outline-none"
+                            placeholder="Ingresa tu contrasena"
+                            autocomplete="current-password"
+                        >
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-amber-400 transition text-sm"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </button>
                     </div>
-                    
-                    <!-- Botón Login -->
-                    <button 
-                        type="submit" 
-                        class="w-full bg-amber-500 text-black font-semibold py-3 rounded-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center"
-                    >
-                        <i class="fas fa-sign-in-alt mr-2"></i>
-                        Iniciar Sesión
-                    </button>
-                </form>
-                
-                <!-- Demo Credentials -->
-                <div class="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-                    <p class="text-blue-400 text-sm font-semibold mb-2">
-                        <i class="fas fa-info-circle mr-2"></i>Credenciales de prueba:
-                    </p>
-                    <p class="text-gray-400 text-xs">Usuario: <span class="text-white font-mono">admin</span></p>
-                    <p class="text-gray-400 text-xs">Contraseña: <span class="text-white font-mono">admin123</span></p>
+                </div>
+
+                <!-- Error / Success message -->
+                <div id="error-message" class="hidden rounded-xl p-3.5 text-sm flex items-center gap-2">
+                    <i class="fas fa-exclamation-circle flex-shrink-0"></i>
+                    <span id="error-text"></span>
+                </div>
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    id="login-btn"
+                    class="login-btn w-full text-black font-semibold py-3.5 rounded-xl flex items-center justify-center text-sm tracking-wide mt-2"
+                >
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Iniciar Sesion
+                </button>
+            </form>
+
+            <!-- Demo Credentials -->
+            <div class="mt-6 p-4 bg-white/[0.03] border border-gray-700/50 rounded-xl">
+                <p class="text-amber-400/80 text-xs font-semibold mb-2 flex items-center gap-1.5">
+                    <i class="fas fa-info-circle"></i>Credenciales de prueba
+                </p>
+                <div class="flex gap-4 text-xs">
+                    <p class="text-gray-400">Usuario: <span class="text-white font-mono bg-white/5 px-1.5 py-0.5 rounded">admin</span></p>
+                    <p class="text-gray-400">Clave: <span class="text-white font-mono bg-white/5 px-1.5 py-0.5 rounded">admin123</span></p>
                 </div>
             </div>
-            
-            <!-- Volver al sitio -->
-            <div class="text-center mt-6">
-                <a href="../index.html" class="text-gray-400 hover:text-amber-400 transition text-sm">
-                    <i class="fas fa-arrow-left mr-2"></i>Volver al sitio
-                </a>
-            </div>
+        </div>
+
+        <!-- Back to site -->
+        <div class="text-center mt-6 animate-in-delay">
+            <a href="../index.html" class="text-gray-500 hover:text-amber-400 transition text-sm inline-flex items-center gap-2">
+                <i class="fas fa-arrow-left text-xs"></i>Volver al sitio
+            </a>
         </div>
     </div>
 
     <script>
+        const API_BASE = '/web-BBR_Fragance/api';
+
         // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
-            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
                 passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         });
 
-        // Login form submission
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        // Login form submission via API
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const username = document.getElementById('username').value;
+
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
             const errorMessage = document.getElementById('error-message');
             const errorText = document.getElementById('error-text');
-            
-            // Credenciales de prueba (en producción esto debería ser una API)
-            const validUsername = 'admin';
-            const validPassword = 'admin123';
-            
-            if (username === validUsername && password === validPassword) {
-                // Guardar sesión
-                const sessionData = {
-                    username: username,
-                    loginTime: new Date().toISOString(),
-                    remember: remember
-                };
-                
-                if (remember) {
-                    localStorage.setItem('admin_session', JSON.stringify(sessionData));
+            const loginBtn = document.getElementById('login-btn');
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Verificando...';
+            errorMessage.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    errorMessage.className = 'rounded-xl p-3.5 text-sm flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400';
+                    errorMessage.querySelector('i').className = 'fas fa-check-circle flex-shrink-0';
+                    errorText.textContent = 'Login exitoso! Redirigiendo...';
+
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 800);
                 } else {
-                    sessionStorage.setItem('admin_session', JSON.stringify(sessionData));
+                    errorMessage.className = 'rounded-xl p-3.5 text-sm flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400';
+                    errorMessage.querySelector('i').className = 'fas fa-exclamation-circle flex-shrink-0';
+                    errorText.textContent = result.message || 'Usuario o contrasena incorrectos';
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesion';
                 }
-                
-                // Mostrar mensaje de éxito
-                errorMessage.classList.remove('hidden', 'bg-red-500/10', 'border-red-500', 'text-red-400');
-                errorMessage.classList.add('bg-green-500/10', 'border-green-500', 'text-green-400');
-                errorText.textContent = '¡Login exitoso! Redirigiendo...';
-                
-                // Redireccionar al panel admin
-                setTimeout(() => {
-                    window.location.href = 'admin.html';
-                }, 1000);
-            } else {
-                // Mostrar error
-                errorMessage.classList.remove('hidden', 'bg-green-500/10', 'border-green-500', 'text-green-400');
-                errorMessage.classList.add('bg-red-500/10', 'border-red-500', 'text-red-400');
-                errorText.textContent = 'Usuario o contraseña incorrectos';
+            } catch (error) {
+                errorMessage.className = 'rounded-xl p-3.5 text-sm flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400';
+                errorMessage.querySelector('i').className = 'fas fa-exclamation-circle flex-shrink-0';
+                errorText.textContent = 'Error de conexion con el servidor. Verifique que XAMPP este activo.';
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesion';
             }
         });
 
-        // Verificar si ya hay sesión activa
-        window.addEventListener('DOMContentLoaded', () => {
-            const sessionStorage = sessionStorage.getItem('admin_session');
-            const localStorage = window.localStorage.getItem('admin_session');
-            
-            if (sessionStorage || localStorage) {
-                window.location.href = 'admin.html';
+        // Check if already authenticated
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(`${API_BASE}/auth/check`);
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = 'admin.html';
+                }
+            } catch (e) {
+                // Not authenticated, stay on login page
             }
         });
     </script>

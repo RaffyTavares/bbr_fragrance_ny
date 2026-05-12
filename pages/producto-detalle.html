@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Detalle del producto - Bbr_Fragance">
     <title>Producto - Bbr_Fragance</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,21 +26,21 @@
             }
         }
     </script>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="bg-black text-white">
-    
-    <!-- Navegación -->
+
+    <!-- Navegacion -->
     <nav class="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-amber-900/20">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
@@ -52,7 +52,7 @@
                 </div>
                 <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
                     <li><a href="../index.html" class="hover:text-amber-400 transition">Inicio</a></li>
-                    <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorías</a></li>
+                    <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorias</a></li>
                     <li><a href="productos.html" class="hover:text-amber-400 transition">Productos</a></li>
                     <li><a href="../index.html#sobre-nosotros" class="hover:text-amber-400 transition">Nosotros</a></li>
                     <li><a href="../index.html#contacto" class="hover:text-amber-400 transition">Contacto</a></li>
@@ -63,7 +63,7 @@
                     </button>
                     <button id="cart-btn" class="hover:text-amber-400 transition relative">
                         <i class="fas fa-shopping-bag"></i>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-500 text-black text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-500 text-black text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
                     </button>
                 </div>
             </div>
@@ -78,494 +78,44 @@
                 <i class="fas fa-chevron-right text-xs"></i>
                 <a href="productos.html" class="hover:text-amber-400">Productos</a>
                 <i class="fas fa-chevron-right text-xs"></i>
-                <span class="text-white">Dior Sauvage</span>
+                <span class="text-white" id="breadcrumb-product">Cargando...</span>
             </div>
         </div>
     </section>
 
-    <!-- Detalle del producto -->
+    <!-- Detalle del producto (se llena dinamicamente) -->
     <section class="py-8 bg-gradient-to-b from-black to-gray-900">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-12">
-                
-                <!-- Galería de imágenes -->
-                <div>
-                    <div class="sticky top-24">
-                        <!-- Imagen principal -->
-                        <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-96 md:h-[500px] flex items-center justify-center mb-4 relative overflow-hidden group">
-                            <i class="fas fa-wine-bottle text-9xl text-white/30"></i>
-                            <div class="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                                -20% OFF
-                            </div>
-                            <button class="absolute top-4 left-4 w-12 h-12 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
-                                <i class="fas fa-heart text-xl"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Miniaturas -->
-                        <div class="grid grid-cols-4 gap-4">
-                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-amber-500">
-                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
-                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
-                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 border-gray-700 hover:border-amber-500 transition">
-                                <i class="fas fa-wine-bottle text-3xl text-white/30"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Información del producto -->
-                <div>
-                    <div class="mb-6">
-                        <span class="text-sm text-amber-400 uppercase tracking-wider font-semibold">Dior</span>
-                        <h1 class="text-4xl md:text-5xl font-serif mt-2 mb-4">Sauvage</h1>
-                        
-                        <!-- Rating -->
-                        <div class="flex items-center mb-6">
-                            <div class="flex text-amber-400 text-lg">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="text-gray-400 ml-3">(128 reseñas)</span>
-                        </div>
-
-                        <!-- Precio -->
-                        <div class="flex items-center gap-4 mb-6">
-                            <span class="text-4xl font-bold text-amber-400">$120</span>
-                            <span class="text-2xl text-gray-400 line-through">$150</span>
-                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Ahorra $30</span>
-                        </div>
-
-                        <!-- Disponibilidad -->
-                        <div class="flex items-center gap-2 mb-6">
-                            <i class="fas fa-check-circle text-green-400"></i>
-                            <span class="text-green-400 font-semibold">En stock</span>
-                            <span class="text-gray-400 ml-2">• Últimas 8 unidades</span>
-                        </div>
-                    </div>
-
-                    <!-- Descripción breve -->
-                    <div class="mb-8 pb-8 border-b border-gray-800">
-                        <p class="text-gray-300 leading-relaxed">
-                            Sauvage de Dior es una fragancia fresca y amaderada que captura la esencia de la naturaleza salvaje. Una composición masculina y refinada que combina notas cítricas con matices especiados, perfecta para el hombre moderno y audaz.
-                        </p>
-                    </div>
-
-                    <!-- Opciones -->
-                    <div class="mb-8">
-                        <h3 class="text-lg font-semibold mb-4">Tamaño</h3>
-                        <div class="flex gap-3">
-                            <button class="px-6 py-3 border-2 border-amber-500 bg-amber-500/10 text-amber-400 rounded-lg font-semibold hover:bg-amber-500 hover:text-black transition">
-                                60ml - $120
-                            </button>
-                            <button class="px-6 py-3 border-2 border-gray-700 text-gray-300 rounded-lg font-semibold hover:border-amber-500 hover:text-amber-400 transition">
-                                100ml - $180
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Cantidad -->
-                    <div class="mb-8">
-                        <h3 class="text-lg font-semibold mb-4">Cantidad</h3>
-                        <div class="flex items-center gap-4">
-                            <div class="flex items-center border-2 border-gray-700 rounded-lg overflow-hidden">
-                                <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-minus">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" value="1" min="1" class="w-16 text-center bg-transparent py-3 focus:outline-none" id="qty-input">
-                                <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-plus">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <span class="text-gray-400">Disponible: 8 unidades</span>
-                        </div>
-                    </div>
-
-                    <!-- Botones de acción -->
-                    <div class="flex flex-col md:flex-row gap-4 mb-8">
-                        <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center">
-                            <i class="fas fa-shopping-cart mr-2"></i>
-                            Agregar al carrito
-                        </button>
-                        <button id="whatsapp-buy" class="flex-1 bg-green-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-600 transition transform hover:scale-105 flex items-center justify-center">
-                            <i class="fab fa-whatsapp mr-2"></i>
-                            Comprar por WhatsApp
-                        </button>
-                    </div>
-
-                    <!-- Beneficios -->
-                    <div class="grid grid-cols-2 gap-4 mb-8 pb-8 border-b border-gray-800">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-shipping-fast text-2xl text-amber-400"></i>
-                            <div>
-                                <p class="font-semibold text-sm">Envío Gratis</p>
-                                <p class="text-xs text-gray-400">En compras +$100</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-certificate text-2xl text-amber-400"></i>
-                            <div>
-                                <p class="font-semibold text-sm">100% Original</p>
-                                <p class="text-xs text-gray-400">Garantizado</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-lock text-2xl text-amber-400"></i>
-                            <div>
-                                <p class="font-semibold text-sm">Pago Seguro</p>
-                                <p class="text-xs text-gray-400">SSL protegido</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-undo text-2xl text-amber-400"></i>
-                            <div>
-                                <p class="font-semibold text-sm">Devoluciones</p>
-                                <p class="text-xs text-gray-400">30 días</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Compartir -->
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-400">Compartir:</span>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
-                            <i class="fas fa-link"></i>
-                        </a>
-                    </div>
-                </div>
+            <!-- Loading state -->
+            <div id="product-loading" class="text-center py-20">
+                <div class="spinner mx-auto mb-4"></div>
+                <p class="text-gray-400">Cargando producto...</p>
             </div>
+            <!-- Product content will be injected here -->
+            <div id="product-content" class="hidden"></div>
         </div>
     </section>
 
-    <!-- Tabs de información detallada -->
-    <section class="py-12 bg-gray-900">
+    <!-- Tabs de informacion -->
+    <section class="py-12 bg-gray-900" id="product-tabs-section">
         <div class="container mx-auto px-4">
             <div class="bg-gray-800/50 backdrop-blur rounded-lg border border-gray-700 overflow-hidden">
-                <!-- Tabs -->
                 <div class="flex border-b border-gray-700">
                     <button class="tab-btn active flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="description">
-                        Descripción
-                    </button>
-                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="notes">
-                        Notas Olfativas
+                        Descripcion
                     </button>
                     <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="info">
-                        Información
-                    </button>
-                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="reviews">
-                        Reseñas (128)
+                        Informacion
                     </button>
                 </div>
-
-                <!-- Contenido de tabs -->
                 <div class="p-8">
-                    <!-- Descripción -->
                     <div id="description" class="tab-content">
-                        <h3 class="text-2xl font-serif text-amber-400 mb-4">Sobre Sauvage</h3>
-                        <p class="text-gray-300 leading-relaxed mb-4">
-                            Sauvage es un perfume masculino de Dior que se inspira en los paisajes desérticos y la libertad del hombre salvaje. Lanzado en 2015, esta fragancia se ha convertido en un ícono moderno de la perfumería masculina.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed mb-4">
-                            Su composición fresca y especiada combina notas cítricas vibrantes con un corazón aromático y un fondo amaderado profundo. Es una fragancia versátil que funciona tanto de día como de noche, perfecta para cualquier ocasión.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed">
-                            El frasco refleja la naturaleza salvaje de la fragancia, con líneas elegantes y un diseño minimalista que evoca la fuerza y masculinidad de quien lo porta.
-                        </p>
+                        <h3 class="text-2xl font-serif text-amber-400 mb-4">Descripcion del Producto</h3>
+                        <p id="tab-description-text" class="text-gray-300 leading-relaxed">Cargando...</p>
                     </div>
-
-                    <!-- Notas Olfativas -->
-                    <div id="notes" class="tab-content hidden">
-                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Pirámide Olfativa</h3>
-                        
-                        <div class="space-y-6">
-                            <!-- Salida -->
-                            <div class="bg-gradient-to-r from-yellow-900/20 to-transparent p-6 rounded-lg border-l-4 border-yellow-500">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-cloud text-2xl text-yellow-400 mr-3"></i>
-                                    <h4 class="text-xl font-semibold">Notas de Salida</h4>
-                                </div>
-                                <p class="text-gray-300 mb-2">Las primeras impresiones frescas y vibrantes:</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-yellow-900/30 px-4 py-2 rounded-full text-sm border border-yellow-700">Bergamota de Calabria</span>
-                                    <span class="bg-yellow-900/30 px-4 py-2 rounded-full text-sm border border-yellow-700">Pimienta de Sichuan</span>
-                                </div>
-                            </div>
-
-                            <!-- Corazón -->
-                            <div class="bg-gradient-to-r from-purple-900/20 to-transparent p-6 rounded-lg border-l-4 border-purple-500">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-heart text-2xl text-purple-400 mr-3"></i>
-                                    <h4 class="text-xl font-semibold">Notas de Corazón</h4>
-                                </div>
-                                <p class="text-gray-300 mb-2">El alma de la fragancia, aromática y especiada:</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Lavanda</span>
-                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Geranio</span>
-                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Elemi</span>
-                                    <span class="bg-purple-900/30 px-4 py-2 rounded-full text-sm border border-purple-700">Pimienta Rosa</span>
-                                </div>
-                            </div>
-
-                            <!-- Fondo -->
-                            <div class="bg-gradient-to-r from-amber-900/20 to-transparent p-6 rounded-lg border-l-4 border-amber-500">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-tree text-2xl text-amber-400 mr-3"></i>
-                                    <h4 class="text-xl font-semibold">Notas de Fondo</h4>
-                                </div>
-                                <p class="text-gray-300 mb-2">La base duradera y profunda:</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Ambroxan</span>
-                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Cedro</span>
-                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Vetiver</span>
-                                    <span class="bg-amber-900/30 px-4 py-2 rounded-full text-sm border border-amber-700">Pachulí</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información -->
                     <div id="info" class="tab-content hidden">
-                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Información del Producto</h3>
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Marca:</span>
-                                    <span class="font-semibold">Dior</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Tipo:</span>
-                                    <span class="font-semibold">Eau de Toilette (EDT)</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Concentración:</span>
-                                    <span class="font-semibold">5-15%</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Duración:</span>
-                                    <span class="font-semibold">6-8 horas</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Estela:</span>
-                                    <span class="font-semibold">Moderada a Fuerte</span>
-                                </div>
-                            </div>
-
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Género:</span>
-                                    <span class="font-semibold">Masculino</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Familia:</span>
-                                    <span class="font-semibold">Aromática Fougère</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Año:</span>
-                                    <span class="font-semibold">2015</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Perfumista:</span>
-                                    <span class="font-semibold">François Demachy</span>
-                                </div>
-                                <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                                    <span class="text-gray-400">Temporada ideal:</span>
-                                    <span class="font-semibold">Primavera/Verano</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-8 bg-amber-500/10 border border-amber-500/30 rounded-lg p-6">
-                            <h4 class="font-semibold mb-3 flex items-center">
-                                <i class="fas fa-lightbulb text-amber-400 mr-2"></i>
-                                Recomendaciones de uso
-                            </h4>
-                            <ul class="space-y-2 text-gray-300">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
-                                    <span>Aplicar sobre puntos de pulso (muñecas, cuello, detrás de las orejas)</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
-                                    <span>Perfecto para uso diario y ocasiones especiales</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
-                                    <span>Ideal para climas cálidos y templados</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check text-amber-400 mr-2 mt-1"></i>
-                                    <span>Combina bien con aromas cítricos y amaderados</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Reseñas -->
-                    <div id="reviews" class="tab-content hidden">
-                        <div class="mb-8">
-                            <h3 class="text-2xl font-serif text-amber-400 mb-6">Reseñas de clientes</h3>
-                            
-                            <!-- Resumen de calificaciones -->
-                            <div class="bg-gray-800 rounded-lg p-6 mb-8">
-                                <div class="flex flex-col md:flex-row gap-8 items-center">
-                                    <div class="text-center">
-                                        <div class="text-5xl font-bold text-amber-400 mb-2">4.9</div>
-                                        <div class="flex text-amber-400 text-xl mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <p class="text-gray-400">128 reseñas</p>
-                                    </div>
-                                    
-                                    <div class="flex-1 w-full space-y-2">
-                                        <div class="flex items-center gap-3">
-                                            <span class="text-sm w-12">5★</span>
-                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
-                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 85%"></div>
-                                            </div>
-                                            <span class="text-sm text-gray-400 w-12">109</span>
-                                        </div>
-                                        <div class="flex items-center gap-3">
-                                            <span class="text-sm w-12">4★</span>
-                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
-                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 10%"></div>
-                                            </div>
-                                            <span class="text-sm text-gray-400 w-12">13</span>
-                                        </div>
-                                        <div class="flex items-center gap-3">
-                                            <span class="text-sm w-12">3★</span>
-                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
-                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 3%"></div>
-                                            </div>
-                                            <span class="text-sm text-gray-400 w-12">4</span>
-                                        </div>
-                                        <div class="flex items-center gap-3">
-                                            <span class="text-sm w-12">2★</span>
-                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
-                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 1%"></div>
-                                            </div>
-                                            <span class="text-sm text-gray-400 w-12">1</span>
-                                        </div>
-                                        <div class="flex items-center gap-3">
-                                            <span class="text-sm w-12">1★</span>
-                                            <div class="flex-1 bg-gray-700 rounded-full h-2">
-                                                <div class="bg-amber-500 h-2 rounded-full" style="width: 1%"></div>
-                                            </div>
-                                            <span class="text-sm text-gray-400 w-12">1</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Reseñas individuales -->
-                            <div class="space-y-6">
-                                <div class="bg-gray-800 rounded-lg p-6">
-                                    <div class="flex items-start justify-between mb-4">
-                                        <div class="flex items-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex items-center justify-center text-black font-bold mr-4">
-                                                MC
-                                            </div>
-                                            <div>
-                                                <h4 class="font-semibold">Miguel Contreras</h4>
-                                                <div class="flex text-amber-400 text-sm">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-gray-400">Hace 2 días</span>
-                                    </div>
-                                    <p class="text-gray-300 mb-3">
-                                        Excelente perfume, la duración es increíble y el aroma es tal cual como lo esperaba. 100% original, la entrega fue rápida y el empaque muy cuidado. Totalmente recomendado!
-                                    </p>
-                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        Compra verificada
-                                    </span>
-                                </div>
-
-                                <div class="bg-gray-800 rounded-lg p-6">
-                                    <div class="flex items-start justify-between mb-4">
-                                        <div class="flex items-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                                JR
-                                            </div>
-                                            <div>
-                                                <h4 class="font-semibold">José Ramírez</h4>
-                                                <div class="flex text-amber-400 text-sm">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-gray-400">Hace 5 días</span>
-                                    </div>
-                                    <p class="text-gray-300 mb-3">
-                                        Una de las mejores fragancias que he probado. Fresco pero no abrumador, perfecto para el día a día. La atención al cliente fue excelente, respondieron todas mis dudas por WhatsApp antes de comprar.
-                                    </p>
-                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        Compra verificada
-                                    </span>
-                                </div>
-
-                                <div class="bg-gray-800 rounded-lg p-6">
-                                    <div class="flex items-start justify-between mb-4">
-                                        <div class="flex items-center">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-700 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                                LG
-                                            </div>
-                                            <div>
-                                                <h4 class="font-semibold">Laura González</h4>
-                                                <div class="flex text-amber-400 text-sm">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-gray-400">Hace 1 semana</span>
-                                    </div>
-                                    <p class="text-gray-300 mb-3">
-                                        Lo compré como regalo para mi esposo y le encantó. El precio es muy bueno comparado con otros sitios. La única observación es que me hubiera gustado que viniera con una bolsa de regalo incluida.
-                                    </p>
-                                    <span class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        Compra verificada
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Informacion del Producto</h3>
+                        <div id="tab-info-content" class="grid md:grid-cols-2 gap-6"></div>
                     </div>
                 </div>
             </div>
@@ -573,29 +123,15 @@
     </section>
 
     <!-- Productos relacionados -->
-    <section class="py-20 bg-black">
+    <section class="py-20 bg-black" id="related-section">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-serif text-amber-400 mb-12">También te puede interesar</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <!-- Mini producto cards -->
-                <div class="bg-gray-800/50 backdrop-blur rounded-lg overflow-hidden hover:transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-amber-500">
-                    <div class="h-48 bg-gradient-to-br from-pink-600 to-rose-900 flex items-center justify-center">
-                        <i class="fas fa-wine-bottle text-6xl text-white/30"></i>
-                    </div>
-                    <div class="p-4">
-                        <span class="text-xs text-amber-400">Chanel</span>
-                        <h3 class="font-semibold mb-2">Coco Mademoiselle</h3>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xl font-bold text-amber-400">$185</span>
-                            <button class="bg-amber-500 text-black px-3 py-1 rounded text-sm hover:bg-amber-400 transition">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Repetir para más productos relacionados -->
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent to-amber-900/30"></div>
+                <h2 class="text-3xl md:text-4xl font-serif text-amber-400 whitespace-nowrap">Tambien te puede interesar</h2>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent to-amber-900/30"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="related-products">
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </section>
@@ -612,23 +148,19 @@
         </div>
     </footer>
 
-    <!-- Botón flotante WhatsApp -->
-    <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20el%20perfume%20Dior%20Sauvage" target="_blank" class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-600 transition transform hover:scale-110 z-50 animate-pulse">
+    <!-- Boton flotante WhatsApp -->
+    <a href="https://wa.me/18094855693" target="_blank" class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-600 transition transform hover:scale-110 z-50 animate-pulse">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Modal de Búsqueda -->
+    <!-- Modal de Busqueda -->
     <div id="search-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-20">
         <div class="bg-gray-900 rounded-lg w-full max-w-2xl mx-4 shadow-2xl border border-gray-700">
             <div class="p-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="flex-1 relative">
-                        <input 
-                            type="text" 
-                            id="search-input" 
-                            placeholder="Buscar perfumes por nombre o marca..." 
-                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:border-amber-500 transition"
-                        >
+                        <input type="text" id="search-input" placeholder="Buscar perfumes por nombre o marca..."
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:border-amber-500 transition">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                     <button id="close-search" class="text-gray-400 hover:text-white text-2xl">
@@ -652,18 +184,16 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                
                 <div id="cart-items" class="flex-1 overflow-y-auto mb-6">
-                    <p class="text-gray-400 text-center py-12">Tu carrito está vacío</p>
+                    <p class="text-gray-400 text-center py-12">Tu carrito esta vacio</p>
                 </div>
-                
                 <div class="border-t border-gray-800 pt-4">
                     <div class="flex justify-between text-xl font-semibold mb-4">
                         <span>Total:</span>
-                        <span class="text-amber-400" id="cart-total">$0</span>
+                        <span class="text-amber-400" id="cart-total">RD$ 0.00</span>
                     </div>
-                    <button class="w-full bg-amber-500 text-black font-semibold py-4 rounded-lg hover:bg-amber-400 transition mb-3">
-                        Proceder al pago
+                    <button id="checkout-btn" class="w-full bg-amber-500 text-black font-semibold py-4 rounded-lg hover:bg-amber-400 transition mb-3" onclick="cart.createOrder()">
+                        <i class="fas fa-credit-card mr-2"></i>Proceder al pago
                     </button>
                     <button id="whatsapp-order" class="w-full bg-green-500 text-white font-semibold py-4 rounded-lg hover:bg-green-600 transition">
                         <i class="fab fa-whatsapp mr-2"></i>
@@ -674,7 +204,542 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="checkout-overlay"></div>
+        <div class="absolute inset-y-0 right-0 w-full max-w-lg bg-gray-900 shadow-2xl flex flex-col overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gray-800 p-4 flex items-center justify-between border-b border-gray-700">
+                <h2 class="text-lg font-bold" id="checkout-title">Finalizar Compra</h2>
+                <button id="close-checkout" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <!-- Step Indicators -->
+            <div class="flex items-center justify-center gap-2 py-3 bg-gray-800/50 border-b border-gray-700 px-4" id="checkout-steps-bar">
+                <div class="checkout-step-indicator active" data-step="1">
+                    <span class="w-7 h-7 rounded-full bg-amber-500 text-black flex items-center justify-center text-sm font-bold">1</span>
+                    <span class="text-xs mt-1 text-amber-400">Datos</span>
+                </div>
+                <div class="flex-1 h-px bg-gray-600 mx-1"></div>
+                <div class="checkout-step-indicator" data-step="2">
+                    <span class="w-7 h-7 rounded-full bg-gray-700 text-gray-400 flex items-center justify-center text-sm font-bold">2</span>
+                    <span class="text-xs mt-1 text-gray-500">Pago</span>
+                </div>
+                <div class="flex-1 h-px bg-gray-600 mx-1"></div>
+                <div class="checkout-step-indicator" data-step="3">
+                    <span class="w-7 h-7 rounded-full bg-gray-700 text-gray-400 flex items-center justify-center text-sm font-bold">3</span>
+                    <span class="text-xs mt-1 text-gray-500">Confirmar</span>
+                </div>
+            </div>
+
+            <!-- Content area -->
+            <div class="flex-1 overflow-y-auto p-5" id="checkout-content">
+
+                <!-- Step 1: Customer Data -->
+                <div class="checkout-step" data-step="1">
+                    <h3 class="text-lg font-semibold mb-4"><i class="fas fa-user mr-2 text-amber-400"></i>Datos del Cliente</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Nombre completo <span class="text-red-400">*</span></label>
+                            <input type="text" id="ck-name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-amber-500 focus:outline-none" placeholder="Tu nombre completo" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Telefono <span class="text-red-400">*</span></label>
+                            <input type="tel" id="ck-phone" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-amber-500 focus:outline-none" placeholder="809-000-0000" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Correo electronico</label>
+                            <input type="email" id="ck-email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-amber-500 focus:outline-none" placeholder="tu@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Direccion de envio</label>
+                            <textarea id="ck-address" rows="2" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-amber-500 focus:outline-none resize-none" placeholder="Calle, sector, ciudad..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Payment Method -->
+                <div class="checkout-step hidden" data-step="2">
+                    <h3 class="text-lg font-semibold mb-4"><i class="fas fa-credit-card mr-2 text-amber-400"></i>Metodo de Pago</h3>
+                    <div class="space-y-3" id="ck-payment-methods">
+                        <button type="button" class="ck-pay-btn w-full flex items-center gap-4 p-4 bg-gray-800 border-2 border-gray-700 rounded-xl hover:border-amber-500 transition text-left" data-method="cash">
+                            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-money-bill-wave text-green-400 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-white">Efectivo</p>
+                                <p class="text-sm text-gray-400">Pago contra entrega</p>
+                            </div>
+                            <i class="fas fa-circle text-gray-600 ck-pay-radio"></i>
+                        </button>
+                        <button type="button" class="ck-pay-btn w-full flex items-center gap-4 p-4 bg-gray-800 border-2 border-gray-700 rounded-xl hover:border-amber-500 transition text-left" data-method="card">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-credit-card text-blue-400 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-white">Tarjeta</p>
+                                <p class="text-sm text-gray-400">Se cobra al momento de la entrega</p>
+                            </div>
+                            <i class="fas fa-circle text-gray-600 ck-pay-radio"></i>
+                        </button>
+                        <button type="button" class="ck-pay-btn w-full flex items-center gap-4 p-4 bg-gray-800 border-2 border-gray-700 rounded-xl hover:border-amber-500 transition text-left" data-method="transfer">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-university text-purple-400 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-white">Transferencia Bancaria</p>
+                                <p class="text-sm text-gray-400">Datos bancarios a continuacion</p>
+                            </div>
+                            <i class="fas fa-circle text-gray-600 ck-pay-radio"></i>
+                        </button>
+                    </div>
+                    <!-- Bank details (shown when transfer is selected) -->
+                    <div id="ck-bank-details" class="hidden mt-4 bg-gray-800 border border-purple-500/30 rounded-xl p-4">
+                        <h4 class="text-sm font-semibold text-purple-400 mb-3"><i class="fas fa-info-circle mr-1"></i>Datos para Transferencia</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span class="text-gray-400">Banco:</span><span id="ck-bank-name" class="text-white font-medium">--</span></div>
+                            <div class="flex justify-between"><span class="text-gray-400">Tipo:</span><span id="ck-bank-type" class="text-white">--</span></div>
+                            <div class="flex justify-between"><span class="text-gray-400">Cuenta:</span><span id="ck-bank-account" class="text-white font-mono">--</span></div>
+                            <div class="flex justify-between"><span class="text-gray-400">Titular:</span><span id="ck-bank-holder" class="text-white">--</span></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-3">Realiza la transferencia y nos contactaremos para confirmar tu pedido.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3: Order Summary -->
+                <div class="checkout-step hidden" data-step="3">
+                    <h3 class="text-lg font-semibold mb-4"><i class="fas fa-receipt mr-2 text-amber-400"></i>Resumen del Pedido</h3>
+
+                    <!-- Customer info summary -->
+                    <div class="bg-gray-800 rounded-xl p-4 mb-4">
+                        <div class="flex items-center gap-2 mb-2"><i class="fas fa-user text-amber-400 text-sm"></i><span class="text-sm font-semibold text-gray-300">Datos del cliente</span></div>
+                        <div id="ck-summary-customer" class="text-sm text-gray-400 space-y-1"></div>
+                    </div>
+
+                    <!-- Payment method summary -->
+                    <div class="bg-gray-800 rounded-xl p-4 mb-4">
+                        <div class="flex items-center gap-2 mb-2"><i class="fas fa-wallet text-amber-400 text-sm"></i><span class="text-sm font-semibold text-gray-300">Metodo de pago</span></div>
+                        <p id="ck-summary-payment" class="text-sm text-white"></p>
+                    </div>
+
+                    <!-- Items summary -->
+                    <div class="bg-gray-800 rounded-xl p-4 mb-4">
+                        <div class="flex items-center gap-2 mb-3"><i class="fas fa-shopping-bag text-amber-400 text-sm"></i><span class="text-sm font-semibold text-gray-300">Productos</span></div>
+                        <div id="ck-summary-items" class="space-y-2 text-sm"></div>
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <div id="ck-summary-totals" class="space-y-2 text-sm"></div>
+                        <div class="border-t border-gray-700 mt-3 pt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-white">Total</span>
+                            <span id="ck-summary-total" class="text-xl font-bold text-amber-400"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div class="checkout-step hidden" data-step="success">
+                    <div class="text-center py-8">
+                        <div class="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-check-circle text-green-400 text-4xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Pedido Creado!</h3>
+                        <p class="text-gray-400 mb-4">Tu pedido ha sido recibido exitosamente</p>
+                        <div class="bg-gray-800 rounded-xl p-4 inline-block mb-6">
+                            <p class="text-sm text-gray-400">Numero de pedido</p>
+                            <p id="ck-order-number" class="text-xl font-bold text-amber-400 font-mono"></p>
+                        </div>
+                        <p class="text-sm text-gray-500">Te contactaremos pronto para confirmar tu pedido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer buttons -->
+            <div class="p-4 border-t border-gray-700 bg-gray-800" id="checkout-footer">
+                <div class="flex gap-3">
+                    <button id="ck-btn-back" class="hidden flex-1 bg-gray-700 text-white font-semibold py-3 rounded-lg hover:bg-gray-600 transition">
+                        <i class="fas fa-arrow-left mr-2"></i>Atras
+                    </button>
+                    <button id="ck-btn-next" class="flex-1 bg-amber-500 text-black font-bold py-3 rounded-lg hover:bg-amber-400 transition">
+                        Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+                <div id="ck-error-msg" class="hidden mt-3 text-sm text-red-400 text-center"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
-    <script src="../js/main.js"></script>
+    <script src="../js/main/core.js"></script>
+    <script src="../js/main/cart.js"></script>
+    <script src="../js/main/products.js"></script>
+    <script src="../js/main/product-detail.js"></script>
+    <script src="../js/main/ui.js"></script>
+    <script src="../js/main/init.js"></script>
+    <script>
+        // Load product detail on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                document.getElementById('product-loading').innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-6xl text-amber-400 mb-4"></i>
+                    <h2 class="text-2xl font-semibold mb-2">Producto no encontrado</h2>
+                    <p class="text-gray-400 mb-6">No se especifico un producto.</p>
+                    <a href="productos.html" class="inline-block px-6 py-3 bg-amber-500 text-black font-semibold rounded-lg hover:bg-amber-400 transition">Ver todos los productos</a>
+                `;
+                return;
+            }
+
+            const result = await loadProductById(productId);
+
+            if (!result.success || !result.data) {
+                document.getElementById('product-loading').innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-6xl text-amber-400 mb-4"></i>
+                    <h2 class="text-2xl font-semibold mb-2">Producto no encontrado</h2>
+                    <p class="text-gray-400 mb-6">El producto que buscas no existe o fue eliminado.</p>
+                    <a href="productos.html" class="inline-block px-6 py-3 bg-amber-500 text-black font-semibold rounded-lg hover:bg-amber-400 transition">Ver todos los productos</a>
+                `;
+                return;
+            }
+
+            const product = result.data;
+            const image = getProductImage(product);
+            const gradient = getProductGradient(product.family_name);
+            const stock = parseInt(product.stock) || 0;
+            const price = parseFloat(product.price) || 0;
+            const originalPrice = parseFloat(product.original_price) || 0;
+            const hasDiscount = originalPrice > 0 && originalPrice > price;
+            const discountPct = hasDiscount ? Math.round((1 - price / originalPrice) * 100) : 0;
+            const savings = hasDiscount ? originalPrice - price : 0;
+            const brandName = product.brand_name || '';
+
+            // Update page title
+            document.title = `${product.name} - ${brandName} | Bbr_Fragance`;
+
+            // Update breadcrumb
+            document.getElementById('breadcrumb-product').textContent = `${brandName} ${product.name}`;
+
+            // Build images
+            let mainImageHtml = '';
+            let thumbnailsHtml = '';
+
+            if (product.images && product.images.length > 0) {
+                const mainImgUrl = product.images[0].url || product.images[0].image_url;
+                mainImageHtml = `<img src="${mainImgUrl}" alt="${product.name}" class="w-full h-full object-cover" id="main-product-image">`;
+                thumbnailsHtml = product.images.map((img, i) => {
+                    const thumbUrl = img.url || img.image_url;
+                    return `
+                    <div class="bg-gray-800 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 ${i === 0 ? 'border-amber-500' : 'border-gray-700 hover:border-amber-500'} transition overflow-hidden"
+                         onclick="document.getElementById('main-product-image').src='${thumbUrl}'; this.parentElement.querySelectorAll('div').forEach(d => {d.classList.remove('border-amber-500'); d.classList.add('border-gray-700')}); this.classList.remove('border-gray-700'); this.classList.add('border-amber-500');">
+                        <img src="${thumbUrl}" alt="" class="w-full h-full object-cover">
+                    </div>
+                `}).join('');
+            } else if (image) {
+                mainImageHtml = `<img src="${image}" alt="${product.name}" class="w-full h-full object-cover">`;
+            } else {
+                mainImageHtml = `<i class="fas fa-wine-bottle text-9xl text-white/30"></i>`;
+            }
+
+            // Render product content
+            const contentEl = document.getElementById('product-content');
+            contentEl.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Gallery -->
+                    <div>
+                        <div class="sticky top-24">
+                            <div class="bg-gradient-to-br ${gradient} rounded-lg h-96 md:h-[500px] flex items-center justify-center mb-4 relative overflow-hidden">
+                                ${mainImageHtml}
+                                <button class="absolute top-4 left-4 w-12 h-12 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                                    <i class="fas fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            ${thumbnailsHtml ? `<div class="grid grid-cols-4 gap-4">${thumbnailsHtml}</div>` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div>
+                        <div class="mb-6">
+                            <span class="text-sm text-amber-400 uppercase tracking-wider font-semibold">${brandName}</span>
+                            <h1 class="text-4xl md:text-5xl font-serif mt-2 mb-4">${product.name}</h1>
+                            <div class="flex items-center gap-4 mb-6">
+                                ${hasDiscount ? `
+                                <div>
+                                    <div class="flex items-center gap-3 mb-1">
+                                        <del class="text-gray-500 text-xl">${formatPrice(originalPrice)}</del>
+                                        <span class="bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">-${discountPct}%</span>
+                                    </div>
+                                    <span class="text-4xl font-bold text-amber-400">${formatPrice(price)}</span>
+                                    <p class="text-green-400 text-sm mt-1"><i class="fas fa-tag mr-1"></i>Ahorras ${formatPrice(savings)}</p>
+                                </div>
+                                ` : `<span class="text-4xl font-bold text-amber-400">${formatPrice(price)}</span>`}
+                            </div>
+                            <div class="flex items-center gap-2 mb-6">
+                                ${stock > 0
+                                    ? `<i class="fas fa-check-circle text-green-400"></i>
+                                       <span class="text-green-400 font-semibold">En stock</span>
+                                       ${stock < 10 ? `<span class="text-gray-400 ml-2">Ultimas ${stock} unidades</span>` : ''}`
+                                    : `<i class="fas fa-times-circle text-red-400"></i>
+                                       <span class="text-red-400 font-semibold">Agotado</span>`}
+                            </div>
+                        </div>
+
+                        <div class="mb-8 pb-8 border-b border-gray-800">
+                            <p class="text-gray-300 leading-relaxed">${product.description || 'Sin descripcion disponible.'}</p>
+                        </div>
+
+                        <!-- Info pills -->
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            ${product.category_name ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-tag text-amber-400 mr-2"></i>${product.category_name}</span>` : ''}
+                            ${product.family_name ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-leaf text-amber-400 mr-2"></i>${product.family_name}</span>` : ''}
+                            ${product.sku ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-barcode text-amber-400 mr-2"></i>${product.sku}</span>` : ''}
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-semibold mb-4">Cantidad</h3>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center border-2 border-gray-700 rounded-lg overflow-hidden">
+                                    <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" value="1" min="1" max="${stock}" class="w-16 text-center bg-transparent py-3 focus:outline-none" id="qty-input">
+                                    <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                                ${stock > 0 ? `<span class="text-gray-400">Disponible: ${stock} unidades</span>` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="flex flex-col md:flex-row gap-4 mb-8">
+                            <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center" ${stock === 0 ? 'disabled' : ''}>
+                                <i class="fas fa-shopping-cart mr-2"></i>
+                                ${stock === 0 ? 'Producto Agotado' : 'Agregar al carrito'}
+                            </button>
+                            <button id="whatsapp-buy" class="flex-1 bg-green-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-600 transition transform hover:scale-105 flex items-center justify-center">
+                                <i class="fab fa-whatsapp mr-2"></i>
+                                Comprar por WhatsApp
+                            </button>
+                        </div>
+
+                        <!-- Benefits -->
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-shipping-fast text-2xl text-amber-400"></i>
+                                <div><p class="font-semibold text-sm">Envio Rapido</p><p class="text-xs text-gray-400">24-48 horas</p></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-certificate text-2xl text-amber-400"></i>
+                                <div><p class="font-semibold text-sm">100% Original</p><p class="text-xs text-gray-400">Garantizado</p></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-lock text-2xl text-amber-400"></i>
+                                <div><p class="font-semibold text-sm">Pago Seguro</p><p class="text-xs text-gray-400">SSL protegido</p></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-undo text-2xl text-amber-400"></i>
+                                <div><p class="font-semibold text-sm">Devoluciones</p><p class="text-xs text-gray-400">30 dias</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Hide loading, show content
+            document.getElementById('product-loading').classList.add('hidden');
+            contentEl.classList.remove('hidden');
+
+            // Setup quantity buttons
+            const qtyInput = document.getElementById('qty-input');
+            const qtyMinus = document.getElementById('qty-minus');
+            const qtyPlus = document.getElementById('qty-plus');
+
+            if (qtyMinus) qtyMinus.addEventListener('click', () => {
+                const v = parseInt(qtyInput.value);
+                if (v > 1) qtyInput.value = v - 1;
+            });
+            if (qtyPlus) qtyPlus.addEventListener('click', () => {
+                const v = parseInt(qtyInput.value);
+                const mx = parseInt(qtyInput.max) || 99;
+                if (v < mx) qtyInput.value = v + 1;
+            });
+
+            // Add to cart
+            document.getElementById('add-to-cart-detail').addEventListener('click', (e) => {
+                e.preventDefault();
+                const qty = parseInt(qtyInput.value || 1);
+                for (let i = 0; i < qty; i++) {
+                    cart.addItem({
+                        id: product.id,
+                        name: product.name,
+                        brand: brandName,
+                        price: price
+                    });
+                }
+            });
+
+            // WhatsApp buy
+            document.getElementById('whatsapp-buy').addEventListener('click', () => {
+                const qty = qtyInput.value || 1;
+                const msg = `*Hola! Me interesa este producto:*%0A%0A*${product.name}*%0AMarca: ${brandName}%0APrecio: ${formatPrice(price)}%0ACantidad: ${qty}`;
+                window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${msg}`, '_blank');
+            });
+
+            // Update tabs
+            document.getElementById('tab-description-text').textContent = product.description || 'Sin descripcion disponible.';
+
+            const infoContent = document.getElementById('tab-info-content');
+            infoContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Marca:</span>
+                        <span class="font-semibold">${brandName}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Categoria:</span>
+                        <span class="font-semibold">${product.category_name || '-'}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Familia Olfativa:</span>
+                        <span class="font-semibold">${product.family_name || '-'}</span>
+                    </div>
+                    ${product.sku ? `<div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">SKU:</span>
+                        <span class="font-semibold">${product.sku}</span>
+                    </div>` : ''}
+                    ${product.barcode ? `<div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Codigo:</span>
+                        <span class="font-semibold">${product.barcode}</span>
+                    </div>` : ''}
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Precio:</span>
+                        <span class="font-semibold text-amber-400">${formatPrice(price)}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Stock:</span>
+                        <span class="font-semibold ${stock > 0 ? 'text-green-400' : 'text-red-400'}">${stock > 0 ? stock + ' unidades' : 'Agotado'}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
+                        <span class="text-gray-400">Estado:</span>
+                        <span class="font-semibold">${product.status === 'active' ? 'Disponible' : 'No disponible'}</span>
+                    </div>
+                </div>
+            `;
+
+            // Load related products (smart multi-criteria)
+            loadRelatedProducts(product);
+        });
+
+        async function loadRelatedProducts(product) {
+            const grid = document.getElementById('related-products');
+            const section = document.getElementById('related-section');
+            if (!grid) return;
+
+            grid.innerHTML = Array(4).fill(0).map(() => `
+                <div class="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700 animate-pulse">
+                    <div class="h-56 bg-gray-700"></div>
+                    <div class="p-5"><div class="h-3 bg-gray-700 rounded w-1/3 mb-3"></div><div class="h-4 bg-gray-700 rounded w-2/3 mb-4"></div><div class="h-5 bg-gray-700 rounded w-1/2"></div></div>
+                </div>
+            `).join('');
+
+            const collected = new Map();
+            const TARGET = 8;
+
+            // 1. Same family (most relevant for fragrance similarity)
+            if (product.family_slug && collected.size < TARGET) {
+                const res = await loadProducts({ family: product.family_slug, per_page: 12 });
+                if (res.success && res.data) {
+                    res.data.forEach(p => { if (p.id !== product.id && !collected.has(p.id)) collected.set(p.id, { ...p, score: 3 }); });
+                }
+            }
+
+            // 2. Same category (gender relevance)
+            if (product.category_slug && collected.size < TARGET) {
+                const res = await loadProducts({ category: product.category_slug, per_page: 12 });
+                if (res.success && res.data) {
+                    res.data.forEach(p => {
+                        if (p.id === product.id) return;
+                        if (collected.has(p.id)) { collected.get(p.id).score += 2; }
+                        else collected.set(p.id, { ...p, score: 2 });
+                    });
+                }
+            }
+
+            // 3. Same brand (brand affinity)
+            if (product.brand_slug && collected.size < TARGET) {
+                const res = await loadProducts({ brand: product.brand_slug, per_page: 8 });
+                if (res.success && res.data) {
+                    res.data.forEach(p => {
+                        if (p.id === product.id) return;
+                        if (collected.has(p.id)) { collected.get(p.id).score += 1; }
+                        else collected.set(p.id, { ...p, score: 1 });
+                    });
+                }
+            }
+
+            // 4. Similar price range (+-30% of current price)
+            const price = parseFloat(product.price) || 0;
+            if (price > 0 && collected.size < TARGET) {
+                const minP = Math.round(price * 0.7);
+                const maxP = Math.round(price * 1.3);
+                const res = await loadProducts({ min_price: minP, max_price: maxP, per_page: 8 });
+                if (res.success && res.data) {
+                    res.data.forEach(p => {
+                        if (p.id === product.id) return;
+                        if (collected.has(p.id)) { collected.get(p.id).score += 0.5; }
+                        else collected.set(p.id, { ...p, score: 0.5 });
+                    });
+                }
+            }
+
+            // Sort by relevance score descending, take top 4
+            const related = Array.from(collected.values())
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 4);
+
+            if (!related.length) {
+                if (section) section.classList.add('hidden');
+                return;
+            }
+
+            grid.innerHTML = related.map(p => {
+                const pImg = getProductImage(p);
+                const pGrad = getProductGradient(p.family_name);
+                const pPrice = parseFloat(p.price) || 0;
+                const pOriginal = parseFloat(p.original_price) || 0;
+                const pHasDiscount = pOriginal > 0 && pOriginal > pPrice;
+                const pDiscountPct = pHasDiscount ? Math.round((1 - pPrice / pOriginal) * 100) : 0;
+                const pStock = parseInt(p.stock) || 0;
+                const brandName = p.brand_name || '';
+
+                return `
+                <a href="producto-detalle.html?id=${p.id}" class="group block bg-gray-800/50 backdrop-blur rounded-xl overflow-hidden border border-gray-700 hover:border-amber-500/60 transition-all duration-300 hover:shadow-lg hover:shadow-amber-900/10">
+                    <div class="h-56 bg-gradient-to-br ${pGrad} flex items-center justify-center overflow-hidden relative">
+                        ${pImg
+                            ? `<img src="${pImg}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
+                            : '<i class="fas fa-wine-bottle text-6xl text-white/20"></i>'}
+                        ${pHasDiscount ? `<div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold">-${pDiscountPct}%</div>` : ''}
+                        ${pStock === 0 ? '<div class="absolute top-3 right-3 bg-gray-600 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Agotado</div>' : pStock < 5 ? `<div class="absolute top-3 right-3 bg-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Ultimas ${pStock}</div>` : ''}
+                    </div>
+                    <div class="p-5">
+                        <span class="text-xs text-amber-400/80 uppercase tracking-wider font-medium">${brandName}</span>
+                        <h3 class="font-semibold mt-1 mb-3 text-white group-hover:text-amber-400 transition line-clamp-2">${p.name}</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                ${pHasDiscount ? `<del class="text-gray-500 text-xs mr-1">${formatPrice(pOriginal)}</del>` : ''}
+                                <span class="text-xl font-bold text-amber-400">${formatPrice(pPrice)}</span>
+                            </div>
+                            <span class="text-xs text-gray-500 group-hover:text-amber-400/60 transition">
+                                Ver detalle <i class="fas fa-arrow-right ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>`;
+            }).join('');
+        }
+    </script>
 </body>
 </html>

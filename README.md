@@ -1,276 +1,265 @@
-# 🌟 Bbr_Fragance - Tienda de Perfumes Premium
+# BBR Fragance - Sistema de Tienda de Perfumes
 
-Sitio web completo para tienda de perfumes originales con diseño elegante y funcionalidad completa.
+Sistema web completo para tienda de perfumes con panel de administracion, POS, gestion de inventario, pedidos online y comprobantes fiscales (NCF).
 
-## 📋 Características
+## Stack Tecnologico
 
-### ✨ Diseño y Estilo
-- **Diseño Premium**: Colores negro, dorado y blanco para transmitir elegancia y lujo
-- **Responsive**: Completamente adaptable a móviles, tablets y desktop
-- **Animaciones suaves**: Efectos visuales profesionales con transiciones fluidas
-- **Tipografía elegante**: Playfair Display para títulos y Inter para textos
+| Capa | Tecnologia |
+|------|-----------|
+| Frontend | HTML5, Tailwind CSS (CDN), JavaScript Vanilla |
+| Backend | PHP 8.x (REST API) |
+| Base de datos | MySQL (PDO) |
+| Email | PHPMailer (SMTP) |
+| Servidor | XAMPP / Apache |
 
-### 🛍️ Funcionalidades Principales
-
-#### Página Principal (index.html)
-- Hero section impactante con llamado a la acción
-- Categorías de perfumes (Mujer, Hombre, Unisex, Árabes, Ofertas, Nuevos)
-- Productos destacados con calificaciones y precios
-- Beneficios (100% originales, envíos rápidos, atención 24/7, pagos seguros)
-- Guía de fragancias por familia olfativa
-- Testimonios de clientes verificados
-- Sección de promociones especiales
-- Información sobre la empresa
-- Formulario de contacto
-- Footer completo con enlaces y métodos de pago
-
-#### Catálogo de Productos (pages/productos.html)
-- Sistema de filtros avanzado:
-  - Por categoría (Mujer, Hombre, Unisex, Árabes)
-  - Por familia olfativa (Dulce, Amaderado, Cítrico, Oriental, Fresco, Intenso)
-  - Por rango de precio
-  - Por marca
-- Ordenamiento de productos (precio, nombre, valoración)
-- Vista en grid o lista
-- Paginación
-- Contador de resultados
-
-#### Ficha de Producto (pages/producto-detalle.html)
-- Galería de imágenes con miniaturas
-- Información completa del producto:
-  - Nombre y marca
-  - Rating y reseñas
-  - Precio con descuentos
-  - Disponibilidad en tiempo real
-  - Selector de tamaño
-  - Selector de cantidad
-- Tabs de información detallada:
-  - **Descripción**: Historia y características del perfume
-  - **Notas Olfativas**: Pirámide completa (salida, corazón, fondo)
-  - **Información Técnica**: 
-    - Tipo de concentración (EDT, EDP, Parfum)
-    - Duración y estela
-    - Perfumista
-    - Año de lanzamiento
-    - Temporada ideal
-    - Recomendaciones de uso
-  - **Reseñas**: Sistema completo de valoraciones con gráficos
-- Botones de acción:
-  - Agregar al carrito
-  - Comprar por WhatsApp
-- Beneficios destacados
-- Productos relacionados
-
-### 🛒 Sistema de Carrito
-- Agregar/eliminar productos
-- Actualizar cantidades
-- Cálculo automático de totales
-- Persistencia en localStorage
-- Modal lateral deslizante
-- Contador visible en navegación
-- Envío directo por WhatsApp con resumen del pedido
-
-### 📱 Integraciones
-- **WhatsApp**: 
-  - Botón flotante animado
-  - Envío de pedidos automático
-  - Consultas rápidas desde productos
-- **Redes Sociales**: Enlaces a Facebook, Instagram, TikTok, Twitter
-- **Compartir productos**: Funcionalidad para compartir en redes
-
-### 🎨 Tecnologías Utilizadas
-- **HTML5**: Estructura semántica
-- **Tailwind CSS**: Framework CSS utility-first
-- **CSS Personalizado**: Estilos premium adicionales
-- **JavaScript Vanilla**: Funcionalidad sin dependencias
-- **Font Awesome**: Iconos profesionales
-- **Google Fonts**: Tipografías elegantes
-
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 web-BBR_Fragance/
-├── index.html                    # Página principal
-├── css/
-│   └── style.css                # Estilos personalizados
+├── index.html                         # Pagina principal (tienda)
+├── css/style.css                      # Estilos personalizados
+├── pages/
+│   ├── admin.html                     # Panel de administracion (SPA)
+│   ├── admin-login.html               # Login del admin
+│   ├── productos.html                 # Catalogo de productos
+│   └── producto-detalle.html          # Detalle de producto
 ├── js/
-│   └── main.js                  # Funcionalidad JavaScript
-├── images/                      # Carpeta para imágenes de productos
-└── pages/
-    ├── productos.html           # Catálogo completo
-    └── producto-detalle.html    # Detalle del producto
+│   ├── admin/                         # JS del panel admin (12 archivos)
+│   │   ├── core.js                    # Globales, API, auth, navegacion
+│   │   ├── dashboard.js               # Dashboard y graficas
+│   │   ├── products.js                # CRUD productos + inventario
+│   │   ├── pos.js                     # Punto de Venta + pagos mixtos
+│   │   ├── orders.js                  # Gestion de pedidos
+│   │   ├── expenses.js                # Gastos
+│   │   ├── cash-register.js           # Caja registradora
+│   │   ├── reports.js                 # Reportes
+│   │   ├── customers.js               # Clientes (RNC/Cedula)
+│   │   ├── sales.js                   # Ventas + NCF
+│   │   ├── settings.js                # Config, NCF, promos, marcas, usuarios
+│   │   └── init.js                    # Event listeners DOMContentLoaded
+│   └── main/                          # JS de la tienda publica (6 archivos)
+│       ├── core.js                    # API helper, formatPrice, utilidades
+│       ├── products.js                # Carga y render de productos
+│       ├── cart.js                    # Carrito (localStorage) + checkout
+│       ├── product-detail.js          # Pagina de detalle
+│       ├── ui.js                      # Modales, filtros, checkout modal
+│       └── init.js                    # Inicializacion de paginas
+├── api/
+│   ├── index.php                      # Router principal (segment-based)
+│   ├── config/database.php            # Conexion PDO a MySQL
+│   ├── middleware/auth.php            # Autenticacion, permisos por rol
+│   ├── helpers/
+│   │   ├── response.php               # JSON responses estandarizadas
+│   │   └── validation.php             # Validaciones reutilizables
+│   ├── controllers/
+│   │   ├── AuthController.php         # Login, logout, sesion
+│   │   ├── ProductController.php      # CRUD productos, busqueda, imagenes
+│   │   ├── CategoryController.php     # Categorias
+│   │   ├── SaleController.php         # Ventas POS + NCF + pagos mixtos
+│   │   ├── OrderController.php        # Pedidos online + rate limiting
+│   │   ├── CustomerController.php     # Clientes + RNC/Cedula
+│   │   ├── ExpenseController.php      # Gastos
+│   │   ├── CashRegisterController.php # Apertura/cierre de caja
+│   │   ├── NcfController.php          # Secuencias NCF (DGII)
+│   │   ├── SettingsController.php     # Configuracion key-value
+│   │   ├── UserController.php         # Usuarios del sistema
+│   │   ├── RoleController.php         # Roles y permisos
+│   │   └── ReportController.php       # Reportes y estadisticas
+│   ├── services/
+│   │   └── MailService.php            # Emails con PHPMailer
+│   └── lib/PHPMailer/                 # PHPMailer v6.9.1
+├── database/
+│   ├── schema.sql                     # Esquema completo de la BD
+│   ├── seed.sql                       # Datos iniciales
+│   ├── migration_ncf.sql              # Migracion NCF
+│   └── migration_checkout.sql         # Migracion SMTP/banco
+├── uploads/                           # Imagenes subidas (productos)
+└── images/                            # Imagenes estaticas del sitio
 ```
 
-## 🚀 Instalación y Uso
+## Instalacion
 
-### Opción 1: Uso Local
-1. Descarga todos los archivos
-2. Abre `index.html` en tu navegador
-3. ¡Listo! El sitio funciona sin necesidad de servidor
+### Requisitos
+- XAMPP (Apache + MySQL + PHP 8.x)
+- Navegador moderno
 
-### Opción 2: Con Servidor Local
+### Pasos
+
+1. Clonar el proyecto en la carpeta `htdocs` de XAMPP:
 ```bash
-# Usando Python 3
-python -m http.server 8000
-
-# Usando Node.js (npx)
-npx serve
-
-# Usando PHP
-php -S localhost:8000
+cd /Applications/XAMPP/xamppfiles/htdocs
+git clone <repo-url> web-BBR_Fragance
 ```
 
-Luego abre tu navegador en `http://localhost:8000`
-
-## ⚙️ Configuración
-
-### Número de WhatsApp
-Edita el archivo `js/main.js` y cambia el número:
-
-```javascript
-const CONFIG = {
-    whatsappNumber: '1234567890', // Cambia este número
-    currency: '$',
-    cartStorageKey: 'bbr_cart'
-};
+2. Crear la base de datos y ejecutar el esquema:
+```bash
+mysql -u root -p < web-BBR_Fragance/database/schema.sql
+mysql -u root -p bbr_fragance < web-BBR_Fragance/database/seed.sql
 ```
 
-### Agregar Imágenes Reales
-1. Coloca tus imágenes de productos en la carpeta `images/`
-2. Actualiza las referencias en los HTML:
-   - Reemplaza los placeholders con `<img src="../images/nombre-producto.jpg">`
-
-### Personalizar Colores
-En `css/style.css`, modifica las variables CSS:
-
-```css
-:root {
-    --color-gold: #F59E0B;
-    --color-gold-dark: #D97706;
-    --color-black: #000000;
-    --color-gray-dark: #1F2937;
-    --color-purple: #7C3AED;
-}
+3. Si es una actualizacion, ejecutar las migraciones:
+```bash
+mysql -u root -p bbr_fragance < web-BBR_Fragance/database/migration_ncf.sql
+mysql -u root -p bbr_fragance < web-BBR_Fragance/database/migration_checkout.sql
 ```
 
-## 🎯 Funcionalidades del JavaScript
+4. Configurar la conexion en `api/config/database.php` si es necesario.
 
-### Carrito de Compras
-```javascript
-// Agregar producto
-cart.addItem({
-    id: '123',
-    name: 'Dior Sauvage',
-    brand: 'Dior',
-    price: 120
-});
+5. Acceder:
+   - Tienda: `http://localhost/web-BBR_Fragance/`
+   - Admin: `http://localhost/web-BBR_Fragance/pages/admin-login.html`
 
-// Ver total
-cart.getTotal();
+## Modulos del Sistema
 
-// Enviar por WhatsApp
-cart.sendToWhatsApp();
+### Tienda Publica (Frontend)
+
+- **Catalogo**: Productos con filtros por categoria, familia olfativa, marca y precio
+- **Busqueda**: Busqueda en tiempo real via API con debounce
+- **Carrito**: Persistente en localStorage con modal lateral
+- **Checkout profesional**: Modal de 3 pasos (Datos > Pago > Confirmar)
+  - Metodos de pago: Efectivo, Tarjeta, Transferencia bancaria
+  - Muestra datos bancarios al seleccionar transferencia
+  - Validacion de campos obligatorios
+  - Pantalla de exito con numero de pedido
+- **WhatsApp**: Pedidos y consultas directas
+
+### Panel de Administracion (SPA)
+
+- **Dashboard**: Ventas del dia, productos, estadisticas
+- **POS (Punto de Venta)**: Ventas rapidas con busqueda de productos
+  - Pagos: Efectivo, tarjeta, transferencia, **pagos mixtos**
+  - Calculo automatico de cambio
+  - Requiere caja abierta para vender
+  - Recibos imprimibles
+- **Productos**: CRUD completo con imagenes, stock, SKU/codigo de barras
+- **Inventario**: Ajustes de stock con historial
+- **Pedidos**: Gestion de pedidos online con cambio de estado
+- **Clientes**: Base de datos con RNC/Cedula
+- **Gastos**: Registro de gastos operativos
+- **Caja Registradora**: Apertura/cierre con monto inicial y desglose
+- **Reportes**: Ventas, productos mas vendidos, ingresos por periodo
+- **Configuracion**: Tienda, impuestos, envio, SMTP, datos bancarios, NCF
+- **Usuarios y Roles**: Sistema de permisos granular por rol
+
+## API REST
+
+Base URL: `/web-BBR_Fragance/api`
+
+### Autenticacion
+| Metodo | Ruta | Descripcion | Auth |
+|--------|------|-------------|------|
+| POST | /auth/login | Iniciar sesion | No |
+| POST | /auth/logout | Cerrar sesion | Si |
+| GET | /auth/me | Usuario actual | Si |
+
+### Productos
+| Metodo | Ruta | Descripcion | Auth |
+|--------|------|-------------|------|
+| GET | /products | Listar productos | No |
+| GET | /products/{id} | Detalle de producto | No |
+| GET | /products/search?q= | Buscar productos | No |
+| POST | /products | Crear producto | Si |
+| PUT | /products/{id} | Actualizar producto | Si |
+| DELETE | /products/{id} | Eliminar producto | Si |
+
+### Pedidos (Online)
+| Metodo | Ruta | Descripcion | Auth |
+|--------|------|-------------|------|
+| POST | /orders | Crear pedido (publico) | No |
+| GET | /orders | Listar pedidos | Si |
+| GET | /orders/{id} | Detalle de pedido | Si |
+| PUT | /orders/{id}/status | Cambiar estado | Si |
+| DELETE | /orders/{id} | Eliminar pedido | Si |
+
+### Ventas (POS)
+| Metodo | Ruta | Descripcion | Auth |
+|--------|------|-------------|------|
+| POST | /sales | Crear venta | Si |
+| GET | /sales | Listar ventas | Si |
+| GET | /sales/{id}/receipt | Recibo de venta | Si |
+
+### Configuracion
+| Metodo | Ruta | Descripcion | Auth |
+|--------|------|-------------|------|
+| GET | /settings | Obtener config | No* |
+| POST | /settings | Guardar config | Si |
+
+*Los campos SMTP sensibles se ocultan para usuarios no autenticados.
+
+### Otros endpoints
+- `/categories`, `/brands`, `/customers`, `/expenses`, `/cash-register`, `/reports`, `/users`, `/roles`, `/ncf-sequences`
+
+## Proteccion contra Pedidos Falsos
+
+El sistema implementa 3 capas de proteccion para evitar pedidos falsos y proteger el stock:
+
+### 1. Stock NO se descuenta al crear pedido
+Los pedidos online se crean con status `pending`. El stock **solo se descuenta** cuando un administrador cambia el estado a `confirmed` o `processing`. Si se cancela un pedido confirmado, el stock se restaura automaticamente.
+
+### 2. Rate Limiting
+En `OrderController::store()` se limita a **3 pedidos por hora** por:
+- **Telefono**: Cuenta pedidos con el mismo `customer_phone` en la ultima hora
+- **IP**: Cuenta pedidos creados desde la misma IP (via `activity_log`) en la ultima hora
+
+Si se excede el limite, responde con HTTP 429: *"Has alcanzado el limite de 3 pedidos por hora..."*
+
+### 3. Auto-cancelacion de Pedidos Expirados
+En `OrderController::index()`, cada vez que se consulta la lista de pedidos, el sistema ejecuta:
+```sql
+UPDATE orders SET status = 'cancelled'
+WHERE status = 'pending'
+AND created_at < DATE_SUB(NOW(), INTERVAL 48 HOUR)
 ```
+Pedidos pendientes con mas de **48 horas** se cancelan automaticamente. Esto previene la acumulacion de pedidos falsos o abandonados.
 
-### Filtros de Productos
-Los filtros se aplican automáticamente según los atributos `data-*` de cada producto:
-- `data-category`: mujer, hombre, unisex, arabe
-- `data-family`: dulce, amaderado, citrico, oriental, fresco, intenso
-- `data-brand`: dior, chanel, tomford, ysl, versace
-- `data-price`: precio numérico
+### 4. Monto Minimo de Pedido
+Configurable desde el admin (`min_order_amount`). Si el subtotal del pedido es menor al monto minimo, se rechaza con HTTP 400.
 
-### Búsqueda de Productos
-```javascript
-searchProducts('sauvage'); // Busca productos por nombre o marca
-```
+## Comprobantes Fiscales (NCF)
 
-## 📱 Responsive Design
+Sistema compatible con la DGII (Republica Dominicana):
 
-El sitio se adapta perfectamente a:
-- **Móviles**: < 768px
-- **Tablets**: 768px - 1024px
-- **Desktop**: > 1024px
+- **Tipos soportados**: B01 (Credito Fiscal), B02 (Consumo), B14 (Regimenes Especiales), B15 (Gubernamental)
+- **Secuencias**: Configurables con rango (inicio-fin), numero actual y fecha de vencimiento
+- **Asignacion**: Con optimistic locking para evitar duplicados en concurrencia
+- **Activacion**: Se habilita/deshabilita desde configuracion
+- **RNC**: Se almacena el RNC de la tienda y del cliente
 
-Breakpoints principales en Tailwind CSS:
-- `sm`: 640px
-- `md`: 768px
-- `lg`: 1024px
-- `xl`: 1280px
+## Sistema de Email
 
-## 🎨 Paleta de Colores
+Usa PHPMailer con SMTP para enviar:
+- **Confirmacion de pedido**: Email al cliente con resumen completo (productos, totales, metodo de pago)
+- **Actualizacion de estado**: Email al cliente cuando el admin cambia el estado del pedido
 
-| Color | Hex | Uso |
-|-------|-----|-----|
-| Dorado | #F59E0B | Acentos, botones, precios |
-| Dorado Oscuro | #D97706 | Hover states |
-| Negro | #000000 | Fondo principal |
-| Gris Oscuro | #1F2937 | Fondo secundario |
-| Púrpura | #7C3AED | Acentos decorativos |
-| Blanco | #FFFFFF | Texto principal |
+### Configuracion SMTP
+Desde el panel admin (Configuracion > Email SMTP):
+- Servidor SMTP, puerto, usuario, contrasena
+- Nombre y email del remitente
 
-## ✅ Checklist de Implementación
+Para **Gmail**: usar `smtp.gmail.com`, puerto `587`, y generar un App Password en [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords).
 
-- [x] Página principal con hero
-- [x] Categorías de productos
-- [x] Productos destacados
-- [x] Sistema de beneficios
-- [x] Guía de fragancias
-- [x] Testimonios
-- [x] Promociones
-- [x] Sobre nosotros
-- [x] Contacto
-- [x] Catálogo con filtros
-- [x] Ficha de producto detallada
-- [x] Notas olfativas completas
-- [x] Sistema de carrito
-- [x] Integración WhatsApp
-- [x] Diseño responsive
-- [x] Animaciones suaves
-- [x] SEO básico
+## Caja Registradora
 
-## 🔜 Próximas Mejoras (Opcional)
+- Apertura de caja con monto inicial
+- Cierre con desglose automatico (efectivo, tarjeta, transferencia)
+- **Se requiere caja abierta** para realizar ventas en el POS
+- Soporte para pagos mixtos (ej: parte efectivo + parte tarjeta)
 
-- [ ] Sistema de login/registro
-- [ ] Pasarela de pagos (Stripe, PayPal)
-- [ ] Panel de administración
-- [ ] Base de datos MySQL/PostgreSQL
-- [ ] Backend con PHP/Node.js
-- [ ] Sistema de reseñas dinámico
-- [ ] Buscador avanzado con autocompletado
-- [ ] Lista de deseos
-- [ ] Comparador de productos
-- [ ] Programa de puntos/recompensas
-- [ ] Blog de fragancias
-- [ ] Chat en vivo
+## Configuracion del Sistema
 
-## 🌐 SEO
+Toda la configuracion se almacena en la tabla `settings` como pares key-value:
 
-El sitio incluye:
-- Meta tags descriptivos
-- Estructura semántica HTML5
-- URLs amigables
-- Títulos optimizados
-- Alt text para imágenes (cuando se agreguen)
+| Categoria | Settings |
+|-----------|----------|
+| Tienda | `store_name`, `address`, `contact_phone`, `contact_email` |
+| WhatsApp | `whatsapp_number` |
+| Impuestos | `tax_enabled`, `tax_name`, `tax_percent` |
+| Envio | `min_free_shipping` |
+| NCF | `ncf_enabled`, `store_rnc` |
+| SMTP | `smtp_host`, `smtp_port`, `smtp_user`, `smtp_pass`, `smtp_from_name`, `smtp_from_email` |
+| Banco | `bank_name`, `bank_account_type`, `bank_account_number`, `bank_account_holder` |
+| Pedidos | `min_order_amount` |
 
-Para mejorar el SEO:
-1. Agrega descripciones meta únicas por página
-2. Crea un sitemap.xml
-3. Implementa Schema.org para productos
-4. Optimiza velocidad de carga
-5. Crea contenido de blog
+## Licencia
 
-## 📄 Licencia
-
-Este proyecto fue creado para Bbr_Fragance. Todos los derechos reservados © 2026.
-
-## 🤝 Soporte
-
-Para soporte o consultas:
-- WhatsApp: +1 (234) 567-890
-- Email: info@bbrfragance.com
-
----
-
-**Desarrollado con ❤️ para Bbr_Fragance**
-
-*Perfumes originales que definen tu esencia*
+Proyecto privado. Todos los derechos reservados - BBR Fragance.
