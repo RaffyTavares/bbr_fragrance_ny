@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Expense Controller
+ * BBR Fragrance - Expense Controller
  * Gestiona gastos, categorias de gastos y reportes de resumen
  */
 

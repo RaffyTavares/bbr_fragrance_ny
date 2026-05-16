@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: POS (Punto de Venta) y Pago Mixto
+// BBR Fragrance - Admin: POS (Punto de Venta) y Pago Mixto
 
 // ==================== POS (Punto de Venta) ====================
 let posCategory = '';
@@ -447,7 +447,7 @@ ${r.ncf.customer_rnc ? `<div class="center" style="font-size:10px">RNC Cliente: 
 .center{text-align:center}.bold{font-weight:bold}.line{border-top:1px dashed #333;margin:8px 0}
 .row{display:flex;justify-content:space-between;margin:2px 0}.big{font-size:16px}
 @media print{.no-print{display:none}}</style></head><body>
-<div class="center bold big">${r.store?.store_name || 'BBR Fragance'}</div>
+<div class="center bold big">${r.store?.store_name || 'BBR Fragrance'}</div>
 <div class="center" style="font-size:10px;margin:4px 0">${r.store?.address || ''}</div>
 <div class="center" style="font-size:10px">Tel: ${r.store?.store_phone || ''}</div>
 ${r.store?.store_rnc ? `<div class="center" style="font-size:10px">RNC: ${r.store.store_rnc}</div>` : ''}
@@ -472,7 +472,7 @@ ${r.payment?.cash_received ? `<div class="row"><span>Recibido:</span><span>RD$${
 <div class="row bold"><span>Cambio:</span><span>RD$${parseFloat(r.payment.cash_change).toFixed(2)}</span></div>` : ''}
 <div class="line"></div>
 <div class="center" style="margin:8px 0;font-size:11px">Gracias por su compra!</div>
-<div class="center" style="font-size:10px">${r.store?.store_footer || 'BBR Fragance - Santo Domingo, R.D.'}</div>
+<div class="center" style="font-size:10px">${r.store?.store_footer || 'BBR Fragrance - Santo Domingo, R.D.'}</div>
 <br><button onclick="window.print()" class="no-print" style="width:100%;padding:10px;cursor:pointer;font-size:14px;background:#C9A96E;border:none;border-radius:5px;font-weight:bold">Imprimir Recibo</button>
 </body></html>`);
     win.document.close();

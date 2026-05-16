@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Ventas (CRUD)
+// BBR Fragrance - Admin: Ventas (CRUD)
 
 // ==================== VENTAS (CRUD) ====================
 async function loadSales(page = 1) {

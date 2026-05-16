@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Category Controller
+ * BBR Fragrance - Category Controller
  * Gestiona categorias, familias olfativas y marcas
  */
 

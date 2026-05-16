@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Report Controller
+ * BBR Fragrance - Report Controller
  * Genera reportes de ventas, ganancias, inventario, gastos y resumen general
  */
 

@@ -1,9 +1,9 @@
 -- ============================================================
--- BBR Fragance - Promo Settings Migration
+-- BBR Fragrance - Promo Settings Migration
 -- Run this ONCE to add promo settings to existing database
 -- ============================================================
 
-USE bbr_fragance;
+USE BBR Fragrance;
 
 INSERT IGNORE INTO settings (setting_key, setting_value) VALUES
 ('promo_active', '1'),

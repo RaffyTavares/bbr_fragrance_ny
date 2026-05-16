@@ -1,5 +1,5 @@
 /* ===================================
-   Bbr_Fragance - Custom Styles
+   BBR Fragrance - Custom Styles
    Premium Perfume Store
    =================================== */
 
@@ -30,12 +30,45 @@ body {
 }
 
 .hero-logo {
+    width: 14rem;
+    height: 14rem;
+    object-fit: cover;
     border-radius: 50%;
-    border: 3px solid rgba(201, 169, 110, 0.35);
+    padding: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(212, 186, 133, 0.18), rgba(0,0,0,0.6) 70%);
+    border: 2px solid rgba(201, 169, 110, 0.5);
     box-shadow:
-        0 0 40px rgba(201, 169, 110, 0.15),
-        0 0 80px rgba(201, 169, 110, 0.05);
-    animation: heroLogoFadeIn 1.2s ease-out;
+        0 0 0 8px rgba(201, 169, 110, 0.06),
+        0 0 0 16px rgba(201, 169, 110, 0.03),
+        0 0 60px rgba(201, 169, 110, 0.35),
+        0 0 120px rgba(201, 169, 110, 0.15),
+        0 25px 50px -10px rgba(0, 0, 0, 0.7),
+        inset 0 0 30px rgba(201, 169, 110, 0.08);
+    animation: heroLogoFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1), heroLogoFloat 6s ease-in-out infinite 1.4s;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.hero-logo:hover {
+    transform: scale(1.04);
+    box-shadow:
+        0 0 0 8px rgba(201, 169, 110, 0.12),
+        0 0 0 16px rgba(201, 169, 110, 0.05),
+        0 0 80px rgba(201, 169, 110, 0.5),
+        0 0 160px rgba(201, 169, 110, 0.2),
+        0 25px 50px -10px rgba(0, 0, 0, 0.7),
+        inset 0 0 30px rgba(201, 169, 110, 0.12);
+}
+
+@media (min-width: 768px) {
+    .hero-logo {
+        width: 19rem;
+        height: 19rem;
+    }
+}
+
+@keyframes heroLogoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 @keyframes heroLogoFadeIn {

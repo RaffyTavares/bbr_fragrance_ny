@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Dashboard
+// BBR Fragrance - Admin: Dashboard
 
 // ==================== DASHBOARD ====================
 async function loadDashboard() {

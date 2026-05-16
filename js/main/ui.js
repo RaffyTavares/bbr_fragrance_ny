@@ -1,4 +1,4 @@
-// BBR Fragance - Main: UI (Mobile Menu, Cart Modal, Search, Filters, Grid/List, Tabs, Smooth Scroll, Contact Form)
+// BBR Fragrance - Main: UI (Mobile Menu, Cart Modal, Search, Filters, Grid/List, Tabs, Smooth Scroll, Contact Form)
 
 // ===================================
 // Mobile Menu
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = contactForm.querySelector('input[type="tel"]')?.value || '';
             const message = contactForm.querySelector('textarea')?.value || '';
 
-            const waMessage = `*Mensaje desde la web Bbr_Fragance*%0A%0A` +
+            const waMessage = `*Mensaje desde la web BBR Fragrance*%0A%0A` +
                 `*Nombre:* ${name}%0A` +
                 `*Email:* ${email}%0A` +
                 `*Telefono:* ${phone}%0A` +
@@ -347,28 +347,49 @@ async function loadBankSettings() {
         const res = await apiGet('/settings');
         if (res.success && res.data) {
             const s = res.data;
-            checkoutBankData = {
-                bank_name: s.bank_name || '',
-                bank_account_number: s.bank_account_number || '',
-                bank_account_holder: s.bank_account_holder || '',
-                bank_account_type: s.bank_account_type || 'Ahorros'
-            };
-            // Populate bank fields
-            const bankName = document.getElementById('ck-bank-name');
-            const bankType = document.getElementById('ck-bank-type');
-            const bankAccount = document.getElementById('ck-bank-account');
-            const bankHolder = document.getElementById('ck-bank-holder');
-            if (bankName) bankName.textContent = checkoutBankData.bank_name || '--';
-            if (bankType) bankType.textContent = checkoutBankData.bank_account_type || '--';
-            if (bankAccount) bankAccount.textContent = checkoutBankData.bank_account_number || '--';
-            if (bankHolder) bankHolder.textContent = checkoutBankData.bank_account_holder || '--';
+
+            // Parse multi-account bank data
+            let accounts = [];
+            if (s.bank_accounts) {
+                try { accounts = JSON.parse(s.bank_accounts); } catch (e) {}
+            }
+            // Backwards compat: single-account fields
+            if (!accounts.length && s.bank_name) {
+                accounts = [{
+                    bank_name: s.bank_name,
+                    bank_account_type: s.bank_account_type || 'Ahorros',
+                    bank_account_number: s.bank_account_number || '',
+                    bank_account_holder: s.bank_account_holder || ''
+                }];
+            }
+
+            // Render accounts list in checkout
+            const list = document.getElementById('ck-bank-accounts-list');
+            if (list) {
+                if (accounts.length) {
+                    list.innerHTML = accounts.map(acc => `
+                        <div class="bg-gray-700/60 rounded-lg px-3 py-2.5 space-y-1">
+                            <p class="font-semibold text-white">${acc.bank_name}</p>
+                            <div class="flex justify-between"><span class="text-gray-400">Tipo:</span><span class="text-white">${acc.bank_account_type}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-400">Cuenta:</span><span class="text-white font-mono">${acc.bank_account_number}</span></div>
+                            ${acc.bank_account_holder ? `<div class="flex justify-between"><span class="text-gray-400">Titular:</span><span class="text-white">${acc.bank_account_holder}</span></div>` : ''}
+                        </div>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<p class="text-gray-500 text-xs">No hay datos bancarios configurados aun.</p>';
+                }
+            }
 
             // Show/hide payment methods based on settings
-            const payMethods = { cash: s.checkout_pay_cash, card: s.checkout_pay_card, transfer: s.checkout_pay_transfer };
+            const payMethods = {
+                cash: s.checkout_pay_cash,
+                card: s.checkout_pay_card,
+                transfer: s.checkout_pay_transfer,
+                card_online: (s.checkout_pay_card_online === '1' && s.cardnet_enabled === '1') ? '1' : '0'
+            };
             document.querySelectorAll('.ck-pay-btn').forEach(btn => {
                 const method = btn.dataset.method;
-                const enabled = payMethods[method] !== '0';
-                btn.style.display = enabled ? '' : 'none';
+                btn.style.display = (payMethods[method] !== '0') ? '' : 'none';
             });
 
             // If selected method was disabled, reset selection
@@ -487,6 +508,11 @@ function selectPaymentMethod(method) {
     if (bankDetails) {
         bankDetails.classList.toggle('hidden', method !== 'transfer');
     }
+    // Show/hide cardnet info
+    const cardnetInfo = document.getElementById('ck-cardnet-info');
+    if (cardnetInfo) {
+        cardnetInfo.classList.toggle('hidden', method !== 'card_online');
+    }
 
     // Clear error if there was one
     const errorMsg = document.getElementById('ck-error-msg');
@@ -497,7 +523,8 @@ function populateSummary() {
     const paymentLabels = {
         cash: 'Efectivo (Contra Entrega)',
         card: 'Tarjeta (Al Entregar)',
-        transfer: 'Transferencia Bancaria'
+        transfer: 'Transferencia Bancaria',
+        card_online: 'Tarjeta en Linea (Cardnet)'
     };
 
     // Customer data
@@ -565,16 +592,42 @@ async function submitCheckoutOrder() {
     try {
         const result = await cart.submitOrder(customerData);
 
-        if (result.success) {
-            // Show success screen
-            const orderNumEl = document.getElementById('ck-order-number');
-            if (orderNumEl) orderNumEl.textContent = result.orderNumber;
-            showCheckoutStep('success');
-        } else {
+        if (!result.success) {
             showCheckoutError(result.message || 'Error al crear el pedido.');
             btnNext.disabled = false;
             btnNext.innerHTML = originalHTML;
+            return;
         }
+
+        // Si es pago online -> iniciar sesion Cardnet y redirigir
+        if (checkoutPaymentMethod === 'card_online') {
+            btnNext.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Conectando con Cardnet...';
+            try {
+                const sessRes = await fetch(`${API_BASE}/payments/cardnet/session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: result.orderId })
+                });
+                const sessData = await sessRes.json();
+                if (!sessData.success) {
+                    showCheckoutError(sessData.message || 'No se pudo iniciar el pago en linea.');
+                    btnNext.disabled = false;
+                    btnNext.innerHTML = originalHTML;
+                    return;
+                }
+                redirectToCardnet(sessData.data);
+            } catch (e) {
+                showCheckoutError('Error al conectar con Cardnet.');
+                btnNext.disabled = false;
+                btnNext.innerHTML = originalHTML;
+            }
+            return;
+        }
+
+        // Flujo normal: mostrar pantalla de exito
+        const orderNumEl = document.getElementById('ck-order-number');
+        if (orderNumEl) orderNumEl.textContent = result.orderNumber;
+        showCheckoutStep('success');
     } catch (error) {
         showCheckoutError('Error de conexion. Verifica que el servidor este activo.');
         btnNext.disabled = false;
@@ -582,10 +635,101 @@ async function submitCheckoutOrder() {
     }
 }
 
+// Auto-submit a Cardnet con la SESSION recibida
+function redirectToCardnet(sessionData) {
+    // Modo simulador: el "redirect_url" ya contiene todos los parametros en la
+    // query string. Hacemos una navegacion GET simple para que el usuario vea
+    // la pagina del simulador (Aprobar/Rechazar/Cancelar).
+    if (sessionData.simulator) {
+        window.location.href = sessionData.redirect_url;
+        return;
+    }
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = sessionData.redirect_url;
+    form.style.display = 'none';
+
+    const fields = {
+        SESSION: sessionData.session,
+        'SESSION-KEY': sessionData.session_key || '',
+        ChannelId: 'web'
+    };
+    Object.entries(fields).forEach(([k, v]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = k;
+        input.value = v;
+        form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// Mostrar el modal de resultado de pago (al volver de Cardnet)
+function handlePaymentReturn() {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('payment');
+    if (!status) return;
+
+    const orderNumber = params.get('order') || '';
+    const message = params.get('msg') || '';
+
+    const modal = document.getElementById('payment-result-modal');
+    const iconWrap = document.getElementById('pr-icon-wrap');
+    const icon = document.getElementById('pr-icon');
+    const title = document.getElementById('pr-title');
+    const msg = document.getElementById('pr-message');
+    const orderWrap = document.getElementById('pr-order-wrap');
+    const orderEl = document.getElementById('pr-order-number');
+
+    if (!modal) return;
+
+    if (status === 'success') {
+        iconWrap.className = 'w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6';
+        icon.className = 'fas fa-check-circle text-green-400 text-4xl';
+        title.textContent = 'Pago Aprobado!';
+        msg.textContent = 'Tu pago se proceso exitosamente. Te enviaremos los detalles por correo.';
+        // Limpiar carrito
+        try { cart.items = []; cart.saveCart(); cart.updateCartUI(); } catch (e) {}
+    } else if (status === 'cancelled') {
+        iconWrap.className = 'w-20 h-20 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-6';
+        icon.className = 'fas fa-exclamation-triangle text-yellow-400 text-4xl';
+        title.textContent = 'Pago Cancelado';
+        msg.textContent = message || 'Cancelaste el pago. Tu pedido no fue procesado.';
+    } else {
+        iconWrap.className = 'w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-6';
+        icon.className = 'fas fa-times-circle text-red-400 text-4xl';
+        title.textContent = 'Pago Rechazado';
+        msg.textContent = message || 'No se pudo procesar tu pago. Intenta nuevamente o usa otro metodo.';
+    }
+
+    if (orderNumber) {
+        orderWrap.classList.remove('hidden');
+        orderEl.textContent = orderNumber;
+    } else {
+        orderWrap.classList.add('hidden');
+    }
+
+    modal.classList.remove('hidden');
+
+    document.getElementById('pr-close-btn')?.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        // Limpiar query string
+        const url = new URL(window.location.href);
+        ['payment', 'order', 'msg'].forEach(p => url.searchParams.delete(p));
+        window.history.replaceState({}, '', url.pathname + url.hash);
+    }, { once: true });
+}
+
 // Checkout event listeners
 document.addEventListener('DOMContentLoaded', () => {
     const checkoutModal = document.getElementById('checkout-modal');
     if (!checkoutModal) return;
+
+    // Mostrar modal de resultado de pago si volvimos de Cardnet
+    handlePaymentReturn();
 
     // Close checkout
     document.getElementById('close-checkout')?.addEventListener('click', closeCheckout);

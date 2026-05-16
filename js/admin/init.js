@@ -1,4 +1,17 @@
-// BBR Fragance - Admin: Inicializacion Principal
+// BBR Fragrance - Admin: Inicializacion Principal
+
+// ==================== PROTECCION BFCACHE (boton atras) ====================
+// Se ejecuta cada vez que la pagina es mostrada, incluyendo restauraciones desde bfcache
+window.addEventListener('pageshow', async (e) => {
+    // persisted = true significa que viene del cache del navegador (boton atras)
+    if (e.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+        const res = await fetch(API + '/auth/check', { credentials: 'include' }).catch(() => null);
+        const data = res ? await res.json().catch(() => null) : null;
+        if (!data || !data.success) {
+            window.location.replace('admin-login.html');
+        }
+    }
+});
 
 // ==================== INICIALIZACION PRINCIPAL ====================
 document.addEventListener('DOMContentLoaded', async () => {
@@ -17,7 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const ok = await showConfirm('Desea cerrar sesion?');
         if (!ok) return;
         await api('/auth/logout', 'POST');
-        window.location.href = 'admin-login.html';
+        // replace() elimina admin.html del historial — el boton atras no puede volver
+        window.location.replace('admin-login.html');
     });
 
     // 4b. Notification panel toggle

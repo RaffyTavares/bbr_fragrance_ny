@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Sale Controller (POS)
+ * BBR Fragrance - Sale Controller (POS)
  * Gestiona ventas, recibos y operaciones del punto de venta
  */
 
@@ -708,12 +708,12 @@ class SaleController {
 
         $receipt = [
             'store' => [
-                'store_name'  => $storeSettings['store_name'] ?? 'BBR Fragance',
+                'store_name'  => $storeSettings['store_name'] ?? 'BBR Fragrance',
                 'address'     => $storeSettings['address'] ?? '',
                 'store_phone' => $storeSettings['contact_phone'] ?? '',
                 'store_email' => $storeSettings['contact_email'] ?? '',
                 'store_rnc'   => $storeSettings['store_rnc'] ?? '',
-                'store_footer' => 'Gracias por su compra! - BBR Fragance',
+                'store_footer' => 'Gracias por su compra! - BBR Fragrance',
             ],
             'sale' => [
                 'sale_number'      => $sale['sale_number'],

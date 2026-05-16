@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Validation Helpers
+ * BBR Fragrance - Validation Helpers
  */
 
 function sanitizeString($value) {

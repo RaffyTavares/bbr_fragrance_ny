@@ -1,15 +1,15 @@
 -- Active: 1767640973533@@127.0.0.1@3307@phpmyadmin
 -- Active: 1772379205395@@127.0.0.1@3306
 -- ============================================================
--- BBR Fragance - Schema de Base de Datos
+-- BBR Fragrance - Schema de Base de Datos
 -- Sistema Profesional de Perfumeria
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS bbr_fragance
+CREATE DATABASE IF NOT EXISTS BBR Fragrance
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-USE bbr_fragance;
+USE BBR Fragrance;
 
 -- ============================================================
 -- TABLA: users

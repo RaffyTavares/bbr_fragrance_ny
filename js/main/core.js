@@ -1,11 +1,11 @@
-// BBR Fragance - Main: Core (API Helper, Format Currency, Product Image Helper, Utility Functions)
+// BBR Fragrance - Main: Core (API Helper, Format Currency, Product Image Helper, Utility Functions)
 
 // ===================================
-// Bbr_Fragance - Main JavaScript
+// BBR Fragrance - Main JavaScript
 // Premium Perfume Store (API Version)
 // ===================================
 
-const API_BASE = '/web-BBR_Fragance/api';
+const API_BASE = '/BBR_FRAGANCE/api';
 
 const CONFIG = {
     whatsappNumber: '18094855693',
@@ -89,4 +89,55 @@ function hideLoader() {
     if (loader) loader.remove();
 }
 
-console.log('Bbr_Fragance - Sistema cargado correctamente (API Mode)');
+// ===================================
+// Site Settings Loader
+// Carga ajustes del negocio desde la API y actualiza el DOM
+// ===================================
+async function loadSiteSettings() {
+    const res = await apiGet('/settings');
+    if (!res?.success || !res.data) return;
+    const s = res.data;
+
+    // 1. WhatsApp: actualizar CONFIG y todos los links wa.me/
+    if (s.whatsapp_number) {
+        const waNum = s.whatsapp_number.replace(/\D/g, '');
+        CONFIG.whatsappNumber = waNum;
+        document.querySelectorAll('[data-setting="whatsapp_link"]').forEach(el => {
+            el.href = `https://wa.me/${waNum}`;
+            el.textContent = s.whatsapp_number;
+        });
+        // Actualizar el boton flotante y cualquier otro wa.me que no tenga data-setting
+        document.querySelectorAll('a[href^="https://wa.me/"]').forEach(el => {
+            el.href = `https://wa.me/${waNum}`;
+        });
+    }
+
+    // 2. Email
+    if (s.contact_email) {
+        document.querySelectorAll('[data-setting="email_link"]').forEach(el => {
+            el.href = `mailto:${s.contact_email}`;
+            el.textContent = s.contact_email;
+        });
+    }
+
+    // 3. Teléfono
+    if (s.contact_phone) {
+        const phoneDigits = s.contact_phone.replace(/[^0-9+]/g, '');
+        document.querySelectorAll('[data-setting="phone_link"]').forEach(el => {
+            el.href = `tel:${phoneDigits}`;
+            el.textContent = s.contact_phone;
+        });
+    }
+
+    // 4. Dirección, horario y cualquier otro campo con data-setting
+    const textFields = ['address', 'store_hours', 'store_name'];
+    textFields.forEach(key => {
+        if (s[key]) {
+            document.querySelectorAll(`[data-setting="${key}"]`).forEach(el => {
+                el.textContent = s[key];
+            });
+        }
+    });
+}
+
+console.log('BBR Fragrance - Sistema cargado correctamente (API Mode)');

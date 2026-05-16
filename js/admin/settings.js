@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Promociones, Marcas, Configuracion, NCF, Usuarios, Permisos por Rol
+// BBR Fragrance - Admin: Promociones, Marcas, Configuracion, NCF, Usuarios, Permisos por Rol
 
 // ==================== PROMOCIONES ====================
 async function loadPromotions() {
@@ -52,10 +52,15 @@ async function loadPromoMonthSettings() {
         }
     } catch (e) { /* ignore */ }
 
-    // Promo image preview
+    // Promo media preview (image or video)
     const preview = document.getElementById('promo-image-preview');
     if (preview && s.promo_image) {
-        preview.innerHTML = `<img src="${s.promo_image}" class="w-full h-full object-cover">`;
+        const isVideo = s.promo_media_type === 'video' || /\.(mp4|webm|mov)$/i.test(s.promo_image);
+        if (isVideo) {
+            preview.innerHTML = `<video src="${s.promo_image}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>`;
+        } else {
+            preview.innerHTML = `<img src="${s.promo_image}" class="w-full h-full object-cover">`;
+        }
     }
 }
 
@@ -91,20 +96,35 @@ async function uploadPromoImage() {
     const input = document.getElementById('promo-image-input');
     if (!input?.files[0]) return;
 
+    const file = input.files[0];
+    const isVideo = file.type.startsWith('video/');
+    const maxSize = isVideo ? 25 * 1024 * 1024 : 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+        showNotification(`El archivo excede el tamano maximo (${isVideo ? '25MB' : '5MB'})`, 'error');
+        input.value = '';
+        return;
+    }
+
     const form = new FormData();
-    form.append('image', input.files[0]);
+    form.append('media', file);
 
     const preview = document.getElementById('promo-image-preview');
     if (preview) preview.innerHTML = '<i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>';
 
     const res = await api('/settings/promo-image', 'POST', form);
     if (res?.success) {
-        showNotification('Imagen de promocion actualizada', 'success');
+        showNotification('Medio de promocion actualizado', 'success');
         if (preview) {
-            preview.innerHTML = `<img src="${res.data.url}" class="w-full h-full object-cover">`;
+            const type = res.data?.type || (isVideo ? 'video' : 'image');
+            const url = res.data.url;
+            if (type === 'video') {
+                preview.innerHTML = `<video src="${url}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>`;
+            } else {
+                preview.innerHTML = `<img src="${url}" class="w-full h-full object-cover">`;
+            }
         }
     } else {
-        showNotification(res?.message || 'Error al subir imagen', 'error');
+        showNotification(res?.message || 'Error al subir el archivo', 'error');
         if (preview) preview.innerHTML = '<i class="fas fa-image text-3xl text-gray-500"></i>';
     }
 
@@ -477,13 +497,24 @@ async function loadSettings() {
     const res = await api('/settings');
     if (!res?.success) return;
     const s = res.data;
-    ['store_name', 'address', 'contact_phone', 'contact_email', 'whatsapp_number', 'tax_name', 'tax_percent', 'min_free_shipping', 'store_hours', 'store_rnc', 'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_from_name', 'smtp_from_email', 'bank_name', 'bank_account_number', 'bank_account_holder', 'min_order_amount'].forEach(f => {
+
+    // Asegurar que el select de Cardnet tenga la opcion 'simulator' aunque
+    // el HTML cacheado del admin sea viejo (evita que al guardar se pise
+    // el valor con 'sandbox' por defecto).
+    const envSelect = document.getElementById('setting-cardnet_environment');
+    if (envSelect && !envSelect.querySelector('option[value="simulator"]')) {
+        const opt = document.createElement('option');
+        opt.value = 'simulator';
+        opt.textContent = 'Simulador (Local, sin credenciales)';
+        envSelect.insertBefore(opt, envSelect.firstChild);
+    }
+
+    ['store_name', 'address', 'contact_phone', 'contact_email', 'whatsapp_number', 'tax_name', 'tax_percent', 'min_free_shipping', 'store_hours', 'store_rnc', 'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_from_name', 'smtp_from_email', 'min_order_amount', 'cardnet_environment', 'cardnet_currency_code', 'cardnet_merchant_number', 'cardnet_merchant_terminal', 'cardnet_merchant_name', 'cardnet_merchant_type', 'cardnet_acquiring_inst_code', 'cardnet_return_page', 'cardnet_cancel_page'].forEach(f => {
         const el = document.getElementById('setting-' + f);
         if (el && s[f]) el.value = s[f];
     });
-    // Select elements (bank_account_type)
-    const bankTypeEl = document.getElementById('setting-bank_account_type');
-    if (bankTypeEl && s.bank_account_type) bankTypeEl.value = s.bank_account_type;
+    // Load bank accounts (multi-account)
+    loadBankAccountsFromSettings(s);
 
     const taxEn = document.getElementById('setting-tax_enabled');
     if (taxEn) taxEn.checked = s.tax_enabled === '1';
@@ -492,10 +523,14 @@ async function loadSettings() {
     ncfEnabled = s.ncf_enabled === '1';
 
     // Checkout payment method toggles
-    ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer'].forEach(f => {
+    ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer', 'checkout_pay_card_online'].forEach(f => {
         const el = document.getElementById('setting-' + f);
-        if (el) el.checked = s[f] !== '0';
+        if (el) el.checked = s[f] === '1';
     });
+
+    // Cardnet enabled toggle
+    const cardnetEn = document.getElementById('setting-cardnet_enabled');
+    if (cardnetEn) cardnetEn.checked = s.cardnet_enabled === '1';
 
     // Show/hide NCF sequences section
     const ncfSeqSection = document.getElementById('ncf-sequences-section');
@@ -505,21 +540,26 @@ async function loadSettings() {
 
 async function saveSettings() {
     const settings = {};
-    ['store_name', 'address', 'contact_phone', 'contact_email', 'whatsapp_number', 'tax_name', 'tax_percent', 'min_free_shipping', 'store_hours', 'store_rnc', 'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_from_name', 'smtp_from_email', 'bank_name', 'bank_account_number', 'bank_account_holder', 'min_order_amount'].forEach(f => {
+    ['store_name', 'address', 'contact_phone', 'contact_email', 'whatsapp_number', 'tax_name', 'tax_percent', 'min_free_shipping', 'store_hours', 'store_rnc', 'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_from_name', 'smtp_from_email', 'min_order_amount', 'cardnet_environment', 'cardnet_currency_code', 'cardnet_merchant_number', 'cardnet_merchant_terminal', 'cardnet_merchant_name', 'cardnet_merchant_type', 'cardnet_acquiring_inst_code', 'cardnet_return_page', 'cardnet_cancel_page'].forEach(f => {
         const el = document.getElementById('setting-' + f);
         if (el) settings[f] = el.value;
     });
-    // Select elements
-    const bankTypeEl = document.getElementById('setting-bank_account_type');
-    if (bankTypeEl) settings.bank_account_type = bankTypeEl.value;
+    // Bank accounts are saved independently via the bank account modal
 
     settings.tax_enabled = document.getElementById('setting-tax_enabled')?.checked ? '1' : '0';
     settings.ncf_enabled = document.getElementById('setting-ncf_enabled')?.checked ? '1' : '0';
+    settings.cardnet_enabled = document.getElementById('setting-cardnet_enabled')?.checked ? '1' : '0';
 
     // Checkout payment method toggles
-    ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer'].forEach(f => {
+    ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer', 'checkout_pay_card_online'].forEach(f => {
         settings[f] = document.getElementById('setting-' + f)?.checked ? '1' : '0';
     });
+
+    // Secret key: solo enviar si el usuario escribio algo (no sobreescribir con vacio)
+    const secretEl = document.getElementById('setting-cardnet_secret_key');
+    if (secretEl && secretEl.value.trim() !== '') {
+        settings.cardnet_secret_key = secretEl.value.trim();
+    }
 
     const res = await api('/settings', 'POST', settings);
     if (res?.success) {
@@ -531,6 +571,233 @@ async function saveSettings() {
         if (ncfSeqSection) ncfSeqSection.style.display = ncfEnabled ? 'block' : 'none';
         if (ncfEnabled) loadNcfSequences();
     } else showNotification(res?.message || 'Error al guardar configuracion', 'error');
+}
+
+// ==================== INDIVIDUAL SECTION SAVE HELPERS ====================
+async function _saveSettingsGroup(btnId, fields, label) {
+    const btn = document.getElementById(btnId);
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin text-xs"></i>'; }
+    const res = await api('/settings', 'POST', fields);
+    if (res?.success) {
+        showNotification(`${label} guardado`, 'success');
+    } else {
+        showNotification(res?.message || 'Error al guardar', 'error');
+    }
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-save text-xs"></i>Guardar'; }
+}
+
+async function saveSettingsTienda() {
+    await _saveSettingsGroup('save-settings-tienda-btn', {
+        store_name: document.getElementById('setting-store_name')?.value || '',
+        address: document.getElementById('setting-address')?.value || '',
+        contact_phone: document.getElementById('setting-contact_phone')?.value || '',
+        contact_email: document.getElementById('setting-contact_email')?.value || ''
+    }, 'Informacion de la tienda');
+}
+
+async function saveSettingsWhatsApp() {
+    await _saveSettingsGroup('save-settings-whatsapp-btn', {
+        whatsapp_number: document.getElementById('setting-whatsapp_number')?.value || ''
+    }, 'WhatsApp');
+}
+
+async function saveSettingsImpuestos() {
+    const fields = {
+        tax_enabled: document.getElementById('setting-tax_enabled')?.checked ? '1' : '0',
+        tax_name: document.getElementById('setting-tax_name')?.value || '',
+        tax_percent: document.getElementById('setting-tax_percent')?.value || ''
+    };
+    await _saveSettingsGroup('save-settings-impuestos-btn', fields, 'Impuestos');
+    taxPercent = parseFloat(fields.tax_percent) || 18;
+    taxEnabled = fields.tax_enabled === '1';
+}
+
+async function saveSettingsEnvios() {
+    await _saveSettingsGroup('save-settings-envios-btn', {
+        min_free_shipping: document.getElementById('setting-min_free_shipping')?.value || ''
+    }, 'Envios');
+}
+
+async function saveSettingsHorario() {
+    await _saveSettingsGroup('save-settings-horario-btn', {
+        store_hours: document.getElementById('setting-store_hours')?.value || ''
+    }, 'Horario');
+}
+
+async function saveSettingsNcf() {
+    const fields = {
+        ncf_enabled: document.getElementById('setting-ncf_enabled')?.checked ? '1' : '0',
+        store_rnc: document.getElementById('setting-store_rnc')?.value || ''
+    };
+    await _saveSettingsGroup('save-settings-ncf-btn', fields, 'Comprobantes Fiscales');
+    ncfEnabled = fields.ncf_enabled === '1';
+    const ncfSeqSection = document.getElementById('ncf-sequences-section');
+    if (ncfSeqSection) ncfSeqSection.style.display = ncfEnabled ? 'block' : 'none';
+    if (ncfEnabled) loadNcfSequences();
+}
+
+async function saveSettingsSmtp() {
+    await _saveSettingsGroup('save-settings-smtp-btn', {
+        smtp_host: document.getElementById('setting-smtp_host')?.value || '',
+        smtp_port: document.getElementById('setting-smtp_port')?.value || '',
+        smtp_user: document.getElementById('setting-smtp_user')?.value || '',
+        smtp_pass: document.getElementById('setting-smtp_pass')?.value || '',
+        smtp_from_name: document.getElementById('setting-smtp_from_name')?.value || '',
+        smtp_from_email: document.getElementById('setting-smtp_from_email')?.value || ''
+    }, 'Configuracion SMTP');
+}
+
+// ==================== CUENTAS BANCARIAS (multi-cuenta) ====================
+let bankAccounts = [];
+
+function loadBankAccountsFromSettings(s) {
+    bankAccounts = [];
+    if (s.bank_accounts) {
+        try { bankAccounts = JSON.parse(s.bank_accounts); } catch (e) {}
+    }
+    // Backwards compat: migrate old single-account fields if no bank_accounts key yet
+    if (!bankAccounts.length && s.bank_name) {
+        bankAccounts = [{
+            bank_name: s.bank_name,
+            bank_account_type: s.bank_account_type || 'Ahorros',
+            bank_account_number: s.bank_account_number || '',
+            bank_account_holder: s.bank_account_holder || ''
+        }];
+    }
+    renderBankAccountsList();
+}
+
+function renderBankAccountsList() {
+    const container = document.getElementById('bank-accounts-list');
+    const empty = document.getElementById('bank-accounts-empty');
+    if (!container) return;
+
+    if (!bankAccounts.length) {
+        container.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+    }
+    if (empty) empty.classList.add('hidden');
+
+    container.innerHTML = bankAccounts.map((acc, i) => `
+        <div class="bg-gray-900 rounded-lg px-4 py-3 flex items-center justify-between gap-4">
+            <div class="flex-1 min-w-0">
+                <p class="font-semibold text-white text-sm">${acc.bank_name}</p>
+                <p class="text-xs text-gray-400 mt-0.5">${acc.bank_account_type} &bull; <span class="font-mono">${acc.bank_account_number}</span></p>
+                ${acc.bank_account_holder ? `<p class="text-xs text-gray-500">${acc.bank_account_holder}</p>` : ''}
+            </div>
+            <div class="flex gap-2 flex-shrink-0">
+                <button onclick="openBankAccountModal(${i})" class="text-amber-400 hover:text-amber-300 transition p-1" title="Editar">
+                    <i class="fas fa-edit text-sm"></i>
+                </button>
+                <button onclick="deleteBankAccount(${i})" class="text-red-400 hover:text-red-300 transition p-1" title="Eliminar">
+                    <i class="fas fa-trash text-sm"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openBankAccountModal(index = null) {
+    const modal = document.getElementById('bankAccountModal');
+    if (!modal) return;
+
+    document.getElementById('bank-account-edit-index').value = index !== null ? index : '';
+    document.getElementById('bank-account-modal-title').textContent = index !== null ? 'Editar Cuenta Bancaria' : 'Nueva Cuenta Bancaria';
+
+    if (index !== null && bankAccounts[index]) {
+        const acc = bankAccounts[index];
+        document.getElementById('ba-bank_name').value = acc.bank_name || '';
+        document.getElementById('ba-bank_account_type').value = acc.bank_account_type || 'Ahorros';
+        document.getElementById('ba-bank_account_number').value = acc.bank_account_number || '';
+        document.getElementById('ba-bank_account_holder').value = acc.bank_account_holder || '';
+    } else {
+        document.getElementById('ba-bank_name').value = '';
+        document.getElementById('ba-bank_account_type').value = 'Ahorros';
+        document.getElementById('ba-bank_account_number').value = '';
+        document.getElementById('ba-bank_account_holder').value = '';
+    }
+
+    modal.classList.remove('hidden');
+    setTimeout(() => document.getElementById('ba-bank_name')?.focus(), 100);
+}
+
+async function saveBankAccount() {
+    const indexStr = document.getElementById('bank-account-edit-index')?.value;
+    const index = indexStr !== '' ? parseInt(indexStr) : null;
+
+    const acc = {
+        bank_name: document.getElementById('ba-bank_name')?.value?.trim() || '',
+        bank_account_type: document.getElementById('ba-bank_account_type')?.value || 'Ahorros',
+        bank_account_number: document.getElementById('ba-bank_account_number')?.value?.trim() || '',
+        bank_account_holder: document.getElementById('ba-bank_account_holder')?.value?.trim() || ''
+    };
+
+    if (!acc.bank_name || !acc.bank_account_number) {
+        showNotification('El nombre del banco y el numero de cuenta son requeridos', 'error');
+        return;
+    }
+
+    const updated = [...bankAccounts];
+    if (index !== null) {
+        updated[index] = acc;
+    } else {
+        updated.push(acc);
+    }
+
+    const res = await api('/settings', 'POST', { bank_accounts: JSON.stringify(updated) });
+    if (res?.success) {
+        bankAccounts = updated;
+        showNotification(index !== null ? 'Cuenta actualizada' : 'Cuenta agregada', 'success');
+        document.getElementById('bankAccountModal')?.classList.add('hidden');
+        renderBankAccountsList();
+    } else {
+        showNotification(res?.message || 'Error al guardar la cuenta', 'error');
+    }
+}
+
+async function deleteBankAccount(index) {
+    const acc = bankAccounts[index];
+    const ok = await showConfirm(`Eliminar la cuenta de ${acc?.bank_name || 'este banco'}?`);
+    if (!ok) return;
+
+    const updated = bankAccounts.filter((_, i) => i !== index);
+    const res = await api('/settings', 'POST', { bank_accounts: JSON.stringify(updated) });
+    if (res?.success) {
+        bankAccounts = updated;
+        showNotification('Cuenta eliminada', 'success');
+        renderBankAccountsList();
+    } else {
+        showNotification(res?.message || 'Error al eliminar la cuenta', 'error');
+    }
+}
+
+async function saveSettingsPedidos() {
+    const fields = {
+        min_order_amount: document.getElementById('setting-min_order_amount')?.value || ''
+    };
+    ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer', 'checkout_pay_card_online'].forEach(f => {
+        fields[f] = document.getElementById('setting-' + f)?.checked ? '1' : '0';
+    });
+    await _saveSettingsGroup('save-settings-pedidos-btn', fields, 'Pedidos Online');
+}
+
+async function saveSettingsCardnet() {
+    const fields = {
+        cardnet_enabled: document.getElementById('setting-cardnet_enabled')?.checked ? '1' : '0',
+        cardnet_environment: document.getElementById('setting-cardnet_environment')?.value || '',
+        cardnet_currency_code: document.getElementById('setting-cardnet_currency_code')?.value || '',
+        cardnet_merchant_number: document.getElementById('setting-cardnet_merchant_number')?.value || '',
+        cardnet_merchant_terminal: document.getElementById('setting-cardnet_merchant_terminal')?.value || '',
+        cardnet_merchant_name: document.getElementById('setting-cardnet_merchant_name')?.value || '',
+        cardnet_merchant_type: document.getElementById('setting-cardnet_merchant_type')?.value || '',
+        cardnet_acquiring_inst_code: document.getElementById('setting-cardnet_acquiring_inst_code')?.value || '',
+        cardnet_return_page: document.getElementById('setting-cardnet_return_page')?.value || '',
+        cardnet_cancel_page: document.getElementById('setting-cardnet_cancel_page')?.value || ''
+    };
+    const secretEl = document.getElementById('setting-cardnet_secret_key');
+    if (secretEl?.value.trim()) fields.cardnet_secret_key = secretEl.value.trim();
+    await _saveSettingsGroup('save-settings-cardnet-btn', fields, 'Cardnet');
 }
 
 // ==================== NCF (Comprobantes Fiscales) ====================

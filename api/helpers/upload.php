@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Upload Helper
+ * BBR Fragrance - Upload Helper
  */
 
 function uploadProductImage($file, $productId) {

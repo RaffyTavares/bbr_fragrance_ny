@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Customer Controller
+ * BBR Fragrance - Customer Controller
  * Gestiona clientes, historial de compras y pedidos
  */
 

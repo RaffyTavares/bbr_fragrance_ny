@@ -1,12 +1,79 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bbr_Fragance - Perfumes originales de lujo. Fragancias exclusivas para hombre y mujer.">
-    <meta name="keywords" content="perfumes, fragancias, perfumes originales, perfumes de lujo, Bbr_Fragance">
-    <title>Bbr_Fragance - Perfumes Originales de Lujo</title>
-    
+    <title>BBR Fragrance | Perfumes Originales de Lujo en República Dominicana</title>
+    <meta name="description" content="BBR Fragrance - Perfumes originales de lujo en República Dominicana. Fragancias exclusivas para hombre, mujer y árabes con garantía de autenticidad. Envíos a todo el país.">
+    <meta name="keywords" content="perfumes originales, fragancias de lujo, perfumes importados, BBR Fragrance, perfumes República Dominicana, perfumes Santo Domingo, comprar perfumes online RD, perfumes árabes, perfumes para mujer, perfumes para hombre">
+    <meta name="author" content="BBR Fragrance">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://bbrfragrance.es/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BBR Fragrance | Perfumes Originales de Lujo en República Dominicana">
+    <meta property="og:description" content="Fragancias exclusivas para hombre, mujer y árabes con garantía de autenticidad. Envíos a todo el país.">
+    <meta property="og:url" content="https://bbrfragrance.es/">
+    <meta property="og:site_name" content="BBR Fragrance">
+    <meta property="og:image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_DO">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BBR Fragrance | Perfumes Originales de Lujo">
+    <meta name="twitter:description" content="Fragancias exclusivas para hombre, mujer y árabes con garantía de autenticidad. Envíos a todo RD.">
+    <meta name="twitter:image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://bbrfragrance.es/#website",
+          "url": "https://bbrfragrance.es/",
+          "name": "BBR Fragrance",
+          "description": "Perfumes originales de lujo en República Dominicana",
+          "inLanguage": "es-DO",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://bbrfragrance.es/pages/productos.html?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Store",
+          "@id": "https://bbrfragrance.es/#store",
+          "name": "BBR Fragrance",
+          "description": "Tienda de perfumes originales de lujo en República Dominicana. Fragancias exclusivas para hombre, mujer y árabes con garantía de autenticidad.",
+          "url": "https://bbrfragrance.es/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://bbrfragrance.es/images/LOGO-BBR.png"
+          },
+          "image": "https://bbrfragrance.es/images/LOGO-BBR.png",
+          "email": "bbrperfume@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Santo Domingo",
+            "addressCountry": "DO"
+          },
+          "priceRange": "$$",
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "09:00",
+            "closes": "21:00"
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -47,14 +114,15 @@
             <div class="flex justify-between items-center">
                 <div class="logo">
                     <a href="#inicio" class="flex items-center gap-3">
-                        <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="nav-logo">
-                        <span class="text-xl font-serif text-amber-400 hidden sm:block">Bbr_Fragance</span>
+                        <img src="images/LOGO-BBR.png" alt="BBR Fragrance" class="nav-logo">
+                        <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance</span>
                     </a>
                 </div>
                 <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
                     <li><a href="#inicio" class="hover:text-amber-400 transition">Inicio</a></li>
                     <li><a href="#categorias" class="hover:text-amber-400 transition">Categorías</a></li>
                     <li><a href="pages/productos.html" class="hover:text-amber-400 transition">Productos</a></li>
+                    <li><a href="#promo-month-section" class="block hover:text-amber-400 transition">Promociones</a></li>
                     <li><a href="#sobre-nosotros" class="hover:text-amber-400 transition">Nosotros</a></li>
                     <li><a href="#contacto" class="hover:text-amber-400 transition">Contacto</a></li>
                 </ul>
@@ -79,6 +147,7 @@
                 <li><a href="#inicio" class="block hover:text-amber-400 transition">Inicio</a></li>
                 <li><a href="#categorias" class="block hover:text-amber-400 transition">Categorías</a></li>
                 <li><a href="pages/productos.html" class="block hover:text-amber-400 transition">Productos</a></li>
+                 <li><a href="#promo-month-section" class="block hover:text-amber-400 transition">Promociones</a></li>
                 <li><a href="#sobre-nosotros" class="block hover:text-amber-400 transition">Nosotros</a></li>
                 <li><a href="#contacto" class="block hover:text-amber-400 transition">Contacto</a></li>
             </ul>
@@ -92,8 +161,8 @@
         
         <div class="container mx-auto px-4 relative z-10 text-center">
             <div class="animate-fade-in-up">
-                <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="hero-logo w-40 md:w-56 mx-auto mb-6 drop-shadow-2xl">
-                <h1 class="text-5xl md:text-7xl font-serif text-amber-400 mb-4">Bbr_Fragance</h1>
+                <img src="images/LOGO-BBR.png" alt="BBR Fragrance" class="hero-logo block mx-auto mb-8">
+                <h1 class="text-5xl md:text-7xl font-serif text-amber-400 mb-4">BBR Fragrance</h1>
                 <p class="text-xl md:text-3xl mb-8 text-gray-300 font-light">Perfumes originales que definen tu esencia</p>
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
                     <a href="pages/productos.html" class="btn-primary px-8 py-4 bg-amber-500 text-black font-semibold rounded-full hover:bg-amber-400 transition transform hover:scale-105 flex items-center">
@@ -187,7 +256,7 @@
     <section class="py-20 bg-black">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-serif text-amber-400 mb-4">¿Por qué elegir Bbr_Fragance?</h2>
+                <h2 class="text-4xl md:text-5xl font-serif text-amber-400 mb-4">¿Por qué elegir BBR Fragrance?</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">Tu satisfacción es nuestra prioridad</p>
             </div>
             
@@ -348,41 +417,55 @@
     </section>
 
     <!-- Promociones -->
-    <section id="promo-month-section" class="py-20 bg-gradient-to-br from-purple-900 to-pink-900 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl"></div>
+    <section id="promo-month-section" class="py-24 relative overflow-hidden bg-[#0a0a0a]">
+        <!-- Base luxury gradient: deep black -> charcoal with warm gold undertone -->
+        <div class="absolute inset-0 bg-gradient-to-br from-black via-[#1a1410] to-[#2a1f12]"></div>
+
+        <!-- Subtle gold radial glows for depth -->
+        <div class="absolute inset-0">
+            <div class="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C9A96E 0%, transparent 70%);"></div>
+            <div class="absolute -bottom-40 -right-32 w-[32rem] h-[32rem] rounded-full blur-3xl opacity-25" style="background: radial-gradient(circle, #A8884E 0%, transparent 70%);"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full blur-3xl opacity-10" style="background: radial-gradient(circle, #D4BA85 0%, transparent 60%);"></div>
         </div>
+
+        <!-- Top & bottom gold hairlines for elegance -->
+        <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, #C9A96E 50%, transparent);"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, #C9A96E 50%, transparent);"></div>
 
         <div class="container mx-auto px-4 relative z-10">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <span class="text-amber-400 text-sm uppercase tracking-wider font-semibold">Oferta Especial</span>
-                    <h2 id="promo-title" class="text-4xl md:text-5xl font-serif text-white mt-4 mb-6">Promocion del Mes</h2>
-                    <p id="promo-subtitle" class="text-xl text-white/90 mb-8">Hasta 30% de descuento en perfumes seleccionados + envio gratis en compras mayores a $100</p>
-                    <ul id="promo-bullets" class="space-y-3 mb-8">
-                        <li class="flex items-center text-white">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
+                    <span class="inline-flex items-center text-[#D4BA85] text-xs uppercase tracking-[0.3em] font-semibold mb-4">
+                        <span class="w-8 h-px bg-[#C9A96E] mr-3"></span>
+                        Oferta Especial
+                    </span>
+                    <h2 id="promo-title" class="text-4xl md:text-5xl font-serif mt-2 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#D4BA85] via-[#C9A96E] to-[#A8884E]">Promocion del Mes</h2>
+                    <p id="promo-subtitle" class="text-lg text-gray-300 mb-8 leading-relaxed">Hasta 30% de descuento en perfumes seleccionados + envio gratis en compras mayores a $100</p>
+                    <ul id="promo-bullets" class="space-y-3 mb-10">
+                        <li class="flex items-center text-gray-200">
+                            <i class="fas fa-check-circle text-[#C9A96E] mr-3"></i>
                             Combos 2x1 en fragancias seleccionadas
                         </li>
-                        <li class="flex items-center text-white">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
+                        <li class="flex items-center text-gray-200">
+                            <i class="fas fa-check-circle text-[#C9A96E] mr-3"></i>
                             Regalo sorpresa en compras mayores a $200
                         </li>
-                        <li class="flex items-center text-white">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
+                        <li class="flex items-center text-gray-200">
+                            <i class="fas fa-check-circle text-[#C9A96E] mr-3"></i>
                             Muestras gratis con cada pedido
                         </li>
                     </ul>
-                    <a id="promo-link" href="pages/productos.html?offers=1" class="inline-block px-8 py-4 bg-white text-purple-900 font-semibold rounded-full hover:bg-amber-400 hover:text-black transition transform hover:scale-105">
+                    <a id="promo-link" href="pages/productos.html?offers=1" class="inline-flex items-center px-8 py-4 font-semibold rounded-full text-black transition transform hover:scale-105 shadow-lg shadow-[#C9A96E]/30 hover:shadow-[#C9A96E]/50" style="background: linear-gradient(135deg, #D4BA85 0%, #C9A96E 50%, #A8884E 100%);">
                         Ver ofertas
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 <div class="hidden md:flex justify-center">
                     <div class="relative">
-                        <div id="promo-image-container" class="w-80 h-80 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border-4 border-white/20 overflow-hidden">
-                            <i class="fas fa-gift text-9xl text-white/30" id="promo-image-placeholder"></i>
+                        <!-- Soft glow behind image -->
+                        <div class="absolute inset-0 rounded-full blur-2xl opacity-40" style="background: radial-gradient(circle, #C9A96E 0%, transparent 70%);"></div>
+                        <div id="promo-image-container" class="relative w-80 h-80 rounded-full flex items-center justify-center overflow-hidden border-2" style="border-color: rgba(201,169,110,0.4); background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); box-shadow: 0 0 60px rgba(201,169,110,0.25), inset 0 0 40px rgba(201,169,110,0.08);">
+                            <i class="fas fa-gift text-9xl text-[#C9A96E]/40" id="promo-image-placeholder"></i>
                         </div>
                     </div>
                 </div>
@@ -395,9 +478,9 @@
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-serif text-amber-400 mb-6">Sobre Bbr_Fragance</h2>
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-400 mb-6">Sobre BBR Fragrance</h2>
                     <p class="text-gray-300 mb-6 leading-relaxed">
-                        En Bbr_Fragance nos dedicamos a ofrecer las mejores fragancias originales del mercado. Nuestra pasión por los perfumes y el compromiso con la autenticidad nos han convertido en la opción preferida de miles de clientes.
+                        En BBR Fragrance nos dedicamos a ofrecer las mejores fragancias originales del mercado. Nuestra pasión por los perfumes y el compromiso con la autenticidad nos han convertido en la opción preferida de miles de clientes.
                     </p>
                     <p class="text-gray-300 mb-6 leading-relaxed">
                         Trabajamos directamente con distribuidores autorizados para garantizar que cada fragancia que llega a tus manos sea 100% original. Nuestro equipo de expertos está siempre disponible para asesorarte y ayudarte a encontrar el perfume perfecto para ti o para regalar.
@@ -419,7 +502,7 @@
                 </div>
                 <div class="relative">
                     <div class="rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/20 ring-1 ring-amber-500/20">
-                        <img src="images/nosotros.jpg" alt="Sobre BBR Fragance" class="w-full h-96 object-cover">
+                        <img src="images/nosotros.jpg" alt="Sobre BBR Fragrance" class="w-full h-96 object-cover">
                     </div>
                     <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-amber-500/10 rounded-full blur-2xl"></div>
                     <div class="absolute -top-4 -left-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
@@ -446,7 +529,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold mb-1">WhatsApp</h4>
-                                <a href="https://wa.me/18094855693" class="text-amber-400 hover:text-amber-300">+1 (809) 485-5693</a>
+                                <a href="https://wa.me/18094855693" class="text-amber-400 hover:text-amber-300" data-setting="whatsapp_link">+1 (809) 485-5693</a>
                                 <p class="text-sm text-gray-400 mt-1">Respuesta inmediata</p>
                             </div>
                         </div>
@@ -457,7 +540,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold mb-1">Email</h4>
-                                <a href="mailto:info@bbrfragance.com" class="text-amber-400 hover:text-amber-300">bbrperfume@gmail.com</a>
+                                <a href="mailto:bbrperfume@gmail.com" class="text-amber-400 hover:text-amber-300" data-setting="email_link">bbrperfume@gmail.com</a>
                                 <p class="text-sm text-gray-400 mt-1">Respuesta en menos de 12h</p>
                             </div>
                         </div>
@@ -468,8 +551,8 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold mb-1">Teléfono</h4>
-                                <a href="tel:+18095261115" class="text-amber-400 hover:text-amber-300">+1 (809) 526-1115</a>
-                                <p class="text-sm text-gray-400 mt-1">Lun - Vie: 10AM - 6:30PM, Sab 10:00AM - 6:00PM, Dom: Cerrados</p>
+                                <a href="tel:+18095261115" class="text-amber-400 hover:text-amber-300" data-setting="phone_link">+1 (809) 526-1115</a>
+                                <p class="text-sm text-gray-400 mt-1" data-setting="store_hours">Lun - Vie: 10AM - 6:30PM, Sab 10:00AM - 6:00PM, Dom: Cerrados</p>
                             </div>
                         </div>
                         
@@ -479,7 +562,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold mb-1">Ubicación</h4>
-                                <p class="text-gray-300">Av. Wiston churcill, esq roberto p. Plaza las americas 1 local 10AA </p>
+                                <p class="text-gray-300" data-setting="address">Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA</p>
                                 <p class="text-sm text-gray-400 mt-1">Santo Domingo, R.D</p>
                             </div>
                         </div>
@@ -569,7 +652,7 @@
                 <!-- Columna 1: Logo e info -->
                 <div>
                     <a href="#inicio" class="inline-block mb-4">
-                        <img src="images/LOGO-BBR.png" alt="Bbr_Fragance" class="footer-logo h-14 w-auto object-contain">
+                        <img src="images/LOGO-BBR.png" alt="BBR Fragrance" class="footer-logo h-14 w-auto object-contain">
                     </a>
                     <p class="text-gray-400 text-sm leading-relaxed mb-5">Perfumes originales que definen tu esencia. Trabajamos con distribuidores autorizados para garantizar autenticidad en cada fragancia.</p>
                     <div class="flex items-center gap-2 text-sm text-amber-400">
@@ -596,19 +679,19 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-3">
                             <i class="fas fa-map-marker-alt text-amber-500/60 mt-0.5"></i>
-                            <span class="text-gray-400">Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA, Santo Domingo, R.D.</span>
+                            <span class="text-gray-400" data-setting="address">Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA, Santo Domingo, R.D.</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fab fa-whatsapp text-green-400"></i>
-                            <a href="https://wa.me/18094855693" class="text-gray-400 hover:text-amber-400 transition">+1 (809) 485-5693</a>
+                            <a href="https://wa.me/18094855693" class="text-gray-400 hover:text-amber-400 transition" data-setting="whatsapp_link">+1 (809) 485-5693</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-phone text-amber-500/60"></i>
-                            <a href="tel:+18095261115" class="text-gray-400 hover:text-amber-400 transition">+1 (809) 526-1115</a>
+                            <a href="tel:+18095261115" class="text-gray-400 hover:text-amber-400 transition" data-setting="phone_link">+1 (809) 526-1115</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-envelope text-amber-500/60"></i>
-                            <a href="mailto:bbrperfume@gmail.com" class="text-gray-400 hover:text-amber-400 transition">bbrperfume@gmail.com</a>
+                            <a href="mailto:bbrperfume@gmail.com" class="text-gray-400 hover:text-amber-400 transition" data-setting="email_link">bbrperfume@gmail.com</a>
                         </li>
                     </ul>
                 </div>
@@ -645,7 +728,7 @@
             <div class="container mx-auto px-4 py-6">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-gray-500 text-sm">
-                        &copy; 2026 Bbr_Fragance. Todos los derechos reservados.
+                        &copy; 2026 BBR Fragrance. Todos los derechos reservados.
                     </p>
                     <div class="flex items-center gap-6">
                         <div class="flex items-center gap-3 text-gray-500">
@@ -818,15 +901,36 @@
                             </div>
                             <i class="fas fa-circle text-gray-600 ck-pay-radio"></i>
                         </button>
+                        <button type="button" class="ck-pay-btn w-full flex items-center gap-4 p-4 bg-gray-800 border-2 border-gray-700 rounded-xl hover:border-amber-500 transition text-left" data-method="card_online" style="display:none">
+                            <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-lock text-amber-400 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-white">Pagar en linea con Tarjeta</p>
+                                <p class="text-sm text-gray-400">Visa / Mastercard - Pago seguro Cardnet</p>
+                            </div>
+                            <i class="fas fa-circle text-gray-600 ck-pay-radio"></i>
+                        </button>
+                    </div>
+                    <!-- Card online info (shown when card_online is selected) -->
+                    <div id="ck-cardnet-info" class="hidden mt-4 bg-gray-800 border border-amber-500/30 rounded-xl p-4">
+                        <h4 class="text-sm font-semibold text-amber-400 mb-2"><i class="fas fa-shield-alt mr-1"></i>Pago Seguro en Linea</h4>
+                        <p class="text-xs text-gray-400">
+                            Al confirmar, seras redirigido a la pagina segura de <strong class="text-white">Cardnet</strong>
+                            para ingresar los datos de tu tarjeta. Tu informacion no se almacena en nuestro sitio.
+                        </p>
+                        <div class="flex items-center gap-2 mt-3 text-gray-500">
+                            <i class="fab fa-cc-visa text-2xl"></i>
+                            <i class="fab fa-cc-mastercard text-2xl"></i>
+                            <i class="fas fa-lock text-xs ml-2"></i>
+                            <span class="text-xs">SSL / 3D-Secure</span>
+                        </div>
                     </div>
                     <!-- Bank details (shown when transfer is selected) -->
                     <div id="ck-bank-details" class="hidden mt-4 bg-gray-800 border border-purple-500/30 rounded-xl p-4">
                         <h4 class="text-sm font-semibold text-purple-400 mb-3"><i class="fas fa-info-circle mr-1"></i>Datos para Transferencia</h4>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Banco:</span><span id="ck-bank-name" class="text-white font-medium">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tipo:</span><span id="ck-bank-type" class="text-white">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Cuenta:</span><span id="ck-bank-account" class="text-white font-mono">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Titular:</span><span id="ck-bank-holder" class="text-white">--</span></div>
+                        <div id="ck-bank-accounts-list" class="space-y-3 text-sm">
+                            <!-- rendered dynamically by loadBankSettings() -->
                         </div>
                         <p class="text-xs text-gray-500 mt-3">Realiza la transferencia y nos contactaremos para confirmar tu pedido.</p>
                     </div>
@@ -892,6 +996,27 @@
                     </button>
                 </div>
                 <div id="ck-error-msg" class="hidden mt-3 text-sm text-red-400 text-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Result Modal (shown after Cardnet redirect) -->
+    <div id="payment-result-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-gray-900 rounded-2xl max-w-md w-full p-8 text-center border border-gray-700 shadow-2xl">
+                <div id="pr-icon-wrap" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i id="pr-icon" class="text-4xl"></i>
+                </div>
+                <h3 id="pr-title" class="text-2xl font-bold text-white mb-2"></h3>
+                <p id="pr-message" class="text-gray-400 mb-4"></p>
+                <div id="pr-order-wrap" class="bg-gray-800 rounded-xl p-4 inline-block mb-6 hidden">
+                    <p class="text-sm text-gray-400">Numero de pedido</p>
+                    <p id="pr-order-number" class="text-xl font-bold text-amber-400 font-mono"></p>
+                </div>
+                <button id="pr-close-btn" class="w-full bg-amber-500 text-black font-bold py-3 rounded-lg hover:bg-amber-400 transition">
+                    Continuar
+                </button>
             </div>
         </div>
     </div>

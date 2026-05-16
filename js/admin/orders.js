@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Pedidos
+// BBR Fragrance - Admin: Pedidos
 
 // ==================== PEDIDOS ====================
 async function loadOrders(page = 1, status = null) {

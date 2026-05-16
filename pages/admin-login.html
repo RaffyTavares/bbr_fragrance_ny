@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Bbr_Fragance</title>
+    <title>Acceso Administrativo | BBR Fragrance</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="BBR Fragrance">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -137,7 +142,7 @@
 
             <!-- Header -->
             <div class="text-center mb-8">
-                <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="login-logo mx-auto mb-5">
+                <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="login-logo mx-auto mb-5">
                 <h2 class="text-2xl font-semibold text-white mb-1">Bienvenido</h2>
                 <div class="gold-line mx-auto my-3"></div>
                 <p class="text-gray-400 text-sm">Accede al panel administrativo</p>
@@ -173,7 +178,7 @@
                             required
                             class="w-full rounded-xl px-4 py-3.5 pl-11 pr-12 text-sm focus:outline-none"
                             placeholder="Ingresa tu contrasena"
-                            autocomplete="current-password"
+                            autocomplete="off"
                         >
                         <button
                             type="button"
@@ -223,7 +228,7 @@
     </div>
 
     <script>
-        const API_BASE = '/web-BBR_Fragance/api';
+        const API_BASE = '/BBR_FRAGANCE/api';
 
         // Toggle password visibility
         document.getElementById('toggle-password').addEventListener('click', function() {
@@ -266,8 +271,14 @@
                     errorMessage.querySelector('i').className = 'fas fa-check-circle flex-shrink-0';
                     errorText.textContent = 'Login exitoso! Redirigiendo...';
 
+                    // Limpiar credenciales del DOM antes de redirigir
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+
                     setTimeout(() => {
-                        window.location.href = 'admin.html';
+                        // replace() elimina la pagina de login del historial
+                        // El boton atras desde admin.html no puede volver aqui
+                        window.location.replace('admin.html');
                     }, 800);
                 } else {
                     errorMessage.className = 'rounded-xl p-3.5 text-sm flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400';
@@ -285,16 +296,28 @@
             }
         });
 
-        // Check if already authenticated
+        // Limpiar formulario si el browser restaura la pagina desde bfcache (boton atras)
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('error-message').classList.add('hidden');
+                const btn = document.getElementById('login-btn');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesion';
+            }
+        });
+
+        // Redirigir si ya tiene sesion activa
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch(`${API_BASE}/auth/check`);
+                const response = await fetch(`${API_BASE}/auth/check`, { credentials: 'include' });
                 const result = await response.json();
                 if (result.success) {
-                    window.location.href = 'admin.html';
+                    window.location.replace('admin.html');
                 }
             } catch (e) {
-                // Not authenticated, stay on login page
+                // No autenticado, quedarse en login
             }
         });
     </script>

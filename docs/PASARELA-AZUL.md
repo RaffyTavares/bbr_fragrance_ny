@@ -67,7 +67,7 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('azul_merchant_id', ''),
 ('azul_auth1', ''),
 ('azul_auth2', ''),
-('azul_merchant_name', 'BBR Fragance'),
+('azul_merchant_name', 'BBR Fragrance'),
 ('azul_merchant_type', ''),
 ('azul_environment', 'sandbox'),
 ('azul_enabled', '0');

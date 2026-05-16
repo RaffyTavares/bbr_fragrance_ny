@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - NCF Controller
+ * BBR Fragrance - NCF Controller
  * Gestiona secuencias de Comprobantes Fiscales (NCF) de la DGII
  */
 

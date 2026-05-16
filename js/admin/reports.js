@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Reportes
+// BBR Fragrance - Admin: Reportes
 
 // ==================== REPORTES ====================
 function initReportDates() {

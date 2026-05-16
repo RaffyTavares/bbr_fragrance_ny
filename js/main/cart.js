@@ -1,4 +1,4 @@
-// BBR Fragance - Main: Shopping Cart (localStorage)
+// BBR Fragrance - Main: Shopping Cart (localStorage)
 
 // ===================================
 // Shopping Cart (localStorage - kept client-side)
@@ -138,7 +138,7 @@ class ShoppingCart {
     }
 
     generateWhatsAppMessage() {
-        let message = '*Pedido desde Bbr_Fragance*%0A%0A';
+        let message = '*Pedido desde BBR Fragrance*%0A%0A';
         this.items.forEach(item => {
             message += `*${item.name}*%0A`;
             message += `Marca: ${item.brand}%0A`;
@@ -195,10 +195,15 @@ class ShoppingCart {
         const result = await response.json();
 
         if (result.success) {
-            this.items = [];
-            this.saveCart();
-            this.updateCartUI();
-            return { success: true, orderNumber: result.data.order_number };
+            const orderId = result.data?.id;
+            const orderNumber = result.data?.order_number;
+            // Para pago en linea NO limpiamos el carrito hasta confirmar pago
+            if (customerData.paymentMethod !== 'card_online') {
+                this.items = [];
+                this.saveCart();
+                this.updateCartUI();
+            }
+            return { success: true, orderId, orderNumber };
         } else {
             return { success: false, message: result.message || 'Error desconocido' };
         }

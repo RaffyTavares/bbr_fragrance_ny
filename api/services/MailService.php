@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Mail Service
+ * BBR Fragrance - Mail Service
  * Envio de emails usando PHPMailer con SMTP
  */
 
@@ -37,7 +37,7 @@ class MailService {
         $mail->CharSet    = 'UTF-8';
 
         $fromEmail = !empty($s['smtp_from_email']) ? $s['smtp_from_email'] : $s['smtp_user'];
-        $fromName  = !empty($s['smtp_from_name']) ? $s['smtp_from_name'] : ($s['store_name'] ?? 'BBR Fragance');
+        $fromName  = !empty($s['smtp_from_name']) ? $s['smtp_from_name'] : ($s['store_name'] ?? 'BBR Fragrance');
         $mail->setFrom($fromEmail, $fromName);
 
         return $mail;
@@ -53,7 +53,7 @@ class MailService {
 
             $mail->addAddress($order['customer_email'], $order['customer_name']);
             $mail->isHTML(true);
-            $mail->Subject = 'Confirmacion de Pedido ' . $order['order_number'] . ' - BBR Fragance';
+            $mail->Subject = 'Confirmacion de Pedido ' . $order['order_number'] . ' - BBR Fragrance';
             $mail->Body    = self::orderConfirmationTemplate($order);
             $mail->AltBody = "Tu pedido {$order['order_number']} ha sido recibido. Total: RD$ " . number_format($order['total'], 2);
             $mail->send();
@@ -103,14 +103,14 @@ class MailService {
 <table width="600" cellpadding="0" cellspacing="0" style="background:#1F2937;border-radius:12px;overflow:hidden;max-width:100%">
   <!-- Header -->
   <tr><td style="background:linear-gradient(135deg,#C9A96E,#B8941F);padding:24px;text-align:center">
-    <h1 style="margin:0;color:#000;font-size:22px;font-weight:bold">BBR Fragance</h1>
+    <h1 style="margin:0;color:#000;font-size:22px;font-weight:bold">BBR Fragrance</h1>
     <p style="margin:6px 0 0;color:rgba(0,0,0,0.7);font-size:13px">' . htmlspecialchars($title) . '</p>
   </td></tr>
   <!-- Body -->
   <tr><td style="padding:30px;color:#D1D5DB;font-size:14px;line-height:1.6">' . $content . '</td></tr>
   <!-- Footer -->
   <tr><td style="padding:20px 30px;border-top:1px solid #374151;text-align:center;color:#6B7280;font-size:12px">
-    <p style="margin:0">BBR Fragance - Santo Domingo, R.D.</p>
+    <p style="margin:0">BBR Fragrance - Santo Domingo, R.D.</p>
     <p style="margin:4px 0 0">Este es un email automatico, no responder directamente.</p>
   </td></tr>
 </table>

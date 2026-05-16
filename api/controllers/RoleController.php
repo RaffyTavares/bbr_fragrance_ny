@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Role Controller
+ * BBR Fragrance - Role Controller
  * Gestion de permisos por rol
  */
 

@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Detalle del producto - Bbr_Fragance">
-    <title>Producto - Bbr_Fragance</title>
+    <title>Perfume Original | BBR Fragrance</title>
+    <meta name="description" id="meta-description" content="Perfume original de lujo con garantía de autenticidad | BBR Fragrance - República Dominicana">
+    <meta name="keywords" content="perfume original, fragancia de lujo, BBR Fragrance, perfume auténtico, perfume importado República Dominicana">
+    <meta name="author" content="BBR Fragrance">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" id="canonical-url" href="https://bbrfragrance.es/pages/producto-detalle.html">
+
+    <!-- Open Graph (dinámico via JS) -->
+    <meta property="og:type" content="product">
+    <meta property="og:title" id="og-title" content="Perfume Original | BBR Fragrance">
+    <meta property="og:description" id="og-description" content="Perfume original de lujo con garantía de autenticidad - BBR Fragrance República Dominicana">
+    <meta property="og:url" id="og-url" content="https://bbrfragrance.es/pages/producto-detalle.html">
+    <meta property="og:site_name" content="BBR Fragrance">
+    <meta property="og:image" id="og-image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
+    <meta property="og:locale" content="es_DO">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="tw-title" content="Perfume Original | BBR Fragrance">
+    <meta name="twitter:description" id="tw-description" content="Perfume original de lujo - BBR Fragrance República Dominicana">
+    <meta name="twitter:image" id="tw-image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -46,8 +65,8 @@
             <div class="flex justify-between items-center">
                 <div class="logo">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="nav-logo">
-                        <span class="text-xl font-serif text-amber-400 hidden sm:block">Bbr_Fragance</span>
+                        <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="nav-logo">
+                        <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance</span>
                     </a>
                 </div>
                 <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
@@ -141,9 +160,9 @@
         <div class="container mx-auto px-4">
             <div class="text-center">
                 <a href="../index.html" class="inline-block mb-4">
-                    <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="footer-logo h-12 w-auto object-contain mx-auto">
+                    <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="footer-logo h-12 w-auto object-contain mx-auto">
                 </a>
-                <p class="text-gray-400 text-sm">&copy; 2026 Bbr_Fragance. Todos los derechos reservados.</p>
+                <p class="text-gray-400 text-sm">&copy; 2026 BBR Fragrance. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
@@ -296,11 +315,8 @@
                     <!-- Bank details (shown when transfer is selected) -->
                     <div id="ck-bank-details" class="hidden mt-4 bg-gray-800 border border-purple-500/30 rounded-xl p-4">
                         <h4 class="text-sm font-semibold text-purple-400 mb-3"><i class="fas fa-info-circle mr-1"></i>Datos para Transferencia</h4>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Banco:</span><span id="ck-bank-name" class="text-white font-medium">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tipo:</span><span id="ck-bank-type" class="text-white">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Cuenta:</span><span id="ck-bank-account" class="text-white font-mono">--</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Titular:</span><span id="ck-bank-holder" class="text-white">--</span></div>
+                        <div id="ck-bank-accounts-list" class="space-y-3 text-sm">
+                            <!-- rendered dynamically by loadBankSettings() -->
                         </div>
                         <p class="text-xs text-gray-500 mt-3">Realiza la transferencia y nos contactaremos para confirmar tu pedido.</p>
                     </div>
@@ -417,7 +433,7 @@
             const brandName = product.brand_name || '';
 
             // Update page title
-            document.title = `${product.name} - ${brandName} | Bbr_Fragance`;
+            document.title = `${product.name} - ${brandName} | BBR Fragrance`;
 
             // Update breadcrumb
             document.getElementById('breadcrumb-product').textContent = `${brandName} ${product.name}`;

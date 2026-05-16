@@ -1,4 +1,4 @@
-# 🛡️ Panel Administrativo - Bbr_Fragance
+# 🛡️ Panel Administrativo - BBR Fragrance
 
 Sistema de gestión completo para administrar productos, categorías y configuraciones de la tienda.
 
@@ -247,5 +247,5 @@ Para ayuda o reportar problemas con el panel administrativo, contacta al equipo 
 
 ---
 
-**Desarrollado para Bbr_Fragance** 🌟
+**Desarrollado para BBR Fragrance** 🌟
 *Sistema de gestión profesional para tiendas de perfumes*

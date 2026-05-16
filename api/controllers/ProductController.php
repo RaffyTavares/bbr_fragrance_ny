@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Product Controller
+ * BBR Fragrance - Product Controller
  * Gestiona productos, imagenes, stock e inventario
  */
 
@@ -100,7 +100,7 @@ class ProductController {
 
         // Obtener productos con imagen principal
         $sql = "SELECT p.id, p.name, p.price, p.original_price, p.cost, p.stock, p.min_stock,
-                       p.barcode, p.sku, p.description, p.status, p.is_featured,
+                       p.barcode, p.sku, p.description, p.volume_ml, p.status, p.is_featured,
                        p.created_at, p.updated_at,
                        b.id AS brand_id, b.name AS brand_name, b.slug AS brand_slug,
                        c.id AS category_id, c.name AS category_name, c.slug AS category_slug,
@@ -235,10 +235,10 @@ class ProductController {
         // Insertar producto
         $stmt = $db->prepare(
             "INSERT INTO products (name, brand_id, category_id, family_id, price, original_price,
-                                   cost, stock, min_stock, barcode, sku, description, status, is_featured,
+                                   cost, stock, min_stock, barcode, sku, description, volume_ml, status, is_featured,
                                    created_at, updated_at)
              VALUES (:name, :brand_id, :category_id, :family_id, :price, :original_price,
-                     :cost, :stock, :min_stock, :barcode, :sku, :description, :status, :is_featured,
+                     :cost, :stock, :min_stock, :barcode, :sku, :description, :volume_ml, :status, :is_featured,
                      NOW(), NOW())"
         );
 
@@ -255,6 +255,7 @@ class ProductController {
             ':barcode'        => !empty($data['barcode']) ? sanitizeString($data['barcode']) : null,
             ':sku'            => !empty($data['sku']) ? sanitizeString($data['sku']) : null,
             ':description'    => !empty($data['description']) ? sanitizeString($data['description']) : null,
+            ':volume_ml'      => isset($data['volume_ml']) && $data['volume_ml'] !== '' && $data['volume_ml'] !== null ? (int)$data['volume_ml'] : null,
             ':status'         => $data['status'] ?? 'active',
             ':is_featured'    => isset($data['is_featured']) ? (int)$data['is_featured'] : 0,
         ]);
@@ -362,6 +363,7 @@ class ProductController {
             'barcode'        => 'string_nullable',
             'sku'            => 'string_nullable',
             'description'    => 'string_nullable',
+            'volume_ml'      => 'int_nullable',
             'status'         => 'raw',
             'is_featured'    => 'int',
         ];

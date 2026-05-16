@@ -1,4 +1,4 @@
-# BBR Fragance - Sistema de Tienda de Perfumes
+# BBR Fragrance - Sistema de Tienda de Perfumes
 
 Sistema web completo para tienda de perfumes con panel de administracion, POS, gestion de inventario, pedidos online y comprobantes fiscales (NCF).
 
@@ -15,7 +15,7 @@ Sistema web completo para tienda de perfumes con panel de administracion, POS, g
 ## Estructura del Proyecto
 
 ```
-web-BBR_Fragance/
+web-BBR Fragrance/
 ├── index.html                         # Pagina principal (tienda)
 ├── css/style.css                      # Estilos personalizados
 ├── pages/
@@ -88,26 +88,26 @@ web-BBR_Fragance/
 1. Clonar el proyecto en la carpeta `htdocs` de XAMPP:
 ```bash
 cd /Applications/XAMPP/xamppfiles/htdocs
-git clone <repo-url> web-BBR_Fragance
+git clone <repo-url> web-BBR Fragrance
 ```
 
 2. Crear la base de datos y ejecutar el esquema:
 ```bash
-mysql -u root -p < web-BBR_Fragance/database/schema.sql
-mysql -u root -p bbr_fragance < web-BBR_Fragance/database/seed.sql
+mysql -u root -p < web-BBR Fragrance/database/schema.sql
+mysql -u root -p BBR Fragrance < web-BBR Fragrance/database/seed.sql
 ```
 
 3. Si es una actualizacion, ejecutar las migraciones:
 ```bash
-mysql -u root -p bbr_fragance < web-BBR_Fragance/database/migration_ncf.sql
-mysql -u root -p bbr_fragance < web-BBR_Fragance/database/migration_checkout.sql
+mysql -u root -p BBR Fragrance < web-BBR Fragrance/database/migration_ncf.sql
+mysql -u root -p BBR Fragrance < web-BBR Fragrance/database/migration_checkout.sql
 ```
 
 4. Configurar la conexion en `api/config/database.php` si es necesario.
 
 5. Acceder:
-   - Tienda: `http://localhost/web-BBR_Fragance/`
-   - Admin: `http://localhost/web-BBR_Fragance/pages/admin-login.html`
+   - Tienda: `http://localhost/web-BBR Fragrance/`
+   - Admin: `http://localhost/web-BBR Fragrance/pages/admin-login.html`
 
 ## Modulos del Sistema
 
@@ -143,7 +143,7 @@ mysql -u root -p bbr_fragance < web-BBR_Fragance/database/migration_checkout.sql
 
 ## API REST
 
-Base URL: `/web-BBR_Fragance/api`
+Base URL: `/web-BBR Fragrance/api`
 
 ### Autenticacion
 | Metodo | Ruta | Descripcion | Auth |
@@ -262,4 +262,4 @@ Toda la configuracion se almacena en la tabla `settings` como pares key-value:
 
 ## Licencia
 
-Proyecto privado. Todos los derechos reservados - BBR Fragance.
+Proyecto privado. Todos los derechos reservados - BBR Fragrance.

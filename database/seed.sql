@@ -1,8 +1,8 @@
 -- ============================================================
--- BBR Fragance - Datos Iniciales (Seed)
+-- BBR Fragrance - Datos Iniciales (Seed)
 -- ============================================================
 
-USE bbr_fragance;
+USE BBR Fragrance;
 
 -- ============================================================
 -- USUARIO ADMIN
@@ -72,7 +72,7 @@ INSERT INTO expense_categories (name, slug, icon, color) VALUES
 -- CONFIGURACION
 -- ============================================================
 INSERT INTO settings (setting_key, setting_value) VALUES
-('store_name', 'Bbr_Fragance'),
+('store_name', 'BBR Fragrance'),
 ('whatsapp_number', '+18094855693'),
 ('contact_email', 'bbrperfume@gmail.com'),
 ('contact_phone', '+18095261115'),
@@ -95,7 +95,7 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('smtp_port', '587'),
 ('smtp_user', ''),
 ('smtp_pass', ''),
-('smtp_from_name', 'BBR Fragance'),
+('smtp_from_name', 'BBR Fragrance'),
 ('smtp_from_email', ''),
 ('bank_name', ''),
 ('bank_account_number', ''),

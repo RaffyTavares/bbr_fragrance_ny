@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Settings Controller
+ * BBR Fragrance - Settings Controller
  * Gestiona la configuracion general del sistema
  */
 
@@ -32,6 +32,9 @@ class SettingsController {
                 unset($settings[$key]);
             }
         }
+
+        // La clave secreta de Cardnet NUNCA se expone al cliente
+        unset($settings['cardnet_secret_key']);
 
         successResponse($settings, 'Configuracion obtenida exitosamente.');
     }
@@ -77,52 +80,59 @@ class SettingsController {
         foreach ($rows as $row) {
             $settings[$row['setting_key']] = $row['setting_value'];
         }
+        unset($settings['cardnet_secret_key']);
 
         successResponse($settings, 'Configuracion actualizada exitosamente.');
     }
 
     /**
      * POST /settings/promo-image
-     * Subir imagen para la seccion de promocion del mes
+     * Subir imagen o video para la seccion de promocion del mes
+     * Acepta el campo de archivo bajo el nombre 'image' (compatibilidad) o 'media'.
      */
     public static function uploadPromoImage() {
-        if (empty($_FILES['image'])) {
-            errorResponse('No se envio ninguna imagen.', 400);
+        // Accept either 'image' (legacy) or 'media' field name
+        $file = $_FILES['media'] ?? $_FILES['image'] ?? null;
+        if (empty($file)) {
+            errorResponse('No se envio ningun archivo.', 400);
         }
-
-        $file = $_FILES['image'];
 
         if ($file['error'] !== UPLOAD_ERR_OK) {
             errorResponse('Error al subir el archivo.', 400);
         }
 
-        if ($file['size'] > MAX_IMAGE_SIZE) {
-            errorResponse('El archivo excede el tamano maximo de 5MB.', 400);
-        }
-
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($file['tmp_name']);
-        if (!in_array($mimeType, ALLOWED_IMAGE_TYPES)) {
-            errorResponse('Tipo de archivo no permitido. Solo JPG, PNG y WEBP.', 400);
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        // Detect media type
+        $isImage = in_array($mimeType, ALLOWED_IMAGE_TYPES) && in_array($extension, ALLOWED_IMAGE_EXTENSIONS);
+        $isVideo = in_array($mimeType, ALLOWED_VIDEO_TYPES) && in_array($extension, ALLOWED_VIDEO_EXTENSIONS);
+
+        if (!$isImage && !$isVideo) {
+            errorResponse('Tipo de archivo no permitido. Imagenes (JPG, PNG, WEBP) o Videos (MP4, WEBM, MOV).', 400);
         }
 
-        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        if (!in_array($extension, ALLOWED_IMAGE_EXTENSIONS)) {
-            errorResponse('Extension de archivo no permitida.', 400);
+        $maxSize = $isVideo ? MAX_VIDEO_SIZE : MAX_IMAGE_SIZE;
+        if ($file['size'] > $maxSize) {
+            $limitMb = $isVideo ? '25MB' : '5MB';
+            errorResponse("El archivo excede el tamano maximo de {$limitMb}.", 400);
         }
+
+        $mediaType = $isVideo ? 'video' : 'image';
 
         $promoDir = UPLOADS_PATH . '/promo';
         if (!is_dir($promoDir)) {
             mkdir($promoDir, 0777, true);
         }
 
-        // Delete old promo image if exists
+        // Delete old promo media if exists
         $db = getDB();
         $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'promo_image'");
         $stmt->execute();
-        $oldImage = $stmt->fetchColumn();
-        if ($oldImage) {
-            $oldPath = UPLOADS_PATH . '/promo/' . basename($oldImage);
+        $oldMedia = $stmt->fetchColumn();
+        if ($oldMedia) {
+            $oldPath = UPLOADS_PATH . '/promo/' . basename($oldMedia);
             if (file_exists($oldPath)) {
                 unlink($oldPath);
             }
@@ -135,18 +145,28 @@ class SettingsController {
             errorResponse('Error al guardar el archivo.', 500);
         }
 
-        $imageUrl = UPLOADS_URL . '/promo/' . $filename;
+        $mediaUrl = UPLOADS_URL . '/promo/' . $filename;
 
-        // Save URL in settings
+        // Save URL and media type in settings
         $upsert = $db->prepare(
             "INSERT INTO settings (setting_key, setting_value, updated_at)
              VALUES ('promo_image', :url, NOW())
              ON DUPLICATE KEY UPDATE setting_value = :url_update, updated_at = NOW()"
         );
-        $upsert->execute([':url' => $imageUrl, ':url_update' => $imageUrl]);
+        $upsert->execute([':url' => $mediaUrl, ':url_update' => $mediaUrl]);
 
-        logActivity('update', 'settings', null, 'Imagen de promocion actualizada');
+        $upsertType = $db->prepare(
+            "INSERT INTO settings (setting_key, setting_value, updated_at)
+             VALUES ('promo_media_type', :type, NOW())
+             ON DUPLICATE KEY UPDATE setting_value = :type_update, updated_at = NOW()"
+        );
+        $upsertType->execute([':type' => $mediaType, ':type_update' => $mediaType]);
 
-        successResponse(['url' => $imageUrl], 'Imagen de promocion subida exitosamente.');
+        logActivity('update', 'settings', null, 'Medio de promocion actualizado (' . $mediaType . ')');
+
+        successResponse([
+            'url' => $mediaUrl,
+            'type' => $mediaType
+        ], 'Medio de promocion subido exitosamente.');
     }
 }

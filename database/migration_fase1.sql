@@ -1,9 +1,9 @@
 -- ============================================================
--- BBR Fragance - Fase 1 Migration: Roles, Permisos, Usuarios
+-- BBR Fragrance - Fase 1 Migration: Roles, Permisos, Usuarios
 -- Run this ONCE against existing database
 -- ============================================================
 
-USE bbr_fragance;
+USE BBR Fragrance;
 
 -- 1. Update users table: expand role ENUM and add phone column
 ALTER TABLE users MODIFY role ENUM('admin', 'vendedor', 'cajero', 'tecnico') DEFAULT 'cajero';

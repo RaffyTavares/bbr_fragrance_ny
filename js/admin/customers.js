@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Clientes
+// BBR Fragrance - Admin: Clientes
 
 // ==================== CLIENTES ====================
 async function loadCustomers(page = 1) {

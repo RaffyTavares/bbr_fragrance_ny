@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Auth Controller
+ * BBR Fragrance - Auth Controller
  */
 
 class AuthController {
@@ -47,7 +47,19 @@ class AuthController {
 
     public static function logout() {
         logActivity('logout', 'user', getCurrentUserId(), 'Cierre de sesion');
+        // Limpiar datos de sesion
+        $_SESSION = [];
+        // Eliminar la cookie de sesion del browser
+        if (ini_get('session.use_cookies')) {
+            $p = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $p['path'], $p['domain'], $p['secure'], $p['httponly']
+            );
+        }
         session_destroy();
+        // Evitar que el browser cachee esta respuesta
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
         successResponse(null, 'Sesion cerrada exitosamente.');
     }
 

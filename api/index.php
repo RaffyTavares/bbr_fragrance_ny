@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - API Router
+ * BBR Fragrance - API Router
  * Entry point for all API requests
  */
 
@@ -32,7 +32,7 @@ require_once __DIR__ . '/middleware/auth.php';
 
 // Parse request
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = '/web-BBR_Fragance/api';
+$basePath = '/BBR_FRAGANCE/api';
 $path = rtrim(str_replace($basePath, '', $uri), '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -205,6 +205,28 @@ try {
                 switch ($method) {
                     case 'GET': requirePermission('orders.view'); OrderController::index(); break;
                     case 'POST': OrderController::store(); break; // Public - create order from front
+                }
+            }
+            break;
+
+        // ===================== PAYMENTS (Cardnet) =====================
+        case 'payments':
+            require_once __DIR__ . '/controllers/PaymentController.php';
+            // segments[0]='payments', [1]=group/action, [2]=action
+            $payGroup  = $segments[1] ?? null;
+            $payAction = $segments[2] ?? null;
+
+            if ($payGroup === 'status') {
+                if ($method === 'GET') PaymentController::status();
+            } elseif ($payGroup === 'cardnet') {
+                if ($payAction === 'session' && $method === 'POST') {
+                    PaymentController::cardnetSession();
+                } elseif ($payAction === 'return') {
+                    PaymentController::cardnetReturn();
+                } elseif ($payAction === 'cancel') {
+                    PaymentController::cardnetCancel();
+                } elseif ($payAction === 'mock') {
+                    PaymentController::cardnetMock();
                 }
             }
             break;
@@ -403,7 +425,7 @@ try {
             if ($path === '' || $path === '/') {
                 jsonResponse([
                     'success' => true,
-                    'message' => 'BBR Fragance API v' . APP_VERSION,
+                    'message' => 'BBR Fragrance API v' . APP_VERSION,
                     'endpoints' => [
                         'auth' => API_URL . '/auth/login',
                         'products' => API_URL . '/products',

@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Cash Register Controller
+ * BBR Fragrance - Cash Register Controller
  * Gestiona apertura, cierre y consulta de sesiones de caja
  */
 

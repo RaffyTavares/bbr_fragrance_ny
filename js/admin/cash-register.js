@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Cuadre de Caja
+// BBR Fragrance - Admin: Cuadre de Caja
 
 // ==================== CUADRE DE CAJA ====================
 let registerExpectedCash = 0;

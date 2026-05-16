@@ -1,11 +1,11 @@
-// BBR Fragance - Admin: Core (Estado Global, API Wrapper, Utilidades, Autenticacion, Navegacion)
+// BBR Fragrance - Admin: Core (Estado Global, API Wrapper, Utilidades, Autenticacion, Navegacion)
 
 /**
- * BBR Fragance - Panel Administrativo
+ * BBR Fragrance - Panel Administrativo
  * JavaScript principal con API backend
  */
 
-const API = '/web-BBR_Fragance/api';
+const API = '/BBR_FRAGANCE/api';
 
 // ==================== Estado Global ====================
 let salesChart = null;
@@ -40,7 +40,7 @@ async function api(endpoint, method = 'GET', body = null) {
         }
         const res = await fetch(API + endpoint, opts);
         if (res.status === 401) {
-            window.location.href = 'admin-login.html';
+            window.location.replace('admin-login.html');
             return null;
         }
         return await res.json();

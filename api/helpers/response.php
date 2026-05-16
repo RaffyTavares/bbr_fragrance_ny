@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Response Helpers
+ * BBR Fragrance - Response Helpers
  */
 
 function jsonResponse($data, $statusCode = 200) {

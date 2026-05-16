@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Auth Middleware
+ * BBR Fragrance - Auth Middleware
  */
 
 function requireAuth() {

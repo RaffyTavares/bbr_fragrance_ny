@@ -1,4 +1,4 @@
-// BBR Fragance - Main: Page Initialization
+// BBR Fragrance - Main: Page Initialization
 
 // ===================================
 // Page Initialization
@@ -6,6 +6,9 @@
 window.currentPage = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Cargar ajustes del negocio y aplicarlos al DOM (teléfono, email, WhatsApp, dirección, etc.)
+    loadSiteSettings();
+
     // Products page
     const productsGrid = document.getElementById('products-grid');
     if (productsGrid) {

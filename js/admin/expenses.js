@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Gastos
+// BBR Fragrance - Admin: Gastos
 
 // ==================== GASTOS ====================
 async function loadExpenseCategories() {

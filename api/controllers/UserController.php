@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - User Controller
+ * BBR Fragrance - User Controller
  * CRUD de usuarios del sistema
  */
 

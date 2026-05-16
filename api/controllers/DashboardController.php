@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Dashboard Controller
+ * BBR Fragrance - Dashboard Controller
  * Proporciona estadisticas, KPIs, actividad reciente y datos para graficos del panel
  */
 

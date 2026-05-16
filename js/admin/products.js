@@ -1,4 +1,4 @@
-// BBR Fragance - Admin: Productos e Inventario
+// BBR Fragrance - Admin: Productos e Inventario
 
 // ==================== PRODUCTOS ====================
 let filterOptions = { categories: [], families: [], brands: [] };
@@ -64,7 +64,7 @@ async function loadProducts(page = 1) {
                 <td class="px-4 py-3">
                     ${p.image_url ? `<img src="${p.image_url}" class="w-12 h-12 rounded-lg object-cover">` : '<div class="w-12 h-12 rounded-lg bg-gray-700 flex items-center justify-center"><i class="fas fa-image text-gray-500"></i></div>'}
                 </td>
-                <td class="px-4 py-3"><p class="font-medium">${p.name}</p><p class="text-xs text-gray-400">${p.brand_name || ''}</p></td>
+                <td class="px-4 py-3"><p class="font-medium">${p.name}${p.volume_ml ? ` <span class="text-xs text-gray-500 font-normal">· ${p.volume_ml}ml</span>` : ''}</p><p class="text-xs text-gray-400">${p.brand_name || ''}</p></td>
                 <td class="px-4 py-3 text-sm">${p.category_name || ''}</td>
                 <td class="px-4 py-3 text-sm">${p.family_name || ''}</td>
                 <td class="px-4 py-3 text-sm font-medium text-amber-400">${formatCurrency(p.price)}</td>
@@ -118,7 +118,7 @@ async function openProductModal(id = null) {
     }
     // Reset form
     document.getElementById('product-id').value = '';
-    ['name', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description'].forEach(f => {
+    ['name', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description', 'volume_ml'].forEach(f => {
         const el = document.getElementById('product-' + f);
         if (el) el.value = '';
     });
@@ -136,7 +136,7 @@ async function openProductModal(id = null) {
         if (res?.success) {
             const p = res.data;
             document.getElementById('product-id').value = p.id;
-            ['name', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description'].forEach(f => {
+            ['name', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description', 'volume_ml'].forEach(f => {
                 const el = document.getElementById('product-' + f);
                 if (el && p[f] != null) el.value = p[f];
             });
@@ -159,7 +159,7 @@ async function openProductModal(id = null) {
 async function saveProduct() {
     const id = document.getElementById('product-id')?.value;
     const form = new FormData();
-    ['name', 'brand_id', 'category_id', 'family_id', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description', 'status'].forEach(f => {
+    ['name', 'brand_id', 'category_id', 'family_id', 'price', 'original_price', 'cost', 'stock', 'min_stock', 'barcode', 'sku', 'description', 'volume_ml', 'status'].forEach(f => {
         const el = document.getElementById('product-' + f);
         if (el && el.value !== '') form.append(f, el.value);
     });

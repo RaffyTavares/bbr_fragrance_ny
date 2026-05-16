@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragance - Database Connection
+ * BBR Fragrance - Database Connection
  * Singleton PDO connection to MySQL
  */
 
@@ -11,7 +11,7 @@ class Database {
     private $host = 'localhost';
     private $dbname = 'bbr_fragance';
     private $username = 'root';
-    private $password = '';
+    private $password = 'raffy1992';
     private $charset = 'utf8mb4';
 
     private function __construct() {

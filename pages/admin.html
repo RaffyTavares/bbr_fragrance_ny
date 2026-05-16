@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Bbr_Fragance</title>
+    <title>Panel Administrativo | BBR Fragrance</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="BBR Fragrance">
+    <!-- Evitar que el browser almacene esta pagina en cache -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,7 +65,7 @@
                     <i class="fas fa-bars text-xl"></i>
                 </button>
                 <a href="" class="flex items-center space-x-3">
-                    <img src="../images/LOGO-BBR.png" alt="Bbr_Fragance" class="h-10 w-10 rounded-full border-2 border-amber-400/30 object-cover">
+                    <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="h-10 w-10 rounded-full border-2 border-amber-400/30 object-cover">
                     <span class="text-lg font-serif text-amber-400 hidden sm:inline">Panel Administrativo</span>
                 </a>
             </div>
@@ -1327,14 +1333,19 @@
                 <form id="settings-form" class="space-y-6">
                     <!-- Tienda -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-store text-amber-400 mr-2"></i>
-                            Informacion de la Tienda
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-store text-amber-400 mr-2"></i>
+                                Informacion de la Tienda
+                            </h3>
+                            <button type="button" id="save-settings-tienda-btn" onclick="saveSettingsTienda()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Nombre de la Tienda</label>
-                                <input type="text" id="setting-store_name" value="Bbr_Fragance" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-store_name" value="BBR Fragrance" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Direccion</label>
@@ -1353,10 +1364,15 @@
 
                     <!-- WhatsApp -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fab fa-whatsapp text-green-400 mr-2"></i>
-                            WhatsApp
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fab fa-whatsapp text-green-400 mr-2"></i>
+                                WhatsApp
+                            </h3>
+                            <button type="button" id="save-settings-whatsapp-btn" onclick="saveSettingsWhatsApp()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium mb-2">Numero de WhatsApp</label>
                             <input type="text" id="setting-whatsapp_number" placeholder="Ej: 18094855693" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
@@ -1366,10 +1382,15 @@
 
                     <!-- Impuestos -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-percentage text-amber-400 mr-2"></i>
-                            Impuestos
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-percentage text-amber-400 mr-2"></i>
+                                Impuestos
+                            </h3>
+                            <button type="button" id="save-settings-impuestos-btn" onclick="saveSettingsImpuestos()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="flex items-center space-x-3">
                                 <input type="checkbox" id="setting-tax_enabled" checked class="w-5 h-5 rounded border-gray-600 bg-gray-900 text-amber-500 focus:ring-amber-500">
@@ -1388,10 +1409,15 @@
 
                     <!-- Envios -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-truck text-amber-400 mr-2"></i>
-                            Envios
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-truck text-amber-400 mr-2"></i>
+                                Envios
+                            </h3>
+                            <button type="button" id="save-settings-envios-btn" onclick="saveSettingsEnvios()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium mb-2">Monto minimo para envio gratis (RD$)</label>
                             <input type="number" id="setting-min_free_shipping" min="0" step="0.01" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
@@ -1400,10 +1426,15 @@
 
                     <!-- Horario -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-clock text-amber-400 mr-2"></i>
-                            Horario
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-clock text-amber-400 mr-2"></i>
+                                Horario
+                            </h3>
+                            <button type="button" id="save-settings-horario-btn" onclick="saveSettingsHorario()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium mb-2">Horario de la Tienda</label>
                             <textarea id="setting-store_hours" rows="3" placeholder="Lun - Vie: 10AM - 6:30PM&#10;Sab: 10AM - 6PM&#10;Dom: Cerrado" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition resize-none"></textarea>
@@ -1412,10 +1443,15 @@
 
                     <!-- Comprobantes Fiscales (NCF) -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-file-invoice text-amber-400 mr-2"></i>
-                            Comprobantes Fiscales (NCF)
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-file-invoice text-amber-400 mr-2"></i>
+                                Comprobantes Fiscales (NCF)
+                            </h3>
+                            <button type="button" id="save-settings-ncf-btn" onclick="saveSettingsNcf()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -1436,10 +1472,15 @@
 
                     <!-- Configuracion de Email (SMTP) -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-envelope text-amber-400 mr-2"></i>
-                            Configuracion de Email (SMTP)
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-envelope text-amber-400 mr-2"></i>
+                                Configuracion de Email (SMTP)
+                            </h3>
+                            <button type="button" id="save-settings-smtp-btn" onclick="saveSettingsSmtp()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <p class="text-sm text-gray-400 mb-4">Configura el servidor SMTP para enviar emails de confirmacion de pedidos y notificaciones de estado.</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -1460,7 +1501,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Nombre del Remitente</label>
-                                <input type="text" id="setting-smtp_from_name" placeholder="BBR Fragance" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-smtp_from_name" placeholder="BBR Fragrance" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Email del Remitente</label>
@@ -1472,40 +1513,37 @@
 
                     <!-- Datos Bancarios para Transferencias -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-university text-amber-400 mr-2"></i>
-                            Datos Bancarios (Transferencias)
-                        </h3>
-                        <p class="text-sm text-gray-400 mb-4">Estos datos se muestran al cliente cuando elige pagar por transferencia bancaria.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Nombre del Banco</label>
-                                <input type="text" id="setting-bank_name" placeholder="Ej: Banreservas" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Tipo de Cuenta</label>
-                                <select id="setting-bank_account_type" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
-                                    <option value="Ahorros">Ahorros</option>
-                                    <option value="Corriente">Corriente</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Numero de Cuenta</label>
-                                <input type="text" id="setting-bank_account_number" placeholder="Numero de cuenta" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Titular de la Cuenta</label>
-                                <input type="text" id="setting-bank_account_holder" placeholder="Nombre del titular" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
-                            </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-university text-amber-400 mr-2"></i>
+                                Datos Bancarios (Transferencias)
+                            </h3>
+                            <button type="button" onclick="openBankAccountModal()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-plus text-xs"></i>Agregar Cuenta
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">Estos datos se muestran al cliente cuando elige pagar por transferencia bancaria. Puedes agregar varias cuentas de distintos bancos.</p>
+                        <!-- Accounts list -->
+                        <div id="bank-accounts-list" class="space-y-3"></div>
+                        <!-- Empty state -->
+                        <div id="bank-accounts-empty" class="text-center py-8 text-gray-500">
+                            <i class="fas fa-university text-3xl mb-3 block text-gray-600"></i>
+                            <p class="text-sm">No hay cuentas bancarias registradas.</p>
+                            <p class="text-xs mt-1">Agrega una para que los clientes puedan pagar por transferencia.</p>
                         </div>
                     </div>
 
                     <!-- Pedidos Online -->
                     <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <i class="fas fa-shopping-cart text-amber-400 mr-2"></i>
-                            Pedidos Online
-                        </h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-shopping-cart text-amber-400 mr-2"></i>
+                                Pedidos Online
+                            </h3>
+                            <button type="button" id="save-settings-pedidos-btn" onclick="saveSettingsPedidos()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Monto minimo de pedido (RD$)</label>
@@ -1552,15 +1590,116 @@
                                             <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-purple-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                                         </label>
                                     </div>
+                                    <div class="flex items-center justify-between bg-gray-900 rounded-lg px-4 py-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+                                                <i class="fas fa-lock text-amber-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium">Tarjeta en Linea (Cardnet)</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="setting-checkout_pay_card_online" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-amber-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Save Button -->
+                    <!-- Pasarela Cardnet -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-credit-card text-amber-400 mr-2"></i>
+                                Pasarela Cardnet (Pago en Linea)
+                            </h3>
+                            <button type="button" id="save-settings-cardnet-btn" onclick="saveSettingsCardnet()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                <i class="fas fa-save text-xs"></i>Guardar
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-4">
+                            Configura las credenciales que te entrega Cardnet para procesar pagos
+                            con tarjeta directamente desde la tienda. Mientras esten vacias o el toggle
+                            este desactivado, la opcion no aparecera en el checkout.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2 flex items-center justify-between bg-gray-900 rounded-lg px-4 py-3">
+                                <div>
+                                    <span class="text-sm font-medium">Activar pasarela Cardnet</span>
+                                    <p class="text-xs text-gray-500">Habilita el procesamiento real de pagos.</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="setting-cardnet_enabled" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-green-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Ambiente</label>
+                                <select id="setting-cardnet_environment" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                    <option value="simulator">Simulador (Local, sin credenciales)</option>
+                                    <option value="sandbox">Sandbox (Pruebas Cardnet)</option>
+                                    <option value="production">Production (Real)</option>
+                                </select>
+                                <p class="text-xs text-gray-400 mt-1">El modo <strong>Simulador</strong> permite probar el flujo end-to-end sin Merchant Number, Terminal ni Secret Key.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Codigo de Moneda</label>
+                                <input type="text" id="setting-cardnet_currency_code" placeholder="214 (DOP)" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Merchant Number <span class="text-red-400">*</span></label>
+                                <input type="text" id="setting-cardnet_merchant_number" placeholder="Numero de comercio" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Merchant Terminal <span class="text-red-400">*</span></label>
+                                <input type="text" id="setting-cardnet_merchant_terminal" placeholder="Numero de terminal" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Merchant Name</label>
+                                <input type="text" id="setting-cardnet_merchant_name" placeholder="BBR Fragrance" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Merchant Type (MCC)</label>
+                                <input type="text" id="setting-cardnet_merchant_type" placeholder="Ej: 5912" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium mb-2">Secret Key (HMAC) <span class="text-red-400">*</span></label>
+                                <input type="password" id="setting-cardnet_secret_key" placeholder="Clave secreta entregada por Cardnet" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <p class="text-xs text-gray-500 mt-1">No se muestra despues de guardar. Vuelve a ingresarla solo si necesitas cambiarla.</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Acquiring Institution Code</label>
+                                <input type="text" id="setting-cardnet_acquiring_inst_code" placeholder="349" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">URL de Retorno (opcional)</label>
+                                <input type="text" id="setting-cardnet_return_page" placeholder="Auto" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium mb-2">URL de Cancelacion (opcional)</label>
+                                <input type="text" id="setting-cardnet_cancel_page" placeholder="Auto" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-200">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Para activar el cobro real, ademas de llenar estos campos debes tener el sitio
+                            sirviendose por <strong>HTTPS</strong> y haber registrado las URLs de retorno con tu
+                            ejecutivo de Cardnet. Consulta <code>docs/PASARELA-CARDNET.md</code>.
+                        </div>
+                    </div>
+
+                    <!-- Save All Button -->
                     <div class="flex justify-end">
-                        <button type="button" id="save-settings-btn" class="bg-amber-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-amber-300 transition flex items-center">
-                            <i class="fas fa-save mr-2"></i>Guardar Cambios
+                        <button type="button" id="save-settings-btn" class="bg-gray-700 text-gray-300 px-8 py-3 rounded-lg font-semibold hover:bg-gray-600 transition flex items-center">
+                            <i class="fas fa-save mr-2"></i>Guardar Todo
                         </button>
                     </div>
                 </form>
@@ -1667,17 +1806,17 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm text-gray-400 mb-2">Imagen de la Promocion</label>
+                        <label class="block text-sm text-gray-400 mb-2">Imagen o Video de la Promocion</label>
                         <div class="flex items-start gap-4">
                             <div id="promo-image-preview" class="w-32 h-32 bg-gray-700 rounded-lg flex items-center justify-center border border-gray-600 overflow-hidden flex-shrink-0">
                                 <i class="fas fa-image text-3xl text-gray-500"></i>
                             </div>
                             <div class="flex-1">
-                                <input type="file" id="promo-image-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+                                <input type="file" id="promo-image-input" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" class="hidden">
                                 <button type="button" id="promo-image-btn" class="bg-gray-700 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-600 transition mb-2">
-                                    <i class="fas fa-upload mr-2"></i>Subir Imagen
+                                    <i class="fas fa-upload mr-2"></i>Subir Imagen / Video
                                 </button>
-                                <p class="text-xs text-gray-500">JPG, PNG o WEBP. Max 5MB. Recomendado: 400x400px</p>
+                                <p class="text-xs text-gray-500">Imagen JPG/PNG/WEBP (max 5MB) o Video MP4/WEBM/MOV (max 25MB). Recomendado: 400x400px / video corto en loop.</p>
                             </div>
                         </div>
                     </div>
@@ -1764,6 +1903,46 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Bank Account Modal -->
+            <div id="bankAccountModal" class="modal-backdrop fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                <div class="bg-gray-800 border border-gray-700 rounded-2xl w-full max-w-md shadow-2xl">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-700">
+                        <h3 id="bank-account-modal-title" class="text-lg font-semibold">Nueva Cuenta Bancaria</h3>
+                        <button data-close-modal="bankAccountModal" class="text-gray-400 hover:text-white transition"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <input type="hidden" id="bank-account-edit-index">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Nombre del Banco <span class="text-red-400">*</span></label>
+                            <input type="text" id="ba-bank_name" placeholder="Ej: Banreservas" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Tipo de Cuenta</label>
+                                <select id="ba-bank_account_type" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                    <option value="Ahorros">Ahorros</option>
+                                    <option value="Corriente">Corriente</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Numero de Cuenta <span class="text-red-400">*</span></label>
+                                <input type="text" id="ba-bank_account_number" placeholder="Numero de cuenta" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Titular de la Cuenta</label>
+                            <input type="text" id="ba-bank_account_holder" placeholder="Nombre del titular" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                        </div>
+                    </div>
+                    <div class="flex gap-3 px-6 py-4 border-t border-gray-700">
+                        <button data-close-modal="bankAccountModal" class="flex-1 bg-gray-700 text-gray-300 py-2.5 rounded-lg hover:bg-gray-600 transition text-sm font-medium">Cancelar</button>
+                        <button onclick="saveBankAccount()" class="flex-1 bg-amber-500 text-black py-2.5 rounded-lg hover:bg-amber-400 transition text-sm font-semibold flex items-center justify-center gap-2">
+                            <i class="fas fa-save"></i>Guardar Cuenta
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <!-- Brand Modal -->
             <div id="brandModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -2104,6 +2283,10 @@
                     <div>
                         <label class="block text-sm font-medium mb-2">SKU</label>
                         <input type="text" id="product-sku" name="sku" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Volumen (ml)</label>
+                        <input type="number" id="product-volume_ml" name="volume_ml" min="1" max="1000" step="1" placeholder="Ej: 100" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                     </div>
                 </div>
 

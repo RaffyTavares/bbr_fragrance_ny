@@ -1,4 +1,4 @@
-// BBR Fragance - Main: Products (Loading, Rendering, Pagination, Promo, Featured, Animation)
+// BBR Fragrance - Main: Products (Loading, Rendering, Pagination, Promo, Featured, Animation)
 
 // ===================================
 // Product Loading from API
@@ -81,7 +81,8 @@ function createProductCard(product, isFeatured = false) {
             </div>
             <div class="p-6">
                 <span class="text-xs text-amber-400 uppercase tracking-wider">${brandName}</span>
-                <h3 class="text-xl font-semibold mt-2 mb-3">${product.name}</h3>
+                <h3 class="text-xl font-semibold mt-2 mb-1">${product.name}</h3>
+                ${product.volume_ml ? `<p class="text-xs text-gray-400 mb-3"><i class="fas fa-flask mr-1 text-amber-400/70"></i>${product.volume_ml} ml</p>` : '<div class="mb-3"></div>'}
                 <div class="flex items-center mb-4">
                     <div class="flex text-amber-400 text-sm">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -396,17 +397,88 @@ async function loadPromoMonth() {
             if (linkEl) linkEl.href = s.promo_link;
         }
 
-        // Promo image
+        // Promo media (image or video)
         if (s.promo_image) {
             const container = document.getElementById('promo-image-container');
             const placeholder = document.getElementById('promo-image-placeholder');
             if (container) {
                 if (placeholder) placeholder.style.display = 'none';
-                const img = document.createElement('img');
-                img.src = s.promo_image;
-                img.alt = s.promo_title || 'Promocion del Mes';
-                img.className = 'w-full h-full object-cover';
-                container.appendChild(img);
+                const isVideo = s.promo_media_type === 'video' || /\.(mp4|webm|mov)$/i.test(s.promo_image);
+
+                if (isVideo) {
+                    // Restyle container for cinematic video presentation
+                    container.className = 'relative rounded-3xl overflow-hidden border-2 group';
+                    container.style.width = 'min(100%, 32rem)';
+                    container.style.aspectRatio = '4 / 5';
+                    container.style.height = 'auto';
+                    container.style.borderColor = 'rgba(201,169,110,0.45)';
+                    container.style.background = 'rgba(0,0,0,0.4)';
+                    container.style.boxShadow = '0 30px 80px -20px rgba(0,0,0,0.8), 0 0 80px rgba(201,169,110,0.25), inset 0 0 60px rgba(201,169,110,0.06)';
+                    container.style.backdropFilter = 'blur(12px)';
+
+                    // Video element
+                    const video = document.createElement('video');
+                    video.src = s.promo_image;
+                    video.autoplay = true;
+                    video.muted = true; // required for autoplay
+                    video.loop = true;
+                    video.playsInline = true;
+                    video.setAttribute('playsinline', '');
+                    video.className = 'w-full h-full object-cover';
+                    container.appendChild(video);
+
+                    // Soft gold gradient overlay (top + bottom) for elegance
+                    const overlay = document.createElement('div');
+                    overlay.className = 'absolute inset-0 pointer-events-none';
+                    overlay.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.55) 100%)';
+                    container.appendChild(overlay);
+
+                    // Inner gold ring
+                    const ring = document.createElement('div');
+                    ring.className = 'absolute inset-0 rounded-3xl pointer-events-none';
+                    ring.style.boxShadow = 'inset 0 0 0 1px rgba(212,186,133,0.25)';
+                    container.appendChild(ring);
+
+                    // Mute / Unmute button
+                    const audioBtn = document.createElement('button');
+                    audioBtn.type = 'button';
+                    audioBtn.setAttribute('aria-label', 'Activar sonido');
+                    audioBtn.className = 'absolute bottom-4 right-4 w-12 h-12 rounded-full flex items-center justify-center transition transform hover:scale-110 backdrop-blur-md';
+                    audioBtn.style.background = 'rgba(0,0,0,0.55)';
+                    audioBtn.style.border = '1px solid rgba(201,169,110,0.5)';
+                    audioBtn.style.color = '#D4BA85';
+                    audioBtn.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+                    audioBtn.innerHTML = '<i class="fas fa-volume-mute text-lg"></i>';
+                    audioBtn.addEventListener('click', () => {
+                        video.muted = !video.muted;
+                        if (!video.muted) {
+                            video.volume = 1;
+                            // Ensure playback when user gesture unlocks audio
+                            video.play().catch(() => {});
+                            audioBtn.innerHTML = '<i class="fas fa-volume-up text-lg"></i>';
+                            audioBtn.setAttribute('aria-label', 'Silenciar');
+                        } else {
+                            audioBtn.innerHTML = '<i class="fas fa-volume-mute text-lg"></i>';
+                            audioBtn.setAttribute('aria-label', 'Activar sonido');
+                        }
+                    });
+                    container.appendChild(audioBtn);
+
+                    // "Oferta Especial" floating chip top-left for editorial feel
+                    const chip = document.createElement('div');
+                    chip.className = 'absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs uppercase tracking-widest font-semibold backdrop-blur-md';
+                    chip.style.background = 'rgba(0,0,0,0.55)';
+                    chip.style.border = '1px solid rgba(201,169,110,0.5)';
+                    chip.style.color = '#D4BA85';
+                    chip.innerHTML = '<i class="fas fa-circle text-[6px] mr-2 align-middle" style="color:#C9A96E;"></i>En vivo';
+                    container.appendChild(chip);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = s.promo_image;
+                    img.alt = s.promo_title || 'Promocion del Mes';
+                    img.className = 'w-full h-full object-cover';
+                    container.appendChild(img);
+                }
             }
         }
     } catch (e) {

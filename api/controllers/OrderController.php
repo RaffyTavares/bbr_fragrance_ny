@@ -1,6 +1,7 @@
+
 <?php
 /**
- * BBR Fragance - Order Controller
+ * BBR Fragrance - Order Controller
  * Gestiona pedidos desde la tienda online (storefront)
  */
 
@@ -29,9 +30,9 @@ class OrderController {
 
         // Validar metodo de pago si viene
         $paymentMethod = $data['payment_method'] ?? 'pending';
-        $validPayments = ['cash', 'card', 'transfer', 'pending'];
+        $validPayments = ['cash', 'card', 'transfer', 'card_online', 'pending'];
         if (!in_array($paymentMethod, $validPayments)) {
-            errorResponse('Metodo de pago no valido. Opciones: cash, card, transfer.', 400);
+            errorResponse('Metodo de pago no valido. Opciones: cash, card, transfer, card_online.', 400);
         }
 
         // Validar email si viene
@@ -41,54 +42,57 @@ class OrderController {
 
         // =====================================================================
         // RATE LIMITING: max 3 pedidos por IP o telefono en la ultima hora
+        // Se puede desactivar temporalmente con: UPDATE settings SET setting_value='0'
+        //   WHERE setting_key='order_rate_limit_enabled';
         // =====================================================================
         $clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
         $customerPhone = sanitizeString($data['customer_phone']);
         $rateLimitWindow = 1; // horas
         $rateLimitMax = 3;
 
-        // Por IP
-        $stmtRateIp = $db->prepare(
-            "SELECT COUNT(*) FROM orders
-             WHERE SUBSTRING_INDEX(notes, '[IP:', -1) LIKE :ip_pattern
-             AND created_at >= DATE_SUB(NOW(), INTERVAL :hours HOUR)"
-        );
-        // Mejor usar un campo dedicado: buscar por IP en notes no es ideal,
-        // asi que contamos por telefono que es mas confiable para este caso
-        $stmtRatePhone = $db->prepare(
-            "SELECT COUNT(*) FROM orders
-             WHERE customer_phone = :phone
-             AND created_at >= DATE_SUB(NOW(), INTERVAL :hours HOUR)"
-        );
-        $stmtRatePhone->bindValue(':phone', $customerPhone);
-        $stmtRatePhone->bindValue(':hours', $rateLimitWindow, PDO::PARAM_INT);
-        $stmtRatePhone->execute();
-        $phoneOrderCount = (int)$stmtRatePhone->fetchColumn();
+        // Leer toggle (por defecto activo si no existe el setting)
+        $stmtRl = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'order_rate_limit_enabled' LIMIT 1");
+        $stmtRl->execute();
+        $rateLimitEnabled = $stmtRl->fetchColumn();
+        $rateLimitEnabled = ($rateLimitEnabled === false || $rateLimitEnabled === null) ? '1' : (string)$rateLimitEnabled;
 
-        if ($phoneOrderCount >= $rateLimitMax) {
-            errorResponse(
-                "Has alcanzado el limite de {$rateLimitMax} pedidos por hora con este telefono. Intenta mas tarde.",
-                429
+        if ($rateLimitEnabled === '1') {
+            // Por telefono
+            $stmtRatePhone = $db->prepare(
+                "SELECT COUNT(*) FROM orders
+                 WHERE customer_phone = :phone
+                 AND created_at >= DATE_SUB(NOW(), INTERVAL :hours HOUR)"
             );
-        }
+            $stmtRatePhone->bindValue(':phone', $customerPhone);
+            $stmtRatePhone->bindValue(':hours', $rateLimitWindow, PDO::PARAM_INT);
+            $stmtRatePhone->execute();
+            $phoneOrderCount = (int)$stmtRatePhone->fetchColumn();
 
-        // Por IP
-        $stmtRateIp = $db->prepare(
-            "SELECT COUNT(*) FROM orders o
-             INNER JOIN activity_log al ON al.entity_type = 'order' AND al.entity_id = o.id
-                AND al.action = 'create' AND al.ip_address = :ip
-             WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL :hours HOUR)"
-        );
-        $stmtRateIp->bindValue(':ip', $clientIp);
-        $stmtRateIp->bindValue(':hours', $rateLimitWindow, PDO::PARAM_INT);
-        $stmtRateIp->execute();
-        $ipOrderCount = (int)$stmtRateIp->fetchColumn();
+            if ($phoneOrderCount >= $rateLimitMax) {
+                errorResponse(
+                    "Has alcanzado el limite de {$rateLimitMax} pedidos por hora con este telefono. Intenta mas tarde.",
+                    429
+                );
+            }
 
-        if ($ipOrderCount >= $rateLimitMax) {
-            errorResponse(
-                "Has alcanzado el limite de {$rateLimitMax} pedidos por hora. Intenta mas tarde.",
-                429
+            // Por IP
+            $stmtRateIp = $db->prepare(
+                "SELECT COUNT(*) FROM orders o
+                 INNER JOIN activity_log al ON al.entity_type = 'order' AND al.entity_id = o.id
+                    AND al.action = 'create' AND al.ip_address = :ip
+                 WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL :hours HOUR)"
             );
+            $stmtRateIp->bindValue(':ip', $clientIp);
+            $stmtRateIp->bindValue(':hours', $rateLimitWindow, PDO::PARAM_INT);
+            $stmtRateIp->execute();
+            $ipOrderCount = (int)$stmtRateIp->fetchColumn();
+
+            if ($ipOrderCount >= $rateLimitMax) {
+                errorResponse(
+                    "Has alcanzado el limite de {$rateLimitMax} pedidos por hora. Intenta mas tarde.",
+                    429
+                );
+            }
         }
 
         // =====================================================================

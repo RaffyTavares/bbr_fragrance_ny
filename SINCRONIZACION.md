@@ -1,4 +1,4 @@
-# 🔄 Sistema de Sincronización - Bbr_Fragance
+# 🔄 Sistema de Sincronización - BBR Fragrance
 
 ## ✅ Problema Resuelto
 
