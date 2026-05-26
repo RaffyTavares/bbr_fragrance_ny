@@ -142,7 +142,7 @@ class MailService {
   <tr><td style="padding:30px;color:#D1D5DB;font-size:14px;line-height:1.6">' . $content . '</td></tr>
   <!-- Footer -->
   <tr><td style="padding:20px 30px;border-top:1px solid #374151;text-align:center;color:#6B7280;font-size:12px">
-    <p style="margin:0">BBR Fragrance - Santo Domingo, R.D.</p>
+    <p style="margin:0">BBR Fragrance NY - 601 West 162 Street, New York, NY 10032</p>
     <p style="margin:4px 0 0">Este es un email automatico, no responder directamente.</p>
   </td></tr>
 </table>

@@ -472,7 +472,7 @@ ${r.payment?.cash_received ? `<div class="row"><span>Recibido:</span><span>RD$${
 <div class="row bold"><span>Cambio:</span><span>RD$${parseFloat(r.payment.cash_change).toFixed(2)}</span></div>` : ''}
 <div class="line"></div>
 <div class="center" style="margin:8px 0;font-size:11px">Gracias por su compra!</div>
-<div class="center" style="font-size:10px">${r.store?.store_footer || 'BBR Fragrance - Santo Domingo, R.D.'}</div>
+<div class="center" style="font-size:10px">${r.store?.store_footer || 'BBR Fragrance NY - 601 West 162 Street, New York, NY 10032'}</div>
 <br><button onclick="window.print()" class="no-print" style="width:100%;padding:10px;cursor:pointer;font-size:14px;background:#C9A96E;border:none;border-radius:5px;font-weight:bold">Imprimir Recibo</button>
 </body></html>`);
     win.document.close();

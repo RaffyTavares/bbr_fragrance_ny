@@ -750,7 +750,7 @@ class OrderController {
         $businessName    = htmlspecialchars($settings['business_name']    ?? 'BBR Fragrance', ENT_QUOTES, 'UTF-8');
         $businessPhone   = htmlspecialchars($settings['business_phone']   ?? '', ENT_QUOTES, 'UTF-8');
         $businessEmail   = htmlspecialchars($settings['business_email']   ?? '', ENT_QUOTES, 'UTF-8');
-        $businessAddress = htmlspecialchars($settings['business_address'] ?? 'Rep. Dominicana', ENT_QUOTES, 'UTF-8');
+        $businessAddress = htmlspecialchars($settings['business_address'] ?? '601 West 162 Street, New York, NY 10032', ENT_QUOTES, 'UTF-8');
 
         $orderNumber   = htmlspecialchars($order['order_number'], ENT_QUOTES, 'UTF-8');
         $customerName  = htmlspecialchars($order['customer_name'] ?? '', ENT_QUOTES, 'UTF-8');

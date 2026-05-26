@@ -1109,10 +1109,10 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `updated_at`) VALUES
 (1, 'store_name', 'BBR Fragrance', '2026-05-18 13:16:32'),
-(2, 'whatsapp_number', '8094855693', '2026-05-18 13:16:32'),
+(2, 'whatsapp_number', '6462285892', '2026-05-18 13:16:32'),
 (3, 'contact_email', 'ventas@bbrfragrance.es', '2026-05-18 13:16:32'),
-(4, 'contact_phone', '+18095261115', '2026-05-18 13:16:32'),
-(5, 'address', 'Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA, Santo Domingo, R.D.', '2026-05-18 13:16:32'),
+(4, 'contact_phone', '+16462285892', '2026-05-18 13:16:32'),
+(5, 'address', '601 West 162 Street, New York, NY 10032', '2026-05-18 13:16:32'),
 (6, 'currency_symbol', 'RD$', '2026-03-25 14:49:23'),
 (7, 'currency_code', 'DOP', '2026-03-25 14:49:23'),
 (8, 'tax_name', 'ITBIS', '2026-05-18 13:16:32'),

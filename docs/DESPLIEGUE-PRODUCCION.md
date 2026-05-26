@@ -172,7 +172,7 @@ Verifica que el número sea el correcto para producción:
 
 ```javascript
 const CONFIG = {
-    whatsappNumber: '18094855693',   // Confirmar que este sea el número correcto
+    whatsappNumber: '16462285892',   // Confirmar que este sea el número correcto
     ...
 };
 ```

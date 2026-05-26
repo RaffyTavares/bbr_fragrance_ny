@@ -73,10 +73,10 @@ INSERT INTO expense_categories (name, slug, icon, color) VALUES
 -- ============================================================
 INSERT INTO settings (setting_key, setting_value) VALUES
 ('store_name', 'BBR Fragrance'),
-('whatsapp_number', '+18094855693'),
+('whatsapp_number', '+16462285892'),
 ('contact_email', 'bbrperfume@gmail.com'),
-('contact_phone', '+18095261115'),
-('address', 'Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA, Santo Domingo, R.D.'),
+('contact_phone', '+16462285892'),
+('address', '601 West 162 Street, New York, NY 10032'),
 ('currency_symbol', 'RD$'),
 ('currency_code', 'DOP'),
 ('tax_name', 'ITBIS'),
