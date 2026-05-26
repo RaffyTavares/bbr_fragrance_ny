@@ -52,7 +52,7 @@ function openCloseRegisterModal() {
     if (!modal) return;
     document.getElementById('closing-amount').value = '';
     setText('close-register-expected', formatCurrency(registerExpectedCash));
-    setText('close-difference', 'RD$ 0.00');
+    setText('close-difference', formatCurrency(0));
     const diffEl = document.getElementById('close-difference');
     if (diffEl) diffEl.className = 'text-2xl font-bold text-gray-400';
     const notes = document.getElementById('closing-notes');

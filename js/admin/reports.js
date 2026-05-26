@@ -54,7 +54,7 @@ async function loadSalesReport() {
         reportSalesChart = new Chart(ctx, {
             type: 'bar',
             data: { labels: data.map(d => formatDateShort(d.date)), datasets: [{ label: 'Ventas', data: data.map(d => parseFloat(d.total_sales) || 0), backgroundColor: 'rgba(201,169,110,0.6)', borderColor: '#C9A96E', borderWidth: 1 }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#9CA3AF' }, grid: { display: false } }, y: { ticks: { color: '#9CA3AF', callback: v => 'RD$' + v.toLocaleString() }, grid: { color: 'rgba(75,85,99,0.3)' } } } }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#9CA3AF' }, grid: { display: false } }, y: { ticks: { color: '#9CA3AF', callback: v => 'USD$' + v.toLocaleString('en-US') }, grid: { color: 'rgba(75,85,99,0.3)' } } } }
         });
     }
     const tbody = document.getElementById('report-sales-table');

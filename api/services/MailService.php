@@ -1,6 +1,6 @@
 <?php
 /**
- * BBR Fragrance - Mail Service
+ * BBR Fragrance NY - Mail Service
  * Envio de emails usando PHPMailer con SMTP
  */
 
@@ -42,7 +42,7 @@ class MailService {
             : PHPMailer::ENCRYPTION_STARTTLS;
 
         $fromEmail = !empty($s['smtp_from_email']) ? $s['smtp_from_email'] : $s['smtp_user'];
-        $fromName  = !empty($s['smtp_from_name']) ? $s['smtp_from_name'] : ($s['store_name'] ?? 'BBR Fragrance');
+        $fromName  = !empty($s['smtp_from_name']) ? $s['smtp_from_name'] : ($s['store_name'] ?? 'BBR Fragrance NY');
         $mail->setFrom($fromEmail, $fromName);
 
         return $mail;
@@ -61,13 +61,13 @@ class MailService {
 
             $mail->addAddress($toEmail, $toName);
             $mail->isHTML(true);
-            $mail->Subject = 'Prueba de Email - BBR Fragrance';
+            $mail->Subject = 'Prueba de Email - BBR Fragrance NY';
             $mail->Body    = self::baseTemplate(
                 'Prueba de Configuracion SMTP',
                 '<p style="margin:0 0 16px;font-size:16px;color:#fff">Este es un email de <strong>prueba</strong>.</p>
                  <p style="margin:0;color:#9CA3AF">Si estas viendo este mensaje, la configuracion SMTP esta funcionando correctamente.</p>'
             );
-            $mail->AltBody = 'Prueba de configuracion SMTP - BBR Fragrance. Si recibes este mensaje, el correo funciona correctamente.';
+            $mail->AltBody = 'Prueba de configuracion SMTP - BBR Fragrance NY. Si recibes este mensaje, el correo funciona correctamente.';
             $mail->send();
             return ['success' => true, 'message' => "Email de prueba enviado a {$toEmail}"];
         } catch (\Exception $e) {
@@ -85,9 +85,9 @@ class MailService {
 
             $mail->addAddress($order['customer_email'], $order['customer_name']);
             $mail->isHTML(true);
-            $mail->Subject = 'Confirmacion de Pedido ' . $order['order_number'] . ' - BBR Fragrance';
+            $mail->Subject = 'Confirmacion de Pedido ' . $order['order_number'] . ' - BBR Fragrance NY';
             $mail->Body    = self::orderConfirmationTemplate($order);
-            $mail->AltBody = "Tu pedido {$order['order_number']} ha sido recibido. Total: RD$ " . number_format($order['total'], 2);
+            $mail->AltBody = "Tu pedido {$order['order_number']} ha sido recibido. Total: USD$ " . number_format($order['total'], 2);
             $mail->send();
         } catch (Exception $e) {
             error_log('MailService::sendOrderConfirmation failed: ' . $e->getMessage());
@@ -135,7 +135,7 @@ class MailService {
 <table width="600" cellpadding="0" cellspacing="0" style="background:#1F2937;border-radius:12px;overflow:hidden;max-width:100%">
   <!-- Header -->
   <tr><td style="background:linear-gradient(135deg,#C9A96E,#B8941F);padding:24px;text-align:center">
-    <h1 style="margin:0;color:#000;font-size:22px;font-weight:bold">BBR Fragrance</h1>
+    <h1 style="margin:0;color:#000;font-size:22px;font-weight:bold">BBR Fragrance NY</h1>
     <p style="margin:6px 0 0;color:rgba(0,0,0,0.7);font-size:13px">' . htmlspecialchars($title) . '</p>
   </td></tr>
   <!-- Body -->
@@ -161,8 +161,8 @@ class MailService {
                 $items .= '<tr>
                     <td style="padding:8px 0;border-bottom:1px solid #374151;color:#D1D5DB">' . htmlspecialchars($item['product_name']) . ' <span style="color:#9CA3AF;font-size:12px">' . htmlspecialchars($item['product_brand'] ?? '') .'</span></td>
                     <td style="padding:8px 0;border-bottom:1px solid #374151;text-align:center;color:#D1D5DB">' . $item['quantity'] . '</td>
-                    <td style="padding:8px 0;border-bottom:1px solid #374151;text-align:right;color:#D1D5DB">RD$ ' . $unitPrice . '</td>
-                    <td style="padding:8px 0;border-bottom:1px solid #374151;text-align:right;color:#C9A96E;font-weight:bold">RD$ ' . $lineTotal . '</td>
+                    <td style="padding:8px 0;border-bottom:1px solid #374151;text-align:right;color:#D1D5DB">USD$ ' . $unitPrice . '</td>
+                    <td style="padding:8px 0;border-bottom:1px solid #374151;text-align:right;color:#C9A96E;font-weight:bold">USD$ ' . $lineTotal . '</td>
                 </tr>';
             }
         }
@@ -189,11 +189,11 @@ class MailService {
 
         <div style="background:#111827;border-radius:8px;padding:16px">
             <table width="100%" style="font-size:13px">
-                <tr><td style="color:#9CA3AF;padding:4px 0">Subtotal:</td><td style="text-align:right;color:#D1D5DB">RD$ ' . number_format((float)$order['subtotal'], 2) . '</td></tr>
-                <tr><td style="color:#9CA3AF;padding:4px 0">ITBIS:</td><td style="text-align:right;color:#D1D5DB">RD$ ' . number_format((float)$order['tax_amount'], 2) . '</td></tr>
-                <tr><td style="color:#9CA3AF;padding:4px 0">Envio:</td><td style="text-align:right;color:#D1D5DB">RD$ ' . number_format((float)$order['shipping_cost'], 2) . '</td></tr>
+                <tr><td style="color:#9CA3AF;padding:4px 0">Subtotal:</td><td style="text-align:right;color:#D1D5DB">USD$ ' . number_format((float)$order['subtotal'], 2) . '</td></tr>
+                <tr><td style="color:#9CA3AF;padding:4px 0">Sales Tax:</td><td style="text-align:right;color:#D1D5DB">USD$ ' . number_format((float)$order['tax_amount'], 2) . '</td></tr>
+                <tr><td style="color:#9CA3AF;padding:4px 0">Envio:</td><td style="text-align:right;color:#D1D5DB">USD$ ' . number_format((float)$order['shipping_cost'], 2) . '</td></tr>
                 <tr><td colspan="2" style="border-top:1px solid #374151;padding-top:8px"></td></tr>
-                <tr><td style="color:#fff;font-size:16px;font-weight:bold;padding:4px 0">Total:</td><td style="text-align:right;color:#C9A96E;font-size:16px;font-weight:bold">RD$ ' . number_format((float)$order['total'], 2) . '</td></tr>
+                <tr><td style="color:#fff;font-size:16px;font-weight:bold;padding:4px 0">Total:</td><td style="text-align:right;color:#C9A96E;font-size:16px;font-weight:bold">USD$ ' . number_format((float)$order['total'], 2) . '</td></tr>
             </table>
         </div>
 
@@ -233,7 +233,7 @@ class MailService {
 
         <div style="background:#111827;border-radius:8px;padding:16px">
             <table width="100%" style="font-size:13px">
-                <tr><td style="color:#9CA3AF;padding:4px 0">Total del Pedido:</td><td style="text-align:right;color:#C9A96E;font-weight:bold;font-size:16px">RD$ ' . number_format((float)$order['total'], 2) . '</td></tr>
+                <tr><td style="color:#9CA3AF;padding:4px 0">Total del Pedido:</td><td style="text-align:right;color:#C9A96E;font-weight:bold;font-size:16px">USD$ ' . number_format((float)$order['total'], 2) . '</td></tr>
             </table>
         </div>
 

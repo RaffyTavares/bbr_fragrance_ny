@@ -11,11 +11,12 @@ let posRegisterSessionId = null;
 async function loadPOSInit() {
     const res = await api('/settings');
     if (res?.success) {
-        taxPercent = parseFloat(res.data.tax_percent) || 18;
+        taxPercent = parseFloat(res.data.tax_percent) || 0;
         taxEnabled = res.data.tax_enabled === '1';
-        ncfEnabled = res.data.ncf_enabled === '1';
+        // NCF disabled for NY branch
+        ncfEnabled = (typeof NY_FEATURES !== 'undefined' && NY_FEATURES.ncf === false) ? false : (res.data.ncf_enabled === '1');
     }
-    // NCF section visibility
+    // NCF section visibility (always hidden in NY)
     const ncfSection = document.getElementById('pos-ncf-section');
     if (ncfSection) ncfSection.style.display = ncfEnabled ? 'block' : 'none';
     if (ncfEnabled) loadNcfStatus();
@@ -294,10 +295,10 @@ function updatePOSTotals() {
     setText('pos-tax', formatCurrency(tax));
     setText('pos-total', formatCurrency(total));
 
-    // Update ITBIS label based on NCF toggle
+    // Update Tax label based on NCF toggle (NCF disabled in NY)
     const isNcfSale = document.getElementById('pos-ncf-toggle')?.checked || false;
     const taxLabel = document.getElementById('pos-tax-label');
-    if (taxLabel) taxLabel.textContent = isNcfSale ? 'ITBIS (+):' : 'ITBIS (incl.):';
+    if (taxLabel) taxLabel.textContent = isNcfSale ? 'Sales Tax (+):' : 'Sales Tax (incl.):';
 }
 
 function openCashModal() {
@@ -459,11 +460,11 @@ ${ncfHtml}
 ${r.sale?.customer ? `<div class="row"><span>Cliente:</span><span>${r.sale.customer}</span></div>` : ''}
 <div class="line"></div>
 <div class="bold" style="margin-bottom:4px">ARTICULOS:</div>
-${(r.items || []).map(i => `<div class="row"><span>${i.quantity}x ${i.product_name}</span><span>RD$${parseFloat(i.subtotal).toFixed(2)}</span></div>`).join('')}
+${(r.items || []).map(i => `<div class="row"><span>${i.quantity}x ${i.product_name}</span><span>USD$${parseFloat(i.subtotal).toFixed(2)}</span></div>`).join('')}
 <div class="line"></div>
-<div class="row"><span>Subtotal:</span><span>RD$${parseFloat(r.totals?.subtotal || 0).toFixed(2)}</span></div>
-${parseFloat(r.totals?.discount_amount) > 0 ? `<div class="row"><span>Desc. (${r.totals.discount_percent}%):</span><span>-RD$${parseFloat(r.totals.discount_amount).toFixed(2)}</span></div>` : ''}
-${parseFloat(r.totals?.tax_amount) > 0 ? `<div class="row"><span>ITBIS ${r.ncf?.ncf_number ? '(+)' : '(incl.)'} ${r.totals.tax_percent}%:</span><span>RD$${parseFloat(r.totals.tax_amount).toFixed(2)}</span></div>` : ''}
+<div class="row"><span>Subtotal:</span><span>USD$${parseFloat(r.totals?.subtotal || 0).toFixed(2)}</span></div>
+${parseFloat(r.totals?.discount_amount) > 0 ? `<div class="row"><span>Desc. (${r.totals.discount_percent}%):</span><span>-USD$${parseFloat(r.totals.discount_amount).toFixed(2)}</span></div>` : ''}
+${parseFloat(r.totals?.tax_amount) > 0 ? `<div class="row"><span>Sales Tax ${r.ncf?.ncf_number ? '(+)' : '(incl.)'} ${r.totals.tax_percent}%:</span><span>USD$${parseFloat(r.totals.tax_amount).toFixed(2)}</span></div>` : ''}
 <div class="line"></div>
 <div class="row bold big"><span>TOTAL:</span><span>RD$${parseFloat(r.totals?.total || 0).toFixed(2)}</span></div>
 <div class="line"></div>

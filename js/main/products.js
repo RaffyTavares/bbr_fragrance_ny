@@ -214,6 +214,9 @@ async function renderProducts() {
 
     // Animate cards in
     animateProductCards();
+
+    // Re-apply translations to newly rendered cards
+    window.BBRi18n?.refresh();
 }
 
 function getCurrentFilterParams() {

@@ -45,12 +45,12 @@ async function loadProductDetail() {
     const price = parseFloat(product.price) || 0;
 
     // Update page title and SEO meta tags dynamically
-    const pageTitle = `${product.name}${product.brand_name ? ' - ' + product.brand_name : ''} | BBR Fragrance`;
-    const pageDesc  = `Compra ${product.name}${product.brand_name ? ' de ' + product.brand_name : ''} - Perfume original de lujo con garantía de autenticidad. ${product.family_name ? 'Familia olfativa: ' + product.family_name + '.' : ''} BBR Fragrance República Dominicana.`;
-    const pageUrl   = `https://bbrfragrance.es/pages/producto-detalle.html?id=${productId}`;
+    const pageTitle = `${product.name}${product.brand_name ? ' - ' + product.brand_name : ''} | BBR Fragrance NY`;
+    const pageDesc  = `Buy ${product.name}${product.brand_name ? ' by ' + product.brand_name : ''} - Original luxury perfume with authenticity guarantee. ${product.family_name ? 'Fragrance family: ' + product.family_name + '.' : ''} BBR Fragrance NY - New York City.`;
+    const pageUrl   = `https://bbrfragrance-ny.com/pages/producto-detalle.html?id=${productId}`;
     const pageImage = product.images && product.images.length > 0
         ? (product.images[0].url || product.images[0].image_url)
-        : 'https://bbrfragrance.es/images/LOGO-BBR.png';
+        : 'https://bbrfragrance-ny.com/images/LOGO-BBR.png';
 
     document.title = pageTitle;
     const setMeta = (id, attr, val) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); };
@@ -73,14 +73,14 @@ async function loadProductDetail() {
         "name": product.name,
         "description": pageDesc,
         "image": pageImage,
-        "brand": { "@type": "Brand", "name": product.brand_name || "BBR Fragrance" },
+        "brand": { "@type": "Brand", "name": product.brand_name || "BBR Fragrance NY" },
         "offers": {
             "@type": "Offer",
             "url": pageUrl,
-            "priceCurrency": "DOP",
+            "priceCurrency": "USD",
             "price": price.toFixed(2),
             "availability": stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-            "seller": { "@type": "Organization", "name": "BBR Fragrance" }
+            "seller": { "@type": "Organization", "name": "BBR Fragrance NY" }
         }
     });
     document.head.appendChild(schemaScript);
@@ -235,6 +235,9 @@ async function loadProductDetail() {
 
     // Load related products
     loadRelatedProducts(product);
+
+    // Re-apply translations to dynamically injected DOM
+    window.BBRi18n?.refresh();
 }
 
 function setupDetailPageListeners(product) {

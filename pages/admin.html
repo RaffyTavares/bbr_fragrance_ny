@@ -429,7 +429,7 @@
                                         <span id="pos-discount-amount" class="text-red-400">-RD$0.00</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span class="text-gray-400" id="pos-tax-label">ITBIS (incl.):</span>
+                                        <span class="text-gray-400" id="pos-tax-label">Sales Tax (incl.):</span>
                                         <span id="pos-tax">RD$0.00</span>
                                     </div>
                                     <div class="flex justify-between text-xl font-bold pt-2 border-t border-gray-700">
@@ -1479,7 +1479,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Nombre del Impuesto</label>
-                                <input type="text" id="setting-tax_name" value="ITBIS" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-tax_name" value="Sales Tax" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Porcentaje (%)</label>
@@ -1522,8 +1522,8 @@
                         </div>
                     </div>
 
-                    <!-- Comprobantes Fiscales (NCF) -->
-                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <!-- Comprobantes Fiscales (NCF) - DISABLED for NY branch -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6" style="display:none">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold flex items-center">
                                 <i class="fas fa-file-invoice text-amber-400 mr-2"></i>
@@ -1684,7 +1684,7 @@
                                             <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-purple-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                                         </label>
                                     </div>
-                                    <div class="flex items-center justify-between bg-gray-900 rounded-lg px-4 py-3">
+                                    <div class="flex items-center justify-between bg-gray-900 rounded-lg px-4 py-3" style="display:none">
                                         <div class="flex items-center gap-3">
                                             <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                                                 <i class="fas fa-lock text-amber-400 text-sm"></i>
@@ -1701,8 +1701,8 @@
                         </div>
                     </div>
 
-                    <!-- Pasarela Cardnet -->
-                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <!-- Pasarela Cardnet - DISABLED for NY branch -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6" style="display:none">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold flex items-center">
                                 <i class="fas fa-credit-card text-amber-400 mr-2"></i>

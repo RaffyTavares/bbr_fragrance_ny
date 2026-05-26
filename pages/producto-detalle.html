@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfume Original | BBR Fragrance</title>
-    <meta name="description" id="meta-description" content="Perfume original de lujo con garantía de autenticidad | BBR Fragrance - República Dominicana">
-    <meta name="keywords" content="perfume original, fragancia de lujo, BBR Fragrance, perfume auténtico, perfume importado República Dominicana">
-    <meta name="author" content="BBR Fragrance">
+    <title>Original Perfume | BBR Fragrance NY</title>
+    <meta name="description" id="meta-description" content="Original luxury perfume with authenticity guarantee | BBR Fragrance NY - New York City">
+    <meta name="keywords" content="original perfume, luxury fragrance, BBR Fragrance NY, authentic perfume, imported perfume New York City">
+    <meta name="author" content="BBR Fragrance NY">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" id="canonical-url" href="https://bbrfragrance.es/pages/producto-detalle.html">
+    <link rel="canonical" id="canonical-url" href="https://bbrfragrance-ny.com/pages/producto-detalle.html">
 
-    <!-- Open Graph (dinámico via JS) -->
+    <!-- Open Graph (dynamic via JS) -->
     <meta property="og:type" content="product">
-    <meta property="og:title" id="og-title" content="Perfume Original | BBR Fragrance">
-    <meta property="og:description" id="og-description" content="Perfume original de lujo con garantía de autenticidad - BBR Fragrance República Dominicana">
-    <meta property="og:url" id="og-url" content="https://bbrfragrance.es/pages/producto-detalle.html">
-    <meta property="og:site_name" content="BBR Fragrance">
-    <meta property="og:image" id="og-image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
-    <meta property="og:locale" content="es_DO">
+    <meta property="og:title" id="og-title" content="Original Perfume | BBR Fragrance NY">
+    <meta property="og:description" id="og-description" content="Original luxury perfume with authenticity guarantee - BBR Fragrance NY, New York City">
+    <meta property="og:url" id="og-url" content="https://bbrfragrance-ny.com/pages/producto-detalle.html">
+    <meta property="og:site_name" content="BBR Fragrance NY">
+    <meta property="og:image" id="og-image" content="https://bbrfragrance-ny.com/images/LOGO-BBR.png">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_US">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" id="tw-title" content="Perfume Original | BBR Fragrance">
-    <meta name="twitter:description" id="tw-description" content="Perfume original de lujo - BBR Fragrance República Dominicana">
-    <meta name="twitter:image" id="tw-image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
+    <meta name="twitter:title" id="tw-title" content="Original Perfume | BBR Fragrance NY">
+    <meta name="twitter:description" id="tw-description" content="Original luxury perfume - BBR Fragrance NY, New York City">
+    <meta name="twitter:image" id="tw-image" content="https://bbrfragrance-ny.com/images/LOGO-BBR.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -65,18 +66,22 @@
             <div class="flex justify-between items-center">
                 <div class="logo">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="nav-logo">
-                        <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance</span>
+                        <img src="../images/logo1.jpeg" alt="BBR Fragrance NY" class="nav-logo">
+                        <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance NY</span>
                     </a>
                 </div>
                 <ul class="hidden lg:flex space-x-8 text-sm uppercase tracking-wider">
-                    <li><a href="../index.html" class="hover:text-amber-400 transition">Inicio</a></li>
-                    <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorias</a></li>
-                    <li><a href="productos.html" class="hover:text-amber-400 transition">Productos</a></li>
-                    <li><a href="../index.html#sobre-nosotros" class="hover:text-amber-400 transition">Nosotros</a></li>
-                    <li><a href="../index.html#contacto" class="hover:text-amber-400 transition">Contacto</a></li>
+                    <li><a href="../index.html" class="hover:text-amber-400 transition" data-i18n="nav.home">Inicio</a></li>
+                    <li><a href="../index.html#categorias" class="hover:text-amber-400 transition" data-i18n="nav.categories">Categorias</a></li>
+                    <li><a href="productos.html" class="hover:text-amber-400 transition" data-i18n="nav.products">Productos</a></li>
+                    <li><a href="../index.html#sobre-nosotros" class="hover:text-amber-400 transition" data-i18n="nav.about">Nosotros</a></li>
+                    <li><a href="../index.html#contacto" class="hover:text-amber-400 transition" data-i18n="nav.contact">Contacto</a></li>
                 </ul>
                 <div class="flex items-center space-x-4">
+                    <button id="language-toggle" class="language-toggle" type="button" aria-label="Cambiar idioma">
+                        <i class="fas fa-language"></i>
+                        <span id="language-toggle-text">EN</span>
+                    </button>
                     <button id="search-btn" class="hover:text-amber-400 transition">
                         <i class="fas fa-search"></i>
                     </button>
@@ -94,12 +99,18 @@
         <!-- Menú móvil -->
         <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-amber-200">
             <ul class="px-4 py-4 space-y-3">
-                <li><a href="../index.html" class="block hover:text-amber-400 transition">Inicio</a></li>
-                <li><a href="../index.html#categorias" class="block hover:text-amber-400 transition">Categorías</a></li>
-                <li><a href="productos.html" class="block hover:text-amber-400 transition">Productos</a></li>
-                <li><a href="../index.html#promo-month-section" class="block hover:text-amber-400 transition">Promociones</a></li>
-                <li><a href="../index.html#sobre-nosotros" class="block hover:text-amber-400 transition">Nosotros</a></li>
-                <li><a href="../index.html#contacto" class="block hover:text-amber-400 transition">Contacto</a></li>
+                <li><a href="../index.html" class="block hover:text-amber-400 transition" data-i18n="nav.home">Inicio</a></li>
+                <li><a href="../index.html#categorias" class="block hover:text-amber-400 transition" data-i18n="nav.categories">Categorías</a></li>
+                <li><a href="productos.html" class="block hover:text-amber-400 transition" data-i18n="nav.products">Productos</a></li>
+                <li><a href="../index.html#promo-month-section" class="block hover:text-amber-400 transition" data-i18n="nav.promotions">Promociones</a></li>
+                <li><a href="../index.html#sobre-nosotros" class="block hover:text-amber-400 transition" data-i18n="nav.about">Nosotros</a></li>
+                <li><a href="../index.html#contacto" class="block hover:text-amber-400 transition" data-i18n="nav.contact">Contacto</a></li>
+                <li>
+                    <button id="language-toggle-mobile" class="language-toggle language-toggle-mobile" type="button" aria-label="Cambiar idioma">
+                        <i class="fas fa-language"></i>
+                        <span id="language-toggle-mobile-text">EN</span>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -224,7 +235,7 @@
                 <div class="border-t border-gray-800 pt-4">
                     <div class="flex justify-between text-xl font-semibold mb-4">
                         <span>Total:</span>
-                        <span class="text-amber-400" id="cart-total">RD$ 0.00</span>
+                        <span class="text-amber-400" id="cart-total">USD$ 0.00</span>
                     </div>
                     <button id="checkout-btn" class="w-full bg-amber-500 text-black font-semibold py-4 rounded-lg hover:bg-amber-400 transition mb-3" onclick="cart.createOrder()">
                         <i class="fas fa-credit-card mr-2"></i>Proceder al pago
@@ -406,6 +417,7 @@
     <script src="../js/main/cart.js?v=3"></script>
     <script src="../js/main/products.js?v=3"></script>
     <script src="../js/main/product-detail.js?v=3"></script>
+    <script src="../js/main/i18n.js?v=2"></script>
     <script src="../js/main/ui.js?v=3"></script>
     <script src="../js/main/init.js?v=3"></script>
     <script>
