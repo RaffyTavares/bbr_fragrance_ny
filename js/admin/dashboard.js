@@ -81,7 +81,7 @@ function buildNotificationPanel(pendingOrders, lowStockCount, lowStockProducts) 
 async function loadSalesChart() {
     const res = await api('/dashboard/sales-chart?days=7');
     if (!res?.success || !res.data) return;
-    const labels = res.data.map(d => { const dt = new Date(d.date); return dt.toLocaleDateString('es-DO', { weekday: 'short', day: 'numeric' }); });
+    const labels = res.data.map(d => { const dt = new Date(d.date); return dt.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' }); });
     const values = res.data.map(d => parseFloat(d.total) || 0);
     const ctx = document.getElementById('salesChart');
     if (!ctx) return;
@@ -91,7 +91,7 @@ async function loadSalesChart() {
         data: {
             labels,
             datasets: [{
-                label: 'Ventas (RD$)', data: values,
+                label: 'Sales (USD$)', data: values,
                 borderColor: '#C9A96E', backgroundColor: 'rgba(201,169,110,0.1)',
                 fill: true, tension: 0.4, pointBackgroundColor: '#C9A96E', pointBorderWidth: 2, pointRadius: 5
             }]
@@ -101,7 +101,7 @@ async function loadSalesChart() {
             plugins: { legend: { display: false } },
             scales: {
                 x: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(75,85,99,0.3)' } },
-                y: { ticks: { color: '#9CA3AF', callback: v => 'RD$' + v.toLocaleString() }, grid: { color: 'rgba(75,85,99,0.3)' } }
+                y: { ticks: { color: '#9CA3AF', callback: v => 'USD$' + v.toLocaleString() }, grid: { color: 'rgba(75,85,99,0.3)' } }
             }
         }
     });

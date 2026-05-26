@@ -146,6 +146,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     document.getElementById('update-order-status-btn')?.addEventListener('click', updateOrderStatus);
 
+    // 7b. Orders main tab toggle (Lista / Conciliacion)
+    document.getElementById('orders-tab-list')?.addEventListener('click', () => {
+        document.getElementById('orders-list-view')?.classList.remove('hidden');
+        document.getElementById('orders-recon-view')?.classList.add('hidden');
+        document.getElementById('orders-tab-list')?.classList.replace('bg-gray-700', 'bg-amber-500');
+        document.getElementById('orders-tab-list')?.classList.replace('text-gray-300', 'text-black');
+        document.getElementById('orders-tab-recon')?.classList.replace('bg-amber-500', 'bg-gray-700');
+        document.getElementById('orders-tab-recon')?.classList.replace('text-black', 'text-gray-300');
+    });
+    document.getElementById('orders-tab-recon')?.addEventListener('click', () => {
+        document.getElementById('orders-list-view')?.classList.add('hidden');
+        document.getElementById('orders-recon-view')?.classList.remove('hidden');
+        document.getElementById('orders-tab-recon')?.classList.replace('bg-gray-700', 'bg-amber-500');
+        document.getElementById('orders-tab-recon')?.classList.replace('text-gray-300', 'text-black');
+        document.getElementById('orders-tab-list')?.classList.replace('bg-amber-500', 'bg-gray-700');
+        document.getElementById('orders-tab-list')?.classList.replace('text-black', 'text-gray-300');
+        loadReconciliation();
+    });
+
     // 8. Expense event listeners
     document.getElementById('add-expense-btn')?.addEventListener('click', () => openExpenseModal());
     document.getElementById('save-expense-btn')?.addEventListener('click', saveExpense);
@@ -213,20 +232,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 12. Settings event listeners
     document.getElementById('save-settings-btn')?.addEventListener('click', saveSettings);
 
-    // 12b. NCF event listeners
-    document.getElementById('save-ncf-btn')?.addEventListener('click', saveNcfSequence);
-    document.getElementById('pos-ncf-toggle')?.addEventListener('change', function() {
-        const typeSelect = document.getElementById('pos-ncf-type');
-        if (typeSelect) typeSelect.disabled = !this.checked;
-        validateNcfSelection();
-        updatePOSTotals();
-    });
-    document.getElementById('pos-ncf-type')?.addEventListener('change', validateNcfSelection);
-    document.getElementById('setting-ncf_enabled')?.addEventListener('change', function() {
-        const ncfSeqSection = document.getElementById('ncf-sequences-section');
-        if (ncfSeqSection) ncfSeqSection.style.display = this.checked ? 'block' : 'none';
-        if (this.checked) loadNcfSequences();
-    });
+    // 12b. NCF event listeners (disabled for NY deployment)
+    if (NY_FEATURES.ncf) {
+        document.getElementById('save-ncf-btn')?.addEventListener('click', saveNcfSequence);
+        document.getElementById('pos-ncf-toggle')?.addEventListener('change', function() {
+            const typeSelect = document.getElementById('pos-ncf-type');
+            if (typeSelect) typeSelect.disabled = !this.checked;
+            validateNcfSelection();
+            updatePOSTotals();
+        });
+        document.getElementById('pos-ncf-type')?.addEventListener('change', validateNcfSelection);
+        document.getElementById('setting-ncf_enabled')?.addEventListener('change', function() {
+            const ncfSeqSection = document.getElementById('ncf-sequences-section');
+            if (ncfSeqSection) ncfSeqSection.style.display = this.checked ? 'block' : 'none';
+            if (this.checked) loadNcfSequences();
+        });
+    }
 
     // 12a. Promotions event listeners
     document.getElementById('save-promo-month-btn')?.addEventListener('click', savePromoMonth);

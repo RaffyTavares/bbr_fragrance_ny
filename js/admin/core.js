@@ -5,7 +5,15 @@
  * JavaScript principal con API backend
  */
 
-const API = '/BBR_FRAGANCE/api';
+const API = (() => {
+    const src = document.currentScript && document.currentScript.src;
+    if (src) return new URL(src).pathname.replace(/\/js\/.*$/, '') + '/api';
+    return window.location.pathname.replace(/\/pages\/[^\/]*$/, '') + '/api';
+})();
+let _csrfToken = '';
+const NY_FEATURES = {
+    ncf: false
+};
 
 // ==================== Estado Global ====================
 let salesChart = null;
@@ -32,12 +40,17 @@ let ncfSequenceStatus = {};
 async function api(endpoint, method = 'GET', body = null) {
     try {
         const opts = { method, credentials: 'include' };
+        const headers = {};
         if (body instanceof FormData) {
             opts.body = body;
         } else if (body) {
-            opts.headers = { 'Content-Type': 'application/json' };
+            headers['Content-Type'] = 'application/json';
             opts.body = JSON.stringify(body);
         }
+        if (_csrfToken && ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+            headers['X-CSRF-Token'] = _csrfToken;
+        }
+        if (Object.keys(headers).length) opts.headers = headers;
         const res = await fetch(API + endpoint, opts);
         if (res.status === 401) {
             window.location.replace('admin-login.html');
@@ -53,19 +66,19 @@ async function api(endpoint, method = 'GET', body = null) {
 // ==================== Utilidades ====================
 function formatCurrency(amount) {
     const n = parseFloat(amount) || 0;
-    return 'RD$ ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return 'USD$ ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function formatDate(str) {
     if (!str) return '-';
     const d = new Date(str);
-    return d.toLocaleDateString('es-DO', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 function formatDateShort(str) {
     if (!str) return '-';
     const d = new Date(str);
-    return d.toLocaleDateString('es-DO', { year: 'numeric', month: 'short', day: 'numeric' });
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 function showNotification(message, type = 'success') {
@@ -125,7 +138,7 @@ function getStatusBadge(status) {
 }
 
 function getPaymentLabel(method) {
-    return { cash: 'Efectivo', card: 'Tarjeta', transfer: 'Transferencia', mixed: 'Mixto' }[method] || method;
+    return { cash: 'Efectivo', card: 'Tarjeta (POS)', transfer: 'Transferencia', mixed: 'Mixto', card_online: 'Tarjeta en Linea', pending: 'Pendiente' }[method] || method;
 }
 
 function setText(id, text) {
@@ -173,6 +186,7 @@ async function checkAuth() {
     const res = await api('/auth/check');
     if (!res || !res.success) { window.location.href = 'admin-login.html'; return false; }
     const user = res.data;
+    if (user.csrf_token) _csrfToken = user.csrf_token;
     setText('admin-fullname', user.full_name || user.username);
     const avatar = document.getElementById('admin-avatar');
     if (avatar) avatar.textContent = (user.full_name || user.username).charAt(0).toUpperCase();

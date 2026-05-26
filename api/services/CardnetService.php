@@ -68,7 +68,7 @@ class CardnetService {
     public static function getSiteBaseUrl() {
         $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-        return $scheme . '://' . $host . '/BBR_FRAGANCE';
+        return $scheme . '://' . $host . BASE_URL;
     }
 
     /**
@@ -283,6 +283,62 @@ class CardnetService {
                 ? 'Pago aprobado'
                 : ($body['ResponseMessage'] ?? $body['response_message'] ?? "Pago rechazado (codigo {$code})"),
             'raw'           => $body,
+        ];
+    }
+
+    /**
+     * Anular/reembolsar una transaccion ya aprobada.
+     *
+     * @param string $transactionId  ID de la transaccion original (payment_transaction_id)
+     * @param int    $amountCents    Monto en centavos (0 = anulacion total)
+     * @return array ['success' => bool, 'message' => string, 'raw' => array]
+     */
+    public static function voidTransaction($transactionId, $amountCents = 0) {
+        $config = self::getConfig();
+
+        // Modo simulador: reembolso instantaneo sin llamada real
+        if (self::isSimulator($config)) {
+            return [
+                'success' => true,
+                'message' => 'Reembolso procesado (simulador).',
+                'raw'     => ['simulator' => true, 'transaction_id' => $transactionId],
+            ];
+        }
+
+        $base = self::getBaseUrl($config);
+        $endpoint = rtrim($base, '/') . '/transactions/' . urlencode($transactionId) . '/void';
+
+        $payload = [
+            'MerchantNumber'   => $config['cardnet_merchant_number'],
+            'MerchantTerminal' => $config['cardnet_merchant_terminal'],
+            'TransactionType'  => '400', // 400 = Void/Refund
+            'TransactionId'    => $transactionId,
+        ];
+        if ($amountCents > 0) {
+            $payload['Amount'] = (string)$amountCents;
+        }
+        $payload['MAC'] = strtoupper(hash('sha512',
+            $payload['MerchantNumber'] . $payload['MerchantTerminal'] .
+            $transactionId . $config['cardnet_secret_key']
+        ));
+
+        $response = self::httpPost($endpoint, $payload);
+
+        if (!$response['ok']) {
+            error_log('CardnetService voidTransaction error: ' . $response['error']);
+            return ['success' => false, 'message' => 'Error de comunicacion con Cardnet: ' . $response['error']];
+        }
+
+        $body = $response['body'];
+        $code = $body['ResponseCode'] ?? $body['response_code'] ?? '';
+        $approved = ($code === '00');
+
+        return [
+            'success' => $approved,
+            'message' => $approved
+                ? 'Reembolso aprobado.'
+                : ($body['ResponseMessage'] ?? "Reembolso rechazado (codigo {$code})"),
+            'raw' => $body,
         ];
     }
 

@@ -23,6 +23,8 @@ async function loadSales(page = 1) {
     const df = document.getElementById('sales-date-from')?.value || '';
     const dt = document.getElementById('sales-date-to')?.value || '';
 
+    const source = document.getElementById('sales-filter-source')?.value || '';
+
     let url = `/sales?page=${page}&limit=20`;
     if (df) url += `&date_from=${df}`;
     if (dt) url += `&date_to=${dt}`;
@@ -30,6 +32,7 @@ async function loadSales(page = 1) {
     if (status) url += `&status=${status}`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
     if (minAmount) url += `&min_amount=${minAmount}`;
+    if (source) url += `&source=${source}`;
 
     const res = await api(url);
     const tbody = document.getElementById('sales-table');
@@ -62,11 +65,20 @@ async function loadSales(page = 1) {
     setText('sales-summary-cash', formatCurrency(sumCash));
     setText('sales-summary-other', formatCurrency(sumOther));
 
-    tbody.innerHTML = res.data.map(s => `
+    tbody.innerHTML = res.data.map(s => {
+        const isWeb = s.source === 'web';
+        const originBadge = isWeb
+            ? '<span class="ml-1.5 px-1.5 py-0.5 rounded text-xs bg-blue-500/20 text-blue-400 font-medium"><i class="fas fa-globe mr-0.5"></i>Web</span>'
+            : '';
+        const vendorCell = isWeb
+            ? '<span class="text-blue-400 text-xs"><i class="fas fa-globe mr-1"></i>Tienda Web</span>'
+            : (s.user_name || '-');
+        const canCancel = s.status === 'completed';
+        return `
         <tr class="hover:bg-gray-700/30 transition cursor-pointer" onclick="viewSale(${s.id})">
-            <td class="px-4 py-3 font-medium text-amber-400 text-sm">${s.sale_number}</td>
+            <td class="px-4 py-3 font-medium text-amber-400 text-sm">${s.sale_number}${originBadge}</td>
             <td class="px-4 py-3 text-sm text-gray-300">${formatDate(s.created_at)}</td>
-            <td class="px-4 py-3 text-sm">${s.user_name || '-'}</td>
+            <td class="px-4 py-3 text-sm">${vendorCell}</td>
             <td class="px-4 py-3 text-sm">${s.customer_name || '-'}</td>
             <td class="px-4 py-3">${getPaymentBadge(s.payment_method)}</td>
             <td class="px-4 py-3 text-right font-bold text-sm">${formatCurrency(s.total)}</td>
@@ -75,11 +87,11 @@ async function loadSales(page = 1) {
                 <div class="flex justify-end space-x-2">
                     <button onclick="event.stopPropagation(); viewSale(${s.id})" class="text-blue-400 hover:text-blue-300 transition" title="Ver detalle"><i class="fas fa-eye"></i></button>
                     <button onclick="event.stopPropagation(); printSaleById(${s.id})" class="text-gray-400 hover:text-gray-300 transition" title="Imprimir"><i class="fas fa-print"></i></button>
-                    ${s.status === 'completed' ? `<button onclick="event.stopPropagation(); cancelSale(${s.id})" class="text-red-400 hover:text-red-300 transition" title="Cancelar"><i class="fas fa-ban"></i></button>` : ''}
+                    ${canCancel ? `<button onclick="event.stopPropagation(); cancelSale(${s.id}, ${isWeb})" class="text-red-400 hover:text-red-300 transition" title="Anular venta"><i class="fas fa-ban"></i></button>` : ''}
                 </div>
             </td>
-        </tr>
-    `).join('');
+        </tr>`;
+    }).join('');
 
     if (res.pagination) {
         renderPagination('sales-pagination', res.pagination, 'loadSales');
@@ -90,10 +102,12 @@ async function loadSales(page = 1) {
 
 function getPaymentBadge(method) {
     const map = {
-        cash: ['Efectivo', 'bg-green-500/20 text-green-400', 'fa-money-bill-wave'],
-        card: ['Tarjeta', 'bg-blue-500/20 text-blue-400', 'fa-credit-card'],
-        transfer: ['Transf.', 'bg-purple-500/20 text-purple-400', 'fa-exchange-alt'],
-        mixed: ['Mixto', 'bg-orange-500/20 text-orange-400', 'fa-coins']
+        cash:        ['Efectivo',   'bg-green-500/20 text-green-400',   'fa-money-bill-wave'],
+        card:        ['Tarjeta POS','bg-blue-500/20 text-blue-400',     'fa-credit-card'],
+        transfer:    ['Transf.',    'bg-purple-500/20 text-purple-400', 'fa-exchange-alt'],
+        mixed:       ['Mixto',      'bg-orange-500/20 text-orange-400', 'fa-coins'],
+        card_online: ['Online',     'bg-cyan-500/20 text-cyan-400',     'fa-globe'],
+        pending:     ['Pendiente',  'bg-yellow-500/20 text-yellow-400', 'fa-clock'],
     };
     const [label, cls, icon] = map[method] || [method, 'bg-gray-500/20 text-gray-400', 'fa-question'];
     return `<span class="px-2 py-1 rounded-full text-xs font-medium ${cls}"><i class="fas ${icon} mr-1"></i>${label}</span>`;
@@ -110,9 +124,19 @@ async function viewSale(id) {
     setText('sale-detail-number', s.sale_number);
     document.getElementById('sale-detail-status').innerHTML = getStatusBadge(s.status);
     setText('sale-detail-date', formatDate(s.created_at));
-    setText('sale-detail-user', s.user_name || '-');
     setText('sale-detail-customer', s.customer_name || 'Sin cliente');
     setText('sale-detail-payment', getPaymentLabel(s.payment_method));
+
+    // Origen de la venta
+    const isWeb = s.source === 'web';
+    setText('sale-detail-user', isWeb ? 'Tienda Web' : (s.user_name || '-'));
+    const webBanner = document.getElementById('sale-detail-web-banner');
+    if (webBanner) {
+        webBanner.classList.toggle('hidden', !isWeb);
+        if (isWeb && s.web_order_number) {
+            setText('sale-detail-web-order', s.web_order_number);
+        }
+    }
 
     // NCF info
     const ncfSection = document.getElementById('sale-detail-ncf-section');
@@ -175,28 +199,34 @@ async function viewSale(id) {
         if (notesSection) notesSection.style.display = 'none';
     }
 
-    // Cancel button visibility
+    // Cancel button: all completed sales can be cancelled
     const cancelBtn = document.getElementById('sale-cancel-btn');
-    if (cancelBtn) cancelBtn.style.display = s.status === 'completed' ? 'inline-flex' : 'none';
+    if (cancelBtn) {
+        cancelBtn.style.display = s.status === 'completed' ? 'inline-flex' : 'none';
+        cancelBtn.onclick = () => { cancelSaleFromDetail(s.source === 'web'); };
+    }
 
     modal.classList.remove('hidden');
 }
 
-async function cancelSale(id) {
-    const ok = await showConfirm('Cancelar esta venta? Se revertira el stock y los totales del cliente.');
+async function cancelSale(id, isWeb = false) {
+    const msg = isWeb
+        ? 'Anular esta venta web? Se revertira el stock y el pedido pasara a estado Cancelado. Si el cliente pago con tarjeta online, gestiona el reembolso desde el panel de Pedidos.'
+        : 'Cancelar esta venta? Se revertira el stock y los totales del cliente.';
+    const ok = await showConfirm(msg);
     if (!ok) return;
     const res = await api(`/sales/${id}/cancel`, 'POST');
     if (res?.success) {
-        showNotification('Venta cancelada exitosamente', 'success');
+        showNotification(isWeb ? 'Venta web anulada exitosamente' : 'Venta cancelada exitosamente', 'success');
         loadSales(currentSalePage);
     } else {
-        showNotification(res?.message || 'Error al cancelar venta', 'error');
+        showNotification(res?.message || 'Error al anular la venta', 'error');
     }
 }
 
-async function cancelSaleFromDetail() {
+async function cancelSaleFromDetail(isWeb = false) {
     if (!currentSaleId) return;
-    await cancelSale(currentSaleId);
+    await cancelSale(currentSaleId, isWeb);
     document.getElementById('sale-detail-modal')?.classList.add('hidden');
 }
 

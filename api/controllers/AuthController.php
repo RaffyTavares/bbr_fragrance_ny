@@ -41,7 +41,8 @@ class AuthController {
             'username' => $user['username'],
             'full_name' => $user['full_name'],
             'role' => $user['role'],
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'csrf_token' => generateCsrfToken(),
         ], 'Inicio de sesion exitoso.');
     }
 
@@ -87,7 +88,8 @@ class AuthController {
             'full_name' => $user['full_name'],
             'role' => $user['role'],
             'email' => $user['email'],
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'csrf_token' => generateCsrfToken(),
         ]);
     }
 }

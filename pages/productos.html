@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Perfumes Originales | BBR Fragrance</title>
-    <meta name="description" content="Explora el catálogo completo de perfumes originales de lujo en BBR Fragrance. Fragancias para hombre, mujer y árabes. Filtra por familia olfativa, marca y precio. Envíos a toda República Dominicana.">
+    <meta name="description" content="Explora el catálogo completo de perfumes originales de lujo en BBR Fragrance NY. Fragancias para hombre, mujer y arabes. Filtra por familia olfativa, marca y precio.">
     <meta name="keywords" content="catálogo perfumes, perfumes para mujer, perfumes para hombre, fragancias árabes, perfumes amaderados, perfumes cítricos, perfumes orientales, perfumes dulces, BBR Fragrance, perfumes originales RD">
     <meta name="author" content="BBR Fragrance">
     <meta name="robots" content="index, follow">
@@ -17,7 +17,7 @@
     <meta property="og:url" content="https://bbrfragrance.es/pages/productos.html">
     <meta property="og:site_name" content="BBR Fragrance">
     <meta property="og:image" content="https://bbrfragrance.es/images/LOGO-BBR.png">
-    <meta property="og:locale" content="es_DO">
+    <meta property="og:locale" content="es_US">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -78,19 +78,19 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-black text-white">
+<body class="bg-white text-gray-900">
     
     <!-- Navegación -->
-    <nav class="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-amber-900/20">
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b border-amber-200">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="logo">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="nav-logo">
+                        <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="nav-logo">
                         <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance</span>
                     </a>
                 </div>
-                <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
+                <ul class="hidden lg:flex space-x-8 text-sm uppercase tracking-wider">
                     <li><a href="../index.html" class="hover:text-amber-400 transition">Inicio</a></li>
                     <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorías</a></li>
                     <li><a href="productos.html" class="text-amber-400">Productos</a></li>
@@ -105,30 +105,42 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-500 text-black text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
                     </button>
-                    <button class="md:hidden hover:text-amber-400 transition" id="menu-btn">
+                    <button class="lg:hidden hover:text-amber-400 transition" id="menu-btn">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-amber-200">
+            <ul class="px-4 py-4 space-y-3">
+                <li><a href="../index.html" class="block hover:text-amber-400 transition">Inicio</a></li>
+                <li><a href="../index.html#categorias" class="block hover:text-amber-400 transition">Categorías</a></li>
+                <li><a href="productos.html" class="block text-amber-400 transition">Productos</a></li>
+                <li><a href="../index.html#promo-month-section" class="block hover:text-amber-400 transition">Promociones</a></li>
+                <li><a href="../index.html#sobre-nosotros" class="block hover:text-amber-400 transition">Nosotros</a></li>
+                <li><a href="../index.html#contacto" class="block hover:text-amber-400 transition">Contacto</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Header de página -->
-    <section class="pt-32 pb-12 bg-gradient-to-b from-black to-gray-900">
+    <section class="pt-32 pb-12 bg-gray-50 border-b border-gray-200">
         <div class="container mx-auto px-4">
-            <h1 class="text-4xl md:text-5xl font-serif text-amber-400 mb-4">Nuestros Perfumes</h1>
-            <p class="text-gray-400 max-w-2xl">Explora nuestra colección completa de fragancias originales</p>
+            <h1 class="text-4xl md:text-5xl font-serif text-amber-500 mb-4">Nuestros Perfumes</h1>
+            <p class="text-gray-600 max-w-2xl">Explora nuestra colección completa de fragancias originales</p>
         </div>
     </section>
 
     <!-- Filtros y productos -->
-    <section class="py-8 bg-gray-900">
+    <section class="py-8 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col lg:flex-row gap-8">
                 
                 <!-- Sidebar de filtros -->
                 <aside class="lg:w-64 flex-shrink-0">
-                    <div class="bg-gray-800/50 backdrop-blur rounded-lg p-6 border border-gray-700 sticky top-24">
+                    <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm sticky top-24">
                         <h3 class="text-xl font-semibold mb-6 flex items-center justify-between">
                             Filtros
                             <button id="clear-filters" class="text-sm text-amber-400 hover:text-amber-300">Limpiar</button>
@@ -197,6 +209,46 @@
                                     <input type="checkbox" class="mr-2 filter-family" value="intenso">
                                     <span class="text-sm">Intenso</span>
                                 </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="floral">
+                                    <span class="text-sm">Floral</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="frutal">
+                                    <span class="text-sm">Frutal</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="ambar">
+                                    <span class="text-sm">Ámbar</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="fougere">
+                                    <span class="text-sm">Fougère</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="chipre">
+                                    <span class="text-sm">Chipre</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="aromatica">
+                                    <span class="text-sm">Aromática</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="floral-afrutada">
+                                    <span class="text-sm">Floral Afrutada</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="oriental-amaderada">
+                                    <span class="text-sm">Oriental Amaderada</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="gourmand">
+                                    <span class="text-sm">Gourmand</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
+                                    <input type="checkbox" class="mr-2 filter-family" value="cuero">
+                                    <span class="text-sm">Cuero</span>
+                                </label>
                             </div>
                         </div>
                         
@@ -206,19 +258,19 @@
                             <div class="space-y-2">
                                 <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
                                     <input type="radio" name="price" class="mr-2 filter-price" value="0-5000">
-                                    <span class="text-sm">Menos de RD$5,000</span>
+                                    <span class="text-sm">Menos de USD$100</span>
                                 </label>
                                 <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
                                     <input type="radio" name="price" class="mr-2 filter-price" value="5000-10000">
-                                    <span class="text-sm">RD$5,000 - RD$10,000</span>
+                                    <span class="text-sm">USD$100 - USD$200</span>
                                 </label>
                                 <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
                                     <input type="radio" name="price" class="mr-2 filter-price" value="10000-15000">
-                                    <span class="text-sm">RD$10,000 - RD$15,000</span>
+                                    <span class="text-sm">USD$200 - USD$300</span>
                                 </label>
                                 <label class="flex items-center cursor-pointer hover:text-amber-400 transition">
                                     <input type="radio" name="price" class="mr-2 filter-price" value="15000+">
-                                    <span class="text-sm">Más de RD$15,000</span>
+                                    <span class="text-sm">Mas de USD$300</span>
                                 </label>
                             </div>
                         </div>
@@ -269,10 +321,10 @@
                     <!-- Barra de herramientas -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                         <div>
-                            <p class="text-gray-400">Mostrando <span id="results-count" class="text-amber-400 font-semibold">16</span> productos</p>
+                            <p class="text-gray-600">Mostrando <span id="results-count" class="text-amber-500 font-semibold">16</span> productos</p>
                         </div>
                         <div class="flex gap-4 items-center">
-                            <select id="sort-select" class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-amber-500">
+                            <select id="sort-select" class="bg-white border border-gray-300 text-gray-900 rounded-lg px-4 py-2 focus:outline-none focus:border-amber-500">
                                 <option value="default">Ordenar por</option>
                                 <option value="price-asc">Precio: Menor a Mayor</option>
                                 <option value="price-desc">Precio: Mayor a Menor</option>
@@ -281,12 +333,12 @@
                                 <option value="rating">Mejor Valorados</option>
                             </select>
                             
-                            <div class="flex gap-2">
-                                <button id="grid-view" class="p-2 bg-amber-500 text-black rounded hover:bg-amber-400 transition">
-                                    <i class="fas fa-th"></i>
+                            <div class="flex rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                                <button id="grid-view" class="px-3 py-2 bg-amber-500 text-black transition-all duration-200" title="Vista cuadrícula">
+                                    <i class="fas fa-th-large text-sm"></i>
                                 </button>
-                                <button id="list-view" class="p-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition">
-                                    <i class="fas fa-list"></i>
+                                <button id="list-view" class="px-3 py-2 bg-white text-gray-500 border-l border-gray-200 transition-all duration-200" title="Vista lista">
+                                    <i class="fas fa-list text-sm"></i>
                                 </button>
                             </div>
                         </div>
@@ -315,7 +367,7 @@
                 <!-- Columna 1: Logo e info -->
                 <div>
                     <a href="../index.html" class="inline-block mb-4">
-                        <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="footer-logo h-14 w-auto object-contain">
+                        <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="footer-logo">
                     </a>
                     <p class="text-gray-400 text-sm leading-relaxed mb-5">Perfumes originales que definen tu esencia. Trabajamos con distribuidores autorizados para garantizar autenticidad en cada fragancia.</p>
                     <div class="flex items-center gap-2 text-sm text-amber-400">
@@ -342,11 +394,11 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-3">
                             <i class="fas fa-map-marker-alt text-amber-500/60 mt-0.5"></i>
-                            <span class="text-gray-400">Av. Winston Churchill, esq. Roberto P., Plaza las Americas 1 local 10AA, Santo Domingo, R.D.</span>
+                            <span class="text-gray-400">601 West 162 Street, New York, NY 10032</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fab fa-whatsapp text-green-400"></i>
-                            <a href="https://wa.me/18094855693" class="text-gray-400 hover:text-amber-400 transition">+1 (809) 485-5693</a>
+                            <a href="https://wa.me/16462285892" class="text-gray-400 hover:text-amber-400 transition">+1 (646) 228-5892</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-phone text-amber-500/60"></i>
@@ -629,11 +681,11 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="../js/main/core.js"></script>
-    <script src="../js/main/cart.js"></script>
-    <script src="../js/main/products.js"></script>
-    <script src="../js/main/product-detail.js"></script>
-    <script src="../js/main/ui.js"></script>
-    <script src="../js/main/init.js"></script>
+    <script src="../js/main/core.js?v=3"></script>
+    <script src="../js/main/cart.js?v=3"></script>
+    <script src="../js/main/products.js?v=3"></script>
+    <script src="../js/main/product-detail.js?v=3"></script>
+    <script src="../js/main/ui.js?v=3"></script>
+    <script src="../js/main/init.js?v=3"></script>
 </body>
 </html>

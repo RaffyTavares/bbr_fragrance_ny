@@ -169,4 +169,40 @@ class SettingsController {
             'type' => $mediaType
         ], 'Medio de promocion subido exitosamente.');
     }
+
+    /**
+     * POST /settings/test-email
+     * Envia un email de prueba al admin para verificar la configuracion SMTP.
+     */
+    public static function testEmail() {
+        require_once __DIR__ . '/../services/MailService.php';
+
+        $data    = getJsonInput();
+        $toEmail = trim($data['email'] ?? '');
+
+        if (empty($toEmail) || !filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+            // Si no viene email en el body, usar el del usuario en sesion
+            $db = getDB();
+            $stmt = $db->prepare("SELECT email, full_name FROM users WHERE id = :id");
+            $stmt->execute([':id' => $_SESSION['user_id']]);
+            $user = $stmt->fetch();
+            $toEmail = $user['email'] ?? '';
+            $toName  = $user['full_name'] ?? 'Administrador';
+
+            if (empty($toEmail)) {
+                errorResponse('Incluye un email de destino en el body o configura tu email de usuario.', 400);
+            }
+        } else {
+            $toName = $data['name'] ?? 'Administrador';
+        }
+
+        $result = MailService::sendTestEmail($toEmail, $toName);
+
+        if ($result['success']) {
+            logActivity('test_email', 'settings', null, "Email de prueba enviado a {$toEmail}");
+            successResponse(['to' => $toEmail], $result['message']);
+        } else {
+            errorResponse($result['message'], 502);
+        }
+    }
 }

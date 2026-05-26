@@ -143,7 +143,7 @@ async function loadProductDetail() {
                 <div>
                     <div class="mb-6">
                         <span class="text-sm text-amber-400 uppercase tracking-wider font-semibold">${product.brand_name || ''}</span>
-                        <h1 class="text-4xl md:text-5xl font-serif mt-2 mb-4">${product.name}</h1>
+                        <h1 class="text-white text-4xl md:text-5xl font-serif mt-2 mb-4">${product.name}</h1>
 
                         ${product.volume_ml ? `<div class="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full border border-amber-400/30 bg-amber-400/5 text-amber-300 text-sm font-medium"><i class="fas fa-flask"></i><span>${product.volume_ml} ml</span></div>` : ''}
 
@@ -186,9 +186,9 @@ async function loadProductDetail() {
                         </div>
                     </div>
 
-                    <!-- Action buttons -->
+                    <!-- Action buttons ----------------------------------------------->
                     <div class="flex flex-col md:flex-row gap-4 mb-8">
-                        <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center" ${stock === 0 ? 'disabled' : ''}
+                        <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center" ${stock === 0 ? 'disabled' : ''}
                                 data-product-id="${product.id}"
                                 data-product-name="${product.name}"
                                 data-product-brand="${product.brand_name || ''}"

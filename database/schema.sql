@@ -86,6 +86,7 @@ CREATE TABLE products (
     barcode VARCHAR(50) NULL,
     sku VARCHAR(50) NULL UNIQUE,
     description TEXT,
+    volume_ml INT NULL,
     status ENUM('active','inactive') DEFAULT 'active',
     is_featured TINYINT(1) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -63,7 +63,7 @@ function createProductCard(product, isFeatured = false) {
     const containerClass = isFeatured ? 'product-card' : 'product-item';
 
     return `
-        <div class="${containerClass} bg-gray-800/50 backdrop-blur rounded-lg overflow-hidden hover:transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-amber-500"
+        <div class="${containerClass} bg-white rounded-lg overflow-hidden hover:transform hover:scale-105 transition duration-300 border border-gray-200 hover:border-amber-500"
              data-category="${categorySlug}"
              data-family="${familySlug}"
              data-brand="${brandName.toLowerCase()}"
@@ -75,14 +75,14 @@ function createProductCard(product, isFeatured = false) {
                 </div>
                 ${badge}
                 ${discountBadge}
-                <button class="absolute top-4 left-4 w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                <button class="absolute top-4 left-4 w-10 h-10 bg-black/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition text-gray-700">
                     <i class="fas fa-heart"></i>
                 </button>
             </div>
             <div class="p-6">
                 <span class="text-xs text-amber-400 uppercase tracking-wider">${brandName}</span>
-                <h3 class="text-xl font-semibold mt-2 mb-1">${product.name}</h3>
-                ${product.volume_ml ? `<p class="text-xs text-gray-400 mb-3"><i class="fas fa-flask mr-1 text-amber-400/70"></i>${product.volume_ml} ml</p>` : '<div class="mb-3"></div>'}
+                <h3 class="text-xl font-semibold mt-2 mb-1 text-gray-700">${product.name || ''}</h3>
+                ${product.volume_ml ? `<p class="text-xs text-gray-700 mb-3"><i class="fas fa-flask mr-1 text-amber-400/70"></i>${product.volume_ml} ml</p>` : '<div class="mb-3"></div>'}
                 <div class="flex items-center mb-4">
                     <div class="flex text-amber-400 text-sm">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -90,16 +90,16 @@ function createProductCard(product, isFeatured = false) {
                 </div>
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        ${hasDiscount ? `<del class="text-gray-500 text-sm mr-2">${formatPrice(originalPrice)}</del>` : ''}
-                        <span class="text-2xl font-bold text-amber-400">${formatPrice(price)}</span>
+                        ${hasDiscount ? `<del class="text-gray-400 text-sm mr-2">${formatPrice(originalPrice)}</del>` : ''}
+                        <span class="text-2xl font-bold text-amber-500">${formatPrice(price)}</span>
                     </div>
                 </div>
-                ${!isFeatured && product.description ? `<p class="text-gray-400 text-sm mb-4 line-clamp-2">${product.description}</p>` : ''}
+                ${!isFeatured && product.description ? `<p class="text-gray-600 text-sm mb-4 line-clamp-2">${product.description}</p>` : ''}
                 <div class="flex gap-2">
-                    <button class="flex-1 bg-amber-500 text-black py-3 rounded-lg font-semibold hover:bg-amber-400 transition add-to-cart" ${stock === 0 ? 'disabled' : ''}>
+                    <button class="flex-1 bg-amber-500 text-white py-3 rounded-lg font-semibold hover:bg-amber-400 transition add-to-cart" ${stock === 0 ? 'disabled' : ''}>
                         <i class="fas fa-shopping-cart mr-2"></i>${stock === 0 ? 'Agotado' : 'Agregar'}
                     </button>
-                    <a href="${detailUrl}" class="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition flex items-center">
+                    <a href="${detailUrl}" class="bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition flex items-center">
                         <i class="fas fa-eye"></i>
                     </a>
                 </div>
@@ -115,7 +115,7 @@ function renderSkeletonCards(container, count = 6) {
     let html = '';
     for (let i = 0; i < count; i++) {
         html += `
-            <div class="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700">
+            <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
                 <div class="h-64 skeleton"></div>
                 <div class="p-6 space-y-3">
                     <div class="h-3 skeleton rounded w-1/4"></div>
@@ -297,7 +297,7 @@ function renderAPIPagination(pagination) {
 
     // Previous button
     buttonsHTML += `
-        <button class="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition ${current_page === 1 ? 'opacity-50 cursor-not-allowed' : ''}"
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition ${current_page === 1 ? 'opacity-50 cursor-not-allowed' : ''}"
                 onclick="goToAPIPage(${current_page - 1})" ${current_page === 1 ? 'disabled' : ''}>
             <i class="fas fa-chevron-left"></i>
         </button>
@@ -312,14 +312,14 @@ function renderAPIPagination(pagination) {
     }
 
     if (startPage > 1) {
-        buttonsHTML += `<button class="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition" onclick="goToAPIPage(1)">1</button>`;
+        buttonsHTML += `<button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition" onclick="goToAPIPage(1)">1</button>`;
         if (startPage > 2) buttonsHTML += `<span class="px-2 py-2 text-gray-400">...</span>`;
     }
 
     for (let i = startPage; i <= endPage; i++) {
         const isActive = i === current_page;
         buttonsHTML += `
-            <button class="px-4 py-2 rounded-lg font-semibold transition ${isActive ? 'bg-amber-500 text-black' : 'bg-gray-800 hover:bg-gray-700'}"
+            <button class="px-4 py-2 rounded-lg font-semibold transition ${isActive ? 'bg-amber-500 text-black' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
                     onclick="goToAPIPage(${i})" ${isActive ? 'disabled' : ''}>
                 ${i}
             </button>
@@ -328,12 +328,12 @@ function renderAPIPagination(pagination) {
 
     if (endPage < total_pages) {
         if (endPage < total_pages - 1) buttonsHTML += `<span class="px-2 py-2 text-gray-400">...</span>`;
-        buttonsHTML += `<button class="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition" onclick="goToAPIPage(${total_pages})">${total_pages}</button>`;
+        buttonsHTML += `<button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition" onclick="goToAPIPage(${total_pages})">${total_pages}</button>`;
     }
 
     // Next button
     buttonsHTML += `
-        <button class="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition ${current_page === total_pages ? 'opacity-50 cursor-not-allowed' : ''}"
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition ${current_page === total_pages ? 'opacity-50 cursor-not-allowed' : ''}"
                 onclick="goToAPIPage(${current_page + 1})" ${current_page === total_pages ? 'disabled' : ''}>
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -517,14 +517,17 @@ async function renderFeaturedProducts() {
 // ===================================
 function animateProductCards() {
     const cards = document.querySelectorAll('.product-card, .product-item');
-    const observer = new IntersectionObserver((entries) => {
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
+                obs.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.05 });
 
     cards.forEach(el => {
         el.style.opacity = '0';

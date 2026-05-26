@@ -65,7 +65,7 @@
                     <i class="fas fa-bars text-xl"></i>
                 </button>
                 <a href="" class="flex items-center space-x-3">
-                    <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="h-10 w-10 rounded-full border-2 border-amber-400/30 object-cover">
+                    <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="h-10 w-10 rounded-full border-2 border-amber-400/30 object-contain p-1">
                     <span class="text-lg font-serif text-amber-400 hidden sm:inline">Panel Administrativo</span>
                 </a>
             </div>
@@ -709,41 +709,113 @@
                     <p class="text-gray-400">Gestiona los pedidos de tus clientes</p>
                 </div>
 
-                <!-- Status Filter Tabs -->
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <button data-status="" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-amber-500 text-black transition">Todos</button>
-                    <button data-status="pending" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Pendientes</button>
-                    <button data-status="confirmed" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Confirmados</button>
-                    <button data-status="processing" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">En Proceso</button>
-                    <button data-status="shipped" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Enviados</button>
-                    <button data-status="delivered" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Entregados</button>
-                    <button data-status="cancelled" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Cancelados</button>
+                <!-- Tabs: Lista / Conciliacion -->
+                <div class="flex gap-2 mb-4 border-b border-gray-700 pb-1">
+                    <button id="orders-tab-list" class="orders-main-tab px-4 py-2 rounded-t-lg text-sm font-medium bg-amber-500 text-black transition">Lista de Pedidos</button>
+                    <button id="orders-tab-recon" class="orders-main-tab px-4 py-2 rounded-t-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white transition"><i class="fas fa-balance-scale mr-1"></i>Conciliacion</button>
                 </div>
 
-                <!-- Orders Table -->
-                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-700/50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold"># Pedido</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold">Cliente</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold">Telefono</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold">Fecha</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold">Total</th>
-                                    <th class="px-4 py-3 text-left text-sm font-semibold">Estado</th>
-                                    <th class="px-4 py-3 text-right text-sm font-semibold">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orders-table" class="divide-y divide-gray-700">
-                                <tr>
-                                    <td colspan="7" class="px-4 py-12 text-center text-gray-500">
-                                        <i class="fas fa-spinner fa-spin text-2xl mb-2 block"></i>
-                                        Cargando pedidos...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- Vista: Lista de Pedidos -->
+                <div id="orders-list-view">
+                    <!-- Status Filter Tabs -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button data-status="" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-amber-500 text-black transition">Todos</button>
+                        <button data-status="pending" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Pendientes</button>
+                        <button data-status="confirmed" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Confirmados</button>
+                        <button data-status="processing" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">En Proceso</button>
+                        <button data-status="shipped" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Enviados</button>
+                        <button data-status="delivered" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Entregados</button>
+                        <button data-status="cancelled" class="order-status-tab px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 transition">Cancelados</button>
+                    </div>
+
+                    <!-- Payment Status Filter -->
+                    <div class="flex items-center gap-3 mb-4">
+                        <label class="text-xs text-gray-400">Filtrar por pago:</label>
+                        <select id="order-filter-payment-status" onchange="loadOrders(1)" class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 transition">
+                            <option value="">Todos</option>
+                            <option value="pending">Pago pendiente</option>
+                            <option value="paid">Pagado</option>
+                            <option value="failed">Pago fallido</option>
+                            <option value="refunded">Reembolsado</option>
+                        </select>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-700/50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold"># Pedido</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Cliente</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Telefono</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Fecha</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Total</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Estado</th>
+                                        <th class="px-4 py-3 text-left text-sm font-semibold">Pago</th>
+                                        <th class="px-4 py-3 text-right text-sm font-semibold">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table" class="divide-y divide-gray-700">
+                                    <tr>
+                                        <td colspan="8" class="px-4 py-12 text-center text-gray-500">
+                                            <i class="fas fa-spinner fa-spin text-2xl mb-2 block"></i>
+                                            Cargando pedidos...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista: Conciliacion de Pagos -->
+                <div id="orders-recon-view" class="hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Conciliacion de Pagos en Linea</h3>
+                        <button onclick="loadReconciliation()" class="text-sm bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition"><i class="fas fa-sync-alt mr-1"></i>Actualizar</button>
+                    </div>
+                    <div id="recon-summary" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"></div>
+
+                    <!-- Pagados sin confirmar -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 mb-6">
+                        <div class="px-5 py-4 border-b border-gray-700">
+                            <h4 class="font-semibold text-green-400"><i class="fas fa-check-circle mr-2"></i>Pagados - Pendientes de Confirmacion</h4>
+                            <p class="text-xs text-gray-400 mt-1">El cobro fue exitoso pero el pedido aun no fue confirmado manualmente.</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-700/50"><tr>
+                                    <th class="px-4 py-3 text-left">Pedido</th>
+                                    <th class="px-4 py-3 text-left">Cliente</th>
+                                    <th class="px-4 py-3 text-left">Total</th>
+                                    <th class="px-4 py-3 text-left">Autorizacion</th>
+                                    <th class="px-4 py-3 text-left">Pagado</th>
+                                    <th class="px-4 py-3 text-right">Accion</th>
+                                </tr></thead>
+                                <tbody id="recon-paid-table" class="divide-y divide-gray-700"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pagos fallidos recientes -->
+                    <div class="bg-gray-800 rounded-xl border border-gray-700">
+                        <div class="px-5 py-4 border-b border-gray-700">
+                            <h4 class="font-semibold text-red-400"><i class="fas fa-times-circle mr-2"></i>Pagos Fallidos (ultimas 72h)</h4>
+                            <p class="text-xs text-gray-400 mt-1">Intentos de pago rechazados por la pasarela.</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-700/50"><tr>
+                                    <th class="px-4 py-3 text-left">Pedido</th>
+                                    <th class="px-4 py-3 text-left">Cliente</th>
+                                    <th class="px-4 py-3 text-left">Total</th>
+                                    <th class="px-4 py-3 text-center">Codigo</th>
+                                    <th class="px-4 py-3 text-left">Fecha</th>
+                                </tr></thead>
+                                <tbody id="recon-failed-table" class="divide-y divide-gray-700"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -782,13 +854,22 @@
                             <input type="date" id="sales-date-to" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 transition">
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Origen</label>
+                            <select id="sales-filter-source" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 transition">
+                                <option value="">Todos</option>
+                                <option value="pos">Punto de Venta</option>
+                                <option value="web">Tienda Web</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs text-gray-400 mb-1">Metodo de pago</label>
                             <select id="sales-filter-payment" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 transition">
                                 <option value="">Todos</option>
                                 <option value="cash">Efectivo</option>
-                                <option value="card">Tarjeta</option>
+                                <option value="card">Tarjeta POS</option>
+                                <option value="card_online">Tarjeta Online</option>
                                 <option value="transfer">Transferencia</option>
                                 <option value="mixed">Mixto</option>
                             </select>
@@ -1419,13 +1500,13 @@
                             </button>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-2">Monto minimo para envio gratis (RD$)</label>
+                            <label class="block text-sm font-medium mb-2">Monto minimo para envio gratis (USD$)</label>
                             <input type="number" id="setting-min_free_shipping" min="0" step="0.01" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                         </div>
                     </div>
 
                     <!-- Horario -->
-                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <div class="bg-gray-800 rounded-xl border border-gray-700 p-6" style="display:none">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold flex items-center">
                                 <i class="fas fa-clock text-amber-400 mr-2"></i>
@@ -1477,27 +1558,40 @@
                                 <i class="fas fa-envelope text-amber-400 mr-2"></i>
                                 Configuracion de Email (SMTP)
                             </h3>
-                            <button type="button" id="save-settings-smtp-btn" onclick="saveSettingsSmtp()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
-                                <i class="fas fa-save text-xs"></i>Guardar
-                            </button>
+                            <div class="flex gap-2">
+                                <button type="button" onclick="testSmtpEmail()" class="text-xs font-semibold px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition flex items-center gap-1.5">
+                                    <i class="fas fa-paper-plane text-xs"></i>Probar
+                                </button>
+                                <button type="button" id="save-settings-smtp-btn" onclick="saveSettingsSmtp()" class="text-xs font-semibold px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg transition flex items-center gap-1.5">
+                                    <i class="fas fa-save text-xs"></i>Guardar
+                                </button>
+                            </div>
                         </div>
-                        <p class="text-sm text-gray-400 mb-4">Configura el servidor SMTP para enviar emails de confirmacion de pedidos y notificaciones de estado.</p>
+                        <!-- Referencia rapida Hostinger -->
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3 mb-4 text-xs text-blue-300">
+                            <p class="font-semibold mb-1"><i class="fas fa-info-circle mr-1"></i>Valores correctos para Hostinger:</p>
+                            <p>Servidor: <code class="bg-gray-900 px-1 rounded">smtp.hostinger.com</code> &nbsp;|&nbsp;
+                               Puerto SSL: <code class="bg-gray-900 px-1 rounded">465</code> &nbsp;|&nbsp;
+                               Puerto STARTTLS: <code class="bg-gray-900 px-1 rounded">587</code></p>
+                            <p class="mt-1 text-gray-400">Usuario = email completo (ej. <code>info@tudominio.com</code>). Contrasena = la del correo, NO la del panel Hostinger.</p>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Servidor SMTP</label>
-                                <input type="text" id="setting-smtp_host" placeholder="smtp.gmail.com" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-smtp_host" placeholder="smtp.hostinger.com" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Puerto</label>
-                                <input type="number" id="setting-smtp_port" value="587" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="number" id="setting-smtp_port" value="465" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <p class="text-xs text-gray-500 mt-1">465 = SSL &nbsp;|&nbsp; 587 = STARTTLS (se detecta automaticamente)</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Usuario SMTP</label>
-                                <input type="text" id="setting-smtp_user" placeholder="tu@email.com" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-smtp_user" placeholder="info@tudominio.com" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Contrasena SMTP</label>
-                                <input type="password" id="setting-smtp_pass" placeholder="Contrasena o App Password" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="password" id="setting-smtp_pass" placeholder="Contrasena del correo" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Nombre del Remitente</label>
@@ -1546,7 +1640,7 @@
                         </div>
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium mb-2">Monto minimo de pedido (RD$)</label>
+                                <label class="block text-sm font-medium mb-2">Monto minimo de pedido (USD$)</label>
                                 <input type="number" id="setting-min_order_amount" min="0" step="0.01" value="0" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                                 <p class="text-xs text-gray-500 mt-1">0 = sin minimo</p>
                             </div>
@@ -1647,7 +1741,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Codigo de Moneda</label>
-                                <input type="text" id="setting-cardnet_currency_code" placeholder="214 (DOP)" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
+                                <input type="text" id="setting-cardnet_currency_code" placeholder="840 (USD)" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500 transition">
                             </div>
 
                             <div>
@@ -2405,6 +2499,12 @@
                     </div>
                 </div>
 
+                <!-- Payment Info (visible solo si hay pago en linea) -->
+                <div class="bg-gray-900 rounded-lg p-4 hidden">
+                    <h4 class="text-sm font-semibold text-amber-400 mb-3">Informacion de Pago en Linea</h4>
+                    <div id="order-payment-info"></div>
+                </div>
+
                 <!-- Status Update -->
                 <div class="bg-gray-900 rounded-lg p-4">
                     <h4 class="text-sm font-semibold text-amber-400 mb-3">Actualizar Estado</h4>
@@ -2421,6 +2521,20 @@
                             <i class="fas fa-sync-alt mr-2"></i>Actualizar Estado
                         </button>
                     </div>
+                </div>
+
+                <!-- Marcar como Pagado (efectivo / transferencia) -->
+                <div>
+                    <button id="mark-paid-btn" onclick="markOrderPaid()" class="hidden w-full bg-green-600 hover:bg-green-500 text-white px-6 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        <i class="fas fa-check-circle"></i> Marcar como Pagado
+                    </button>
+                </div>
+
+                <!-- Refund Button (visible solo si payment_status = paid via Cardnet) -->
+                <div>
+                    <button id="refund-order-btn" onclick="refundOrder()" class="hidden w-full bg-orange-600 hover:bg-orange-500 text-white px-6 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        <i class="fas fa-undo-alt"></i> Procesar Reembolso
+                    </button>
                 </div>
 
                 <!-- Notes -->
@@ -2750,6 +2864,14 @@
                 </div>
             </div>
             <div class="p-6 space-y-6">
+                <!-- Banner venta web -->
+                <div id="sale-detail-web-banner" class="hidden flex items-center gap-3 bg-blue-500/10 border border-blue-500/30 rounded-lg px-4 py-3 text-sm">
+                    <i class="fas fa-globe text-blue-400 text-lg"></i>
+                    <div>
+                        <p class="text-blue-300 font-medium">Venta originada en la Tienda Web</p>
+                        <p class="text-gray-400 text-xs">Pedido: <span class="font-mono text-blue-400" id="sale-detail-web-order"></span> &mdash; Para cancelar o reembolsar, usa el panel de Pedidos.</p>
+                    </div>
+                </div>
                 <!-- Sale Info -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div>
@@ -2757,7 +2879,7 @@
                         <p class="font-medium text-sm" id="sale-detail-date"></p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400">Vendedor</p>
+                        <p class="text-xs text-gray-400">Vendedor / Origen</p>
                         <p class="font-medium text-sm" id="sale-detail-user"></p>
                     </div>
                     <div>

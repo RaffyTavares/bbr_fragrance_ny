@@ -28,19 +28,51 @@ class MailService {
 
         $mail = new PHPMailer(true);
         $mail->isSMTP();
-        $mail->Host       = $s['smtp_host'];
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $s['smtp_user'];
-        $mail->Password   = $s['smtp_pass'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = (int)($s['smtp_port'] ?: 587);
-        $mail->CharSet    = 'UTF-8';
+        $mail->Host     = $s['smtp_host'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $s['smtp_user'];
+        $mail->Password = $s['smtp_pass'];
+        $mail->CharSet  = 'UTF-8';
+
+        // Puerto 465 requiere SSL (SMTPS); cualquier otro usa STARTTLS (587 es el estandar)
+        $port = (int)($s['smtp_port'] ?: 587);
+        $mail->Port       = $port;
+        $mail->SMTPSecure = ($port === 465)
+            ? PHPMailer::ENCRYPTION_SMTPS
+            : PHPMailer::ENCRYPTION_STARTTLS;
 
         $fromEmail = !empty($s['smtp_from_email']) ? $s['smtp_from_email'] : $s['smtp_user'];
         $fromName  = !empty($s['smtp_from_name']) ? $s['smtp_from_name'] : ($s['store_name'] ?? 'BBR Fragrance');
         $mail->setFrom($fromEmail, $fromName);
 
         return $mail;
+    }
+
+    /**
+     * Enviar email de prueba para verificar la configuracion SMTP.
+     * Retorna ['success' => bool, 'message' => string]
+     */
+    public static function sendTestEmail($toEmail, $toName = 'Administrador') {
+        try {
+            $mail = self::getMailer();
+            if (!$mail) {
+                return ['success' => false, 'message' => 'Faltan credenciales SMTP. Completa Host, Usuario y Contrasena.'];
+            }
+
+            $mail->addAddress($toEmail, $toName);
+            $mail->isHTML(true);
+            $mail->Subject = 'Prueba de Email - BBR Fragrance';
+            $mail->Body    = self::baseTemplate(
+                'Prueba de Configuracion SMTP',
+                '<p style="margin:0 0 16px;font-size:16px;color:#fff">Este es un email de <strong>prueba</strong>.</p>
+                 <p style="margin:0;color:#9CA3AF">Si estas viendo este mensaje, la configuracion SMTP esta funcionando correctamente.</p>'
+            );
+            $mail->AltBody = 'Prueba de configuracion SMTP - BBR Fragrance. Si recibes este mensaje, el correo funciona correctamente.';
+            $mail->send();
+            return ['success' => true, 'message' => "Email de prueba enviado a {$toEmail}"];
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => 'Error SMTP: ' . $e->getMessage()];
+        }
     }
 
     /**

@@ -483,6 +483,12 @@ class SaleController {
             $params[':min_amount'] = (float)$_GET['min_amount'];
         }
 
+        // Filtro por origen (pos / web)
+        if (!empty($_GET['source']) && in_array($_GET['source'], ['pos', 'web'])) {
+            $where[] = "s.source = :source";
+            $params[':source'] = $_GET['source'];
+        }
+
         $whereSQL = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
 
         // Contar total
@@ -495,7 +501,8 @@ class SaleController {
         $total = (int)$stmtCount->fetchColumn();
 
         // Obtener ventas
-        $sql = "SELECT s.id, s.sale_number, s.ncf_number, s.ncf_type, s.customer_id, s.user_id,
+        $sql = "SELECT s.id, s.source, s.order_id, s.sale_number, s.ncf_number, s.ncf_type,
+                       s.customer_id, s.user_id,
                        s.subtotal, s.discount_amount, s.discount_percent,
                        s.tax_percent, s.tax_amount, s.total,
                        s.payment_method, s.status, s.created_at,
@@ -538,7 +545,7 @@ class SaleController {
 
         // Verificar que la venta existe y esta completada
         $stmtSale = $db->prepare(
-            "SELECT id, sale_number, customer_id, register_session_id,
+            "SELECT id, source, order_id, sale_number, customer_id, register_session_id,
                     total, payment_method, cash_received, card_reference, status
              FROM sales WHERE id = :id"
         );
@@ -552,6 +559,8 @@ class SaleController {
         if ($sale['status'] !== 'completed') {
             errorResponse('Solo se pueden cancelar ventas con estado "completed". Estado actual: ' . $sale['status'] . '.', 400);
         }
+
+        $isWebSale = ($sale['source'] ?? 'pos') === 'web';
 
         // Obtener items de la venta
         $stmtItems = $db->prepare(
@@ -636,6 +645,16 @@ class SaleController {
                 $stmtReg->execute($regParams);
             }
 
+            // 5. Para ventas web: cancelar el pedido vinculado (sin tocar stock,
+            //    que ya fue restaurado en el paso 2)
+            if ($isWebSale && $sale['order_id']) {
+                $db->prepare(
+                    "UPDATE orders
+                     SET status = 'cancelled', updated_at = NOW()
+                     WHERE id = :oid AND status NOT IN ('cancelled','delivered')"
+                )->execute([':oid' => $sale['order_id']]);
+            }
+
             $db->commit();
         } catch (Exception $e) {
             $db->rollBack();
@@ -643,9 +662,13 @@ class SaleController {
         }
 
         // --- Registrar actividad ---
-        logActivity('cancel', 'sale', $id, "Venta cancelada: {$sale['sale_number']}");
+        $logNote = "Venta cancelada: {$sale['sale_number']}";
+        if ($isWebSale && $sale['order_id']) {
+            $logNote .= " (pedido web #{$sale['order_id']} anulado)";
+        }
+        logActivity('cancel', 'sale', $id, $logNote);
 
-        self::_getSaleById($db, $id, 'Venta cancelada exitosamente.');
+        self::_getSaleById($db, $id, 'Venta anulada exitosamente.');
     }
 
     /**
@@ -761,10 +784,12 @@ class SaleController {
         $stmtSale = $db->prepare(
             "SELECT s.*,
                     u.full_name AS user_name,
-                    c.name AS customer_name
+                    c.name AS customer_name,
+                    o.order_number AS web_order_number
              FROM sales s
              LEFT JOIN users u ON s.user_id = u.id
              LEFT JOIN customers c ON s.customer_id = c.id
+             LEFT JOIN orders o ON s.order_id = o.id
              WHERE s.id = :id"
         );
         $stmtSale->execute([':id' => $id]);

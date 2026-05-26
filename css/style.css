@@ -12,17 +12,19 @@ body {
 .nav-logo {
     height: 40px;
     width: 40px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
-    border: 2px solid rgba(201, 169, 110, 0.35);
+    background: #ffffff;
+    border: 2px solid rgba(201, 169, 110, 0.4);
+    padding: 5px;
     transition: all 0.3s ease;
-    filter: drop-shadow(0 0 8px rgba(201, 169, 110, 0.12));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     flex-shrink: 0;
 }
 
 .logo a:hover .nav-logo {
-    border-color: rgba(201, 169, 110, 0.7);
-    filter: drop-shadow(0 0 12px rgba(201, 169, 110, 0.25));
+    border-color: rgba(201, 169, 110, 0.75);
+    box-shadow: 0 4px 14px rgba(201, 169, 110, 0.22);
 }
 
 .logo a:hover span {
@@ -32,18 +34,16 @@ body {
 .hero-logo {
     width: 14rem;
     height: 14rem;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
-    padding: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(212, 186, 133, 0.18), rgba(0,0,0,0.6) 70%);
-    border: 2px solid rgba(201, 169, 110, 0.5);
+    padding: 1.75rem;
+    background: #ffffff;
+    border: 3px solid rgba(201, 169, 110, 0.6);
     box-shadow:
-        0 0 0 8px rgba(201, 169, 110, 0.06),
-        0 0 0 16px rgba(201, 169, 110, 0.03),
-        0 0 60px rgba(201, 169, 110, 0.35),
-        0 0 120px rgba(201, 169, 110, 0.15),
-        0 25px 50px -10px rgba(0, 0, 0, 0.7),
-        inset 0 0 30px rgba(201, 169, 110, 0.08);
+        0 0 0 6px rgba(255, 255, 255, 0.12),
+        0 0 0 12px rgba(201, 169, 110, 0.08),
+        0 0 50px rgba(201, 169, 110, 0.3),
+        0 20px 45px -10px rgba(0, 0, 0, 0.45);
     animation: heroLogoFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1), heroLogoFloat 6s ease-in-out infinite 1.4s;
     transition: transform 0.6s ease, box-shadow 0.6s ease;
 }
@@ -51,12 +51,10 @@ body {
 .hero-logo:hover {
     transform: scale(1.04);
     box-shadow:
-        0 0 0 8px rgba(201, 169, 110, 0.12),
-        0 0 0 16px rgba(201, 169, 110, 0.05),
-        0 0 80px rgba(201, 169, 110, 0.5),
-        0 0 160px rgba(201, 169, 110, 0.2),
-        0 25px 50px -10px rgba(0, 0, 0, 0.7),
-        inset 0 0 30px rgba(201, 169, 110, 0.12);
+        0 0 0 6px rgba(255, 255, 255, 0.16),
+        0 0 0 14px rgba(201, 169, 110, 0.12),
+        0 0 70px rgba(201, 169, 110, 0.45),
+        0 24px 50px -10px rgba(0, 0, 0, 0.5);
 }
 
 @media (min-width: 768px) {
@@ -83,18 +81,20 @@ body {
 }
 
 .footer-logo {
-    height: 50px;
-    width: 50px;
-    object-fit: cover;
+    height: 52px;
+    width: 52px;
+    object-fit: contain;
     border-radius: 50%;
-    border: 2px solid rgba(201, 169, 110, 0.25);
-    opacity: 0.8;
+    background: #ffffff;
+    border: 2px solid rgba(201, 169, 110, 0.35);
+    padding: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
 
 .footer-logo:hover {
-    opacity: 1;
-    border-color: rgba(201, 169, 110, 0.5);
+    border-color: rgba(201, 169, 110, 0.65);
+    box-shadow: 0 4px 18px rgba(201, 169, 110, 0.2);
 }
 
 .admin-login-logo {
@@ -121,12 +121,75 @@ h1, h2, h3, h4, h5, h6 {
     --color-gold-dark: #A8884E;
     --color-black: #000000;
     --color-gray-dark: #1F2937;
+    --color-white: #FFFFFF;
 }
 
 /* Hero Pattern Background */
 .hero-pattern {
     background-image:
         repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(201, 169, 110, 0.03) 35px, rgba(201, 169, 110, 0.03) 70px);
+}
+
+.hero-ny-scene {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(17, 72, 119, 0.35) 0%, transparent 38%),
+        radial-gradient(circle at 80% 18%, rgba(201, 169, 110, 0.2) 0%, transparent 35%),
+        linear-gradient(170deg, #04070f 0%, #091527 42%, #101522 100%);
+}
+
+.ny-grid-overlay {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: 0.25;
+}
+
+.ny-skyline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 30vh;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.9) 100%),
+        repeating-linear-gradient(
+            90deg,
+            rgba(8, 12, 20, 0.95) 0 32px,
+            rgba(9, 14, 23, 0.98) 32px 48px,
+            rgba(12, 19, 31, 0.96) 48px 72px,
+            rgba(9, 14, 23, 0.98) 72px 86px,
+            rgba(6, 10, 16, 0.98) 86px 108px
+        );
+    clip-path: polygon(0 100%, 0 32%, 4% 32%, 4% 55%, 8% 55%, 8% 26%, 11% 26%, 11% 44%, 14% 44%, 14% 18%, 17% 18%, 17% 50%, 20% 50%, 20% 30%, 23% 30%, 23% 58%, 27% 58%, 27% 24%, 30% 24%, 30% 48%, 34% 48%, 34% 16%, 38% 16%, 38% 57%, 42% 57%, 42% 22%, 45% 22%, 45% 46%, 48% 46%, 48% 18%, 52% 18%, 52% 52%, 56% 52%, 56% 26%, 60% 26%, 60% 59%, 63% 59%, 63% 23%, 67% 23%, 67% 53%, 71% 53%, 71% 29%, 74% 29%, 74% 48%, 78% 48%, 78% 20%, 82% 20%, 82% 57%, 86% 57%, 86% 31%, 89% 31%, 89% 45%, 92% 45%, 92% 24%, 96% 24%, 96% 52%, 100% 52%, 100% 100%);
+    opacity: 0.82;
+}
+
+.language-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #111827;
+    border: 1px solid rgba(201, 169, 110, 0.7);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(242, 226, 196, 0.85));
+    transition: all 0.25s ease;
+}
+
+.language-toggle:hover {
+    border-color: #B89A5D;
+    color: #000000;
+    box-shadow: 0 8px 18px rgba(184, 154, 93, 0.25);
+}
+
+.language-toggle-mobile {
+    width: 100%;
+    justify-content: center;
 }
 
 /* Animaciones personalizadas */
@@ -161,6 +224,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
     position: relative;
     overflow: hidden;
+    color: var(--color-white);
 }
 
 .btn-primary::before {
@@ -610,17 +674,93 @@ button[disabled] {
     cursor: not-allowed;
 }
 
-/* Admin action buttons - enhanced hover */
+/* Transición base de botones */
 button:not([disabled]) {
-    transition: all 0.2s ease;
-}
-
-button:not([disabled]):hover {
-    filter: brightness(1.1);
+    transition: all 0.22s ease;
 }
 
 button:not([disabled]):active {
-    transform: scale(0.97);
+    transform: scale(0.96);
+}
+
+/* ── Botones ámbar / CTA ── */
+button.bg-amber-500:not([disabled]):hover,
+a.bg-amber-500:hover,
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(201, 169, 110, 0.38);
+}
+
+/* ── Links de nav: subrayado deslizante ── */
+nav ul a {
+    position: relative;
+    padding-bottom: 2px;
+}
+nav ul a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-gold);
+    border-radius: 2px;
+    transition: width 0.28s ease;
+}
+nav ul a:hover::after,
+nav ul a.text-amber-400::after {
+    width: 100%;
+}
+
+/* ── Botones de vista (grid/list) ── */
+#grid-view,
+#list-view {
+    transition: all 0.2s ease;
+}
+#grid-view:not(.bg-amber-500):hover,
+#list-view:not(.bg-amber-500):hover {
+    color: var(--color-gold);
+    border-color: rgba(201, 169, 110, 0.5);
+    background: rgba(201, 169, 110, 0.07);
+}
+#grid-view.bg-amber-500,
+#list-view.bg-amber-500 {
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.2);
+}
+
+/* ── Tarjetas de categoría: lift dorado ── */
+.category-card {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.category-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 14px 30px rgba(201, 169, 110, 0.18) !important;
+    border-color: rgba(201, 169, 110, 0.45) !important;
+}
+
+/* ── Tarjetas de producto: lift suave ── */
+.product-card,
+.product-item {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+.product-card:hover,
+.product-item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 16px 36px rgba(201, 169, 110, 0.15) !important;
+    border-color: rgba(201, 169, 110, 0.5) !important;
+}
+
+/* ── Labels del sidebar de filtros ── */
+.filter-sidebar label {
+    transition: color 0.18s ease;
+}
+.filter-sidebar label:hover {
+    color: var(--color-gold);
+}
+
+/* ── Botones de borde ámbar (CTA outline) ── */
+a.border-amber-500:hover,
+button.border-amber-500:not([disabled]):hover {
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.28);
 }
 
 /* Selection color */
@@ -628,3 +768,173 @@ button:not([disabled]):active {
     background-color: var(--color-gold);
     color: #000000;
 }
+
+/* ===========================
+   Tema Claro / Light Theme
+   =========================== */
+
+/* Hero — imagen de fondo */
+.hero-section {
+    background-image: url('../images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Fondos de secciones */
+#categorias {
+    background: #f9fafb;
+    background-image: none;
+}
+
+#productos {
+    background: #ffffff;
+}
+
+#guia {
+    background: #f9fafb;
+    background-image: none;
+}
+
+#beneficios {
+    background: #ffffff;
+}
+
+#testimonios {
+    background: #ffffff;
+}
+
+#sobre-nosotros {
+    background: #ffffff;
+}
+
+#contacto {
+    background: #f9fafb;
+}
+
+/* Tarjetas de categoría */
+.category-card {
+    background: #ffffff !important;
+    backdrop-filter: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.category-card:hover {
+    background: #fffbf0 !important;
+    box-shadow: 0 8px 24px rgba(201, 169, 110, 0.2);
+}
+
+.category-card p {
+    color: #6b7280 !important;
+}
+
+/* Tarjetas de familias olfativas */
+#guia h4 {
+    color: #111827;
+}
+
+#guia p {
+    color: #6b7280;
+}
+
+/* Textos en secciones claras */
+#categorias .text-gray-400,
+#productos .text-gray-400 {
+    color: #6b7280;
+}
+
+#beneficios .text-gray-400 {
+    color: #4b5563;
+}
+
+#testimonios .text-gray-300 {
+    color: #374151;
+}
+
+#testimonios .text-gray-400 {
+    color: #6b7280;
+}
+
+#sobre-nosotros .text-gray-300 {
+    color: #374151;
+}
+
+#sobre-nosotros .text-gray-400 {
+    color: #6b7280;
+}
+
+#contacto .text-gray-300 {
+    color: #374151;
+}
+
+#contacto .text-gray-400 {
+    color: #4b5563;
+}
+
+/* Inputs en sección de contacto */
+#contacto input,
+#contacto textarea {
+    background-color: #ffffff !important;
+    border-color: #d1d5db !important;
+    color: #111827 !important;
+}
+
+/* Scrollbar tema claro */
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+/* Tarjetas de productos (generadas por JS) */
+.product-card,
+.product-item {
+    background: #ffffff !important;
+    backdrop-filter: none;
+    border-color: #e5e7eb !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.product-card:hover,
+.product-item:hover {
+    box-shadow: 0 12px 30px rgba(201, 169, 110, 0.14) !important;
+    border-color: rgba(201, 169, 110, 0.55) !important;
+}
+
+.product-card .text-gray-400,
+.product-item .text-gray-400 {
+    color: #6b7280;
+}
+
+/* Skeleton tema claro */
+.skeleton {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%) !important;
+    background-size: 200% 100% !important;
+}
+
+/* Tabs en fondo claro */
+.tab-btn {
+    color: #374151;
+}
+
+.tab-btn:hover {
+    background: #f9fafb;
+}
+
+.tab-btn.active {
+    color: var(--color-gold);
+    background: rgba(201, 169, 110, 0.08);
+}
+
+/* Contenido dinámico del detalle de producto */
+#product-content .text-gray-300 { color: #374151; }
+#product-content .text-gray-400 { color: #6b7280; }
+#product-content .bg-gray-800   { background-color: #f3f4f6 !important; color: #374151; }
+#product-content .border-gray-700,
+#product-content .border-gray-800 { border-color: #e5e7eb; }
+#product-content .hover\:bg-gray-800:hover { background-color: #f3f4f6 !important; }
+
+/* Tabla de información del producto */
+#tab-info-content .border-gray-700 { border-color: #e5e7eb; }
+#tab-info-content .text-gray-400   { color: #6b7280; }
+
+/* Texto de descripción del producto */
+#tab-description-text { color: #374151; }

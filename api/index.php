@@ -16,6 +16,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
+// Prevent browser/proxy caching of API responses
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+
 // Handle preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -30,10 +34,22 @@ require_once __DIR__ . '/helpers/validation.php';
 require_once __DIR__ . '/helpers/upload.php';
 require_once __DIR__ . '/middleware/auth.php';
 
-// Parse request
+// Parse request — basePath derived reliably across hosting environments
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = '/BBR_FRAGANCE/api';
-$path = rtrim(str_replace($basePath, '', $uri), '/');
+
+// realpath() resolves symlinks (required on Hostinger where DOCUMENT_ROOT
+// and __DIR__ may point to the same directory via different symlink paths)
+$_dr  = str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'] ?? '') ?: '');
+$_dir = str_replace('\\', '/', realpath(__DIR__) ?: '');
+if ($_dr && $_dir && strpos($_dir, $_dr) === 0) {
+    $basePath = substr($_dir, strlen($_dr));          // e.g. '/api' or '/BBR_FRAGANCE/api'
+} else {
+    // Fallback: SCRIPT_NAME = actual PHP file path set by Apache mod_rewrite
+    $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? '/api/index.php'), '/');
+}
+unset($_dr, $_dir);
+
+$path   = rtrim(substr($uri, strlen($basePath)), '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Split path into segments
@@ -193,9 +209,18 @@ try {
         // ===================== ORDERS =====================
         case 'orders':
             require_once __DIR__ . '/controllers/OrderController.php';
-            if ($id && $action === 'status') {
+            if ($action === 'reconciliation' && !$id) {
+                requirePermission('orders.view');
+                if ($method === 'GET') OrderController::reconciliation();
+            } elseif ($id && $action === 'mark-paid') {
+                requirePermission('orders.manage');
+                if ($method === 'POST') OrderController::markPaid($id);
+            } elseif ($id && $action === 'status') {
                 requirePermission('orders.manage');
                 if ($method === 'PUT' || $method === 'POST') OrderController::updateStatus($id);
+            } elseif ($id && $action === 'invoice') {
+                requirePermission('orders.view');
+                if ($method === 'GET') OrderController::invoice($id);
             } elseif ($id) {
                 switch ($method) {
                     case 'GET': requirePermission('orders.view'); OrderController::show($id); break;
@@ -227,6 +252,9 @@ try {
                     PaymentController::cardnetCancel();
                 } elseif ($payAction === 'mock') {
                     PaymentController::cardnetMock();
+                } elseif ($payAction === 'refund' && $method === 'POST') {
+                    requirePermission('orders.manage');
+                    PaymentController::cardnetRefund();
                 }
             }
             break;
@@ -380,6 +408,9 @@ try {
             if ($action === 'promo-image') {
                 requirePermission('settings.manage');
                 if ($method === 'POST') SettingsController::uploadPromoImage();
+            } elseif ($action === 'test-email') {
+                requirePermission('settings.manage');
+                if ($method === 'POST') SettingsController::testEmail();
             } else {
                 switch ($method) {
                     case 'GET': SettingsController::index(); break;
@@ -425,7 +456,7 @@ try {
             if ($path === '' || $path === '/') {
                 jsonResponse([
                     'success' => true,
-                    'message' => 'BBR Fragrance API v' . APP_VERSION,
+                    'message' => APP_NAME . ' API v' . APP_VERSION,
                     'endpoints' => [
                         'auth' => API_URL . '/auth/login',
                         'products' => API_URL . '/products',

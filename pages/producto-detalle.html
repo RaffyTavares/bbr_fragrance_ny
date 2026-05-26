@@ -57,19 +57,19 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-black text-white">
+<body class="bg-white text-gray-900">
 
     <!-- Navegacion -->
-    <nav class="fixed w-full bg-black/95 backdrop-blur-sm z-50 border-b border-amber-900/20">
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b border-amber-200">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="logo">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="nav-logo">
+                        <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="nav-logo">
                         <span class="text-xl font-serif text-amber-400 hidden sm:block">BBR Fragrance</span>
                     </a>
                 </div>
-                <ul class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
+                <ul class="hidden lg:flex space-x-8 text-sm uppercase tracking-wider">
                     <li><a href="../index.html" class="hover:text-amber-400 transition">Inicio</a></li>
                     <li><a href="../index.html#categorias" class="hover:text-amber-400 transition">Categorias</a></li>
                     <li><a href="productos.html" class="hover:text-amber-400 transition">Productos</a></li>
@@ -84,26 +84,41 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-500 text-black text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
                     </button>
+                    <button class="lg:hidden hover:text-amber-400 transition" id="menu-btn">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-amber-200">
+            <ul class="px-4 py-4 space-y-3">
+                <li><a href="../index.html" class="block hover:text-amber-400 transition">Inicio</a></li>
+                <li><a href="../index.html#categorias" class="block hover:text-amber-400 transition">Categorías</a></li>
+                <li><a href="productos.html" class="block hover:text-amber-400 transition">Productos</a></li>
+                <li><a href="../index.html#promo-month-section" class="block hover:text-amber-400 transition">Promociones</a></li>
+                <li><a href="../index.html#sobre-nosotros" class="block hover:text-amber-400 transition">Nosotros</a></li>
+                <li><a href="../index.html#contacto" class="block hover:text-amber-400 transition">Contacto</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Breadcrumb -->
-    <section class="pt-32 pb-8 bg-black">
+    <section class="pt-32 pb-8 bg-gray-50 border-b border-gray-200">
         <div class="container mx-auto px-4">
-            <div class="flex items-center space-x-2 text-sm text-gray-400">
-                <a href="../index.html" class="hover:text-amber-400">Inicio</a>
-                <i class="fas fa-chevron-right text-xs"></i>
-                <a href="productos.html" class="hover:text-amber-400">Productos</a>
-                <i class="fas fa-chevron-right text-xs"></i>
-                <span class="text-white" id="breadcrumb-product">Cargando...</span>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="../index.html" class="hover:text-amber-500">Inicio</a>
+                <i class="fas fa-chevron-right text-xs text-gray-400"></i>
+                <a href="productos.html" class="hover:text-amber-500">Productos</a>
+                <i class="fas fa-chevron-right text-xs text-gray-400"></i>
+                <span class="text-gray-900 font-medium" id="breadcrumb-product">Cargando...</span>
             </div>
         </div>
     </section>
 
     <!-- Detalle del producto (se llena dinamicamente) -->
-    <section class="py-8 bg-gradient-to-b from-black to-gray-900">
+    <section class="py-8 bg-white">
         <div class="container mx-auto px-4">
             <!-- Loading state -->
             <div id="product-loading" class="text-center py-20">
@@ -116,24 +131,24 @@
     </section>
 
     <!-- Tabs de informacion -->
-    <section class="py-12 bg-gray-900" id="product-tabs-section">
+    <section class="py-12 bg-gray-50" id="product-tabs-section">
         <div class="container mx-auto px-4">
-            <div class="bg-gray-800/50 backdrop-blur rounded-lg border border-gray-700 overflow-hidden">
-                <div class="flex border-b border-gray-700">
-                    <button class="tab-btn active flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="description">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                <div class="flex border-b border-gray-200">
+                    <button class="tab-btn active flex-1 py-4 px-6 font-semibold transition" data-tab="description">
                         Descripcion
                     </button>
-                    <button class="tab-btn flex-1 py-4 px-6 font-semibold hover:bg-gray-700 transition" data-tab="info">
+                    <button class="tab-btn flex-1 py-4 px-6 font-semibold transition" data-tab="info">
                         Informacion
                     </button>
                 </div>
                 <div class="p-8">
                     <div id="description" class="tab-content">
-                        <h3 class="text-2xl font-serif text-amber-400 mb-4">Descripcion del Producto</h3>
-                        <p id="tab-description-text" class="text-gray-300 leading-relaxed">Cargando...</p>
+                        <h3 class="text-2xl font-serif text-amber-500 mb-4">Descripcion del Producto</h3>
+                        <p id="tab-description-text" class="text-gray-700 leading-relaxed">Cargando...</p>
                     </div>
                     <div id="info" class="tab-content hidden">
-                        <h3 class="text-2xl font-serif text-amber-400 mb-6">Informacion del Producto</h3>
+                        <h3 class="text-2xl font-serif text-amber-500 mb-6">Informacion del Producto</h3>
                         <div id="tab-info-content" class="grid md:grid-cols-2 gap-6"></div>
                     </div>
                 </div>
@@ -142,7 +157,7 @@
     </section>
 
     <!-- Productos relacionados -->
-    <section class="py-20 bg-black" id="related-section">
+    <section class="py-20 bg-gray-50" id="related-section">
         <div class="container mx-auto px-4">
             <div class="flex items-center gap-4 mb-12">
                 <div class="h-px flex-1 bg-gradient-to-r from-transparent to-amber-900/30"></div>
@@ -160,7 +175,7 @@
         <div class="container mx-auto px-4">
             <div class="text-center">
                 <a href="../index.html" class="inline-block mb-4">
-                    <img src="../images/LOGO-BBR.png" alt="BBR Fragrance" class="footer-logo h-12 w-auto object-contain mx-auto">
+                    <img src="../images/logo1.jpeg" alt="BBR Fragrance" class="footer-logo mx-auto">
                 </a>
                 <p class="text-gray-400 text-sm">&copy; 2026 BBR Fragrance. Todos los derechos reservados.</p>
             </div>
@@ -387,12 +402,12 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="../js/main/core.js"></script>
-    <script src="../js/main/cart.js"></script>
-    <script src="../js/main/products.js"></script>
-    <script src="../js/main/product-detail.js"></script>
-    <script src="../js/main/ui.js"></script>
-    <script src="../js/main/init.js"></script>
+    <script src="../js/main/core.js?v=3"></script>
+    <script src="../js/main/cart.js?v=3"></script>
+    <script src="../js/main/products.js?v=3"></script>
+    <script src="../js/main/product-detail.js?v=3"></script>
+    <script src="../js/main/ui.js?v=3"></script>
+    <script src="../js/main/init.js?v=3"></script>
     <script>
         // Load product detail on page load
         document.addEventListener('DOMContentLoaded', async () => {
@@ -448,8 +463,8 @@
                 thumbnailsHtml = product.images.map((img, i) => {
                     const thumbUrl = img.url || img.image_url;
                     return `
-                    <div class="bg-gray-800 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 ${i === 0 ? 'border-amber-500' : 'border-gray-700 hover:border-amber-500'} transition overflow-hidden"
-                         onclick="document.getElementById('main-product-image').src='${thumbUrl}'; this.parentElement.querySelectorAll('div').forEach(d => {d.classList.remove('border-amber-500'); d.classList.add('border-gray-700')}); this.classList.remove('border-gray-700'); this.classList.add('border-amber-500');">
+                    <div class="bg-gray-100 rounded-lg h-24 flex items-center justify-center cursor-pointer border-2 ${i === 0 ? 'border-amber-500' : 'border-gray-200 hover:border-amber-500'} transition overflow-hidden"
+                         onclick="document.getElementById('main-product-image').src='${thumbUrl}'; this.parentElement.querySelectorAll('div').forEach(d => {d.classList.remove('border-amber-500'); d.classList.add('border-gray-200')}); this.classList.remove('border-gray-200'); this.classList.add('border-amber-500');">
                         <img src="${thumbUrl}" alt="" class="w-full h-full object-cover">
                     </div>
                 `}).join('');
@@ -468,7 +483,7 @@
                         <div class="sticky top-24">
                             <div class="bg-gradient-to-br ${gradient} rounded-lg h-96 md:h-[500px] flex items-center justify-center mb-4 relative overflow-hidden">
                                 ${mainImageHtml}
-                                <button class="absolute top-4 left-4 w-12 h-12 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition">
+                                <button class="absolute top-4 left-4 w-12 h-12 bg-black/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-black transition text-gray-800">
                                     <i class="fas fa-heart text-xl"></i>
                                 </button>
                             </div>
@@ -480,7 +495,7 @@
                     <div>
                         <div class="mb-6">
                             <span class="text-sm text-amber-400 uppercase tracking-wider font-semibold">${brandName}</span>
-                            <h1 class="text-4xl md:text-5xl font-serif mt-2 mb-4">${product.name}</h1>
+                            <h1 class=" text-gray-500 text-4xl md:text-5xl font-serif mt-2 mb-4">${product.name}</h1>
                             <div class="flex items-center gap-4 mb-6">
                                 ${hasDiscount ? `
                                 <div>
@@ -503,33 +518,33 @@
                             </div>
                         </div>
 
-                        <div class="mb-8 pb-8 border-b border-gray-800">
-                            <p class="text-gray-300 leading-relaxed">${product.description || 'Sin descripcion disponible.'}</p>
+                        <div class="mb-8 pb-8 border-b border-gray-200">
+                            <p class="text-gray-700 leading-relaxed">${product.description || 'Sin descripcion disponible.'}</p>
                         </div>
 
                         <!-- Info pills -->
                         <div class="flex flex-wrap gap-3 mb-8">
-                            ${product.category_name ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-tag text-amber-400 mr-2"></i>${product.category_name}</span>` : ''}
-                            ${product.family_name ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-leaf text-amber-400 mr-2"></i>${product.family_name}</span>` : ''}
-                            ${product.sku ? `<span class="bg-gray-800 px-4 py-2 rounded-full text-sm"><i class="fas fa-barcode text-amber-400 mr-2"></i>${product.sku}</span>` : ''}
+                            ${product.category_name ? `<span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm"><i class="fas fa-tag text-amber-500 mr-2"></i>${product.category_name}</span>` : ''}
+                            ${product.family_name ? `<span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm"><i class="fas fa-leaf text-amber-500 mr-2"></i>${product.family_name}</span>` : ''}
+                            ${product.sku ? `<span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm"><i class="fas fa-barcode text-amber-500 mr-2"></i>${product.sku}</span>` : ''}
                         </div>
 
                         <!-- Quantity -->
                         <div class="mb-8">
                             <h3 class="text-lg font-semibold mb-4">Cantidad</h3>
                             <div class="flex items-center gap-4">
-                                <div class="flex items-center border-2 border-gray-700 rounded-lg overflow-hidden">
-                                    <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-minus"><i class="fas fa-minus"></i></button>
-                                    <input type="number" value="1" min="1" max="${stock}" class="w-16 text-center bg-transparent py-3 focus:outline-none" id="qty-input">
-                                    <button class="px-4 py-3 hover:bg-gray-800 transition" id="qty-plus"><i class="fas fa-plus"></i></button>
+                                <div class="flex items-center border-2 border-gray-300 rounded-lg overflow-hidden">
+                                    <button class="px-4 py-3 hover:bg-gray-100 transition text-gray-700" id="qty-minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" value="1" min="1" max="${stock}" class="w-16 text-center bg-transparent py-3 focus:outline-none text-gray-900" id="qty-input">
+                                    <button class="px-4 py-3 hover:bg-gray-100 transition text-gray-700" id="qty-plus"><i class="fas fa-plus"></i></button>
                                 </div>
-                                ${stock > 0 ? `<span class="text-gray-400">Disponible: ${stock} unidades</span>` : ''}
+                                ${stock > 0 ? `<span class="text-gray-500">Disponible: ${stock} unidades</span>` : ''}
                             </div>
                         </div>
 
                         <!-- Action buttons -->
                         <div class="flex flex-col md:flex-row gap-4 mb-8">
-                            <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center" ${stock === 0 ? 'disabled' : ''}>
+                            <button id="add-to-cart-detail" class="flex-1 bg-amber-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition transform hover:scale-105 flex items-center justify-center" ${stock === 0 ? 'disabled' : ''}>
                                 <i class="fas fa-shopping-cart mr-2"></i>
                                 ${stock === 0 ? 'Producto Agotado' : 'Agregar al carrito'}
                             </button>
@@ -542,20 +557,20 @@
                         <!-- Benefits -->
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-shipping-fast text-2xl text-amber-400"></i>
-                                <div><p class="font-semibold text-sm">Envio Rapido</p><p class="text-xs text-gray-400">24-48 horas</p></div>
+                                <i class="fas fa-shipping-fast text-2xl text-amber-500"></i>
+                                <div><p class="font-semibold text-sm text-gray-900">Envio Rapido</p><p class="text-xs text-gray-500">24-48 horas</p></div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-certificate text-2xl text-amber-400"></i>
-                                <div><p class="font-semibold text-sm">100% Original</p><p class="text-xs text-gray-400">Garantizado</p></div>
+                                <i class="fas fa-certificate text-2xl text-amber-500"></i>
+                                <div><p class="font-semibold text-sm text-gray-900">100% Original</p><p class="text-xs text-gray-500">Garantizado</p></div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-lock text-2xl text-amber-400"></i>
-                                <div><p class="font-semibold text-sm">Pago Seguro</p><p class="text-xs text-gray-400">SSL protegido</p></div>
+                                <i class="fas fa-lock text-2xl text-amber-500"></i>
+                                <div><p class="font-semibold text-sm text-gray-900">Pago Seguro</p><p class="text-xs text-gray-500">SSL protegido</p></div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-undo text-2xl text-amber-400"></i>
-                                <div><p class="font-semibold text-sm">Devoluciones</p><p class="text-xs text-gray-400">30 dias</p></div>
+                                <i class="fas fa-undo text-2xl text-amber-500"></i>
+                                <div><p class="font-semibold text-sm text-gray-900">Devoluciones</p><p class="text-xs text-gray-500">30 dias</p></div>
                             </div>
                         </div>
                     </div>
@@ -608,39 +623,39 @@
             const infoContent = document.getElementById('tab-info-content');
             infoContent.innerHTML = `
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Marca:</span>
-                        <span class="font-semibold">${brandName}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Marca:</span>
+                        <span class="font-semibold text-gray-900">${brandName}</span>
                     </div>
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Categoria:</span>
-                        <span class="font-semibold">${product.category_name || '-'}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Categoria:</span>
+                        <span class="font-semibold text-gray-900">${product.category_name || '-'}</span>
                     </div>
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Familia Olfativa:</span>
-                        <span class="font-semibold">${product.family_name || '-'}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Familia Olfativa:</span>
+                        <span class="font-semibold text-gray-900">${product.family_name || '-'}</span>
                     </div>
-                    ${product.sku ? `<div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">SKU:</span>
-                        <span class="font-semibold">${product.sku}</span>
+                    ${product.sku ? `<div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">SKU:</span>
+                        <span class="font-semibold text-gray-900">${product.sku}</span>
                     </div>` : ''}
-                    ${product.barcode ? `<div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Codigo:</span>
-                        <span class="font-semibold">${product.barcode}</span>
+                    ${product.barcode ? `<div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Codigo:</span>
+                        <span class="font-semibold text-gray-900">${product.barcode}</span>
                     </div>` : ''}
                 </div>
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Precio:</span>
-                        <span class="font-semibold text-amber-400">${formatPrice(price)}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Precio:</span>
+                        <span class="font-semibold text-amber-500">${formatPrice(price)}</span>
                     </div>
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Stock:</span>
-                        <span class="font-semibold ${stock > 0 ? 'text-green-400' : 'text-red-400'}">${stock > 0 ? stock + ' unidades' : 'Agotado'}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Stock:</span>
+                        <span class="font-semibold ${stock > 0 ? 'text-green-600' : 'text-red-500'}">${stock > 0 ? stock + ' unidades' : 'Agotado'}</span>
                     </div>
-                    <div class="flex items-center justify-between py-3 border-b border-gray-700">
-                        <span class="text-gray-400">Estado:</span>
-                        <span class="font-semibold">${product.status === 'active' ? 'Disponible' : 'No disponible'}</span>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-500">Estado:</span>
+                        <span class="font-semibold text-gray-900">${product.status === 'active' ? 'Disponible' : 'No disponible'}</span>
                     </div>
                 </div>
             `;
@@ -655,9 +670,9 @@
             if (!grid) return;
 
             grid.innerHTML = Array(4).fill(0).map(() => `
-                <div class="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700 animate-pulse">
-                    <div class="h-56 bg-gray-700"></div>
-                    <div class="p-5"><div class="h-3 bg-gray-700 rounded w-1/3 mb-3"></div><div class="h-4 bg-gray-700 rounded w-2/3 mb-4"></div><div class="h-5 bg-gray-700 rounded w-1/2"></div></div>
+                <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200 animate-pulse">
+                    <div class="h-56 bg-gray-200"></div>
+                    <div class="p-5"><div class="h-3 bg-gray-200 rounded w-1/3 mb-3"></div><div class="h-4 bg-gray-200 rounded w-2/3 mb-4"></div><div class="h-5 bg-gray-200 rounded w-1/2"></div></div>
                 </div>
             `).join('');
 
@@ -732,23 +747,23 @@
                 const brandName = p.brand_name || '';
 
                 return `
-                <a href="producto-detalle.html?id=${p.id}" class="group block bg-gray-800/50 backdrop-blur rounded-xl overflow-hidden border border-gray-700 hover:border-amber-500/60 transition-all duration-300 hover:shadow-lg hover:shadow-amber-900/10">
+                <a href="producto-detalle.html?id=${p.id}" class="group block bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:border-amber-500/60 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10">
                     <div class="h-56 bg-gradient-to-br ${pGrad} flex items-center justify-center overflow-hidden relative">
                         ${pImg
                             ? `<img src="${pImg}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
                             : '<i class="fas fa-wine-bottle text-6xl text-white/20"></i>'}
                         ${pHasDiscount ? `<div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold">-${pDiscountPct}%</div>` : ''}
-                        ${pStock === 0 ? '<div class="absolute top-3 right-3 bg-gray-600 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Agotado</div>' : pStock < 5 ? `<div class="absolute top-3 right-3 bg-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Ultimas ${pStock}</div>` : ''}
+                        ${pStock === 0 ? '<div class="absolute top-3 right-3 bg-gray-500 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Agotado</div>' : pStock < 5 ? `<div class="absolute top-3 right-3 bg-orange-500 text-white px-2.5 py-1 rounded-full text-xs font-semibold">Ultimas ${pStock}</div>` : ''}
                     </div>
                     <div class="p-5">
-                        <span class="text-xs text-amber-400/80 uppercase tracking-wider font-medium">${brandName}</span>
-                        <h3 class="font-semibold mt-1 mb-3 text-white group-hover:text-amber-400 transition line-clamp-2">${p.name}</h3>
+                        <span class="text-xs text-amber-500/80 uppercase tracking-wider font-medium">${brandName}</span>
+                        <h3 class="font-semibold mt-1 mb-3 text-gray-600 group-hover:text-amber-500 transition line-clamp-2">${p.name}</h3>
                         <div class="flex items-center justify-between">
                             <div>
-                                ${pHasDiscount ? `<del class="text-gray-500 text-xs mr-1">${formatPrice(pOriginal)}</del>` : ''}
-                                <span class="text-xl font-bold text-amber-400">${formatPrice(pPrice)}</span>
+                                ${pHasDiscount ? `<del class="text-gray-400 text-xs mr-1">${formatPrice(pOriginal)}</del>` : ''}
+                                <span class="text-xl font-bold text-amber-500">${formatPrice(pPrice)}</span>
                             </div>
-                            <span class="text-xs text-gray-500 group-hover:text-amber-400/60 transition">
+                            <span class="text-xs text-gray-400 group-hover:text-amber-500/60 transition">
                                 Ver detalle <i class="fas fa-arrow-right ml-1"></i>
                             </span>
                         </div>

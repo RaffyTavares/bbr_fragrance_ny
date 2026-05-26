@@ -9,7 +9,7 @@ class Database {
     private $connection;
 
     private $host = 'localhost';
-    private $dbname = 'bbr_fragance';
+    private $dbname = 'bbr_fragrance_ny';
     private $username = 'root';
     private $password = 'raffy1992';
     private $charset = 'utf8mb4';

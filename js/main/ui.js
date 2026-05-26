@@ -7,7 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        menuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('hidden') === false;
+            const icon = menuBtn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars', !isOpen);
+                icon.classList.toggle('fa-times', isOpen);
+            }
+        });
     }
 });
 
@@ -224,17 +231,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gridViewBtn.addEventListener('click', () => {
             productsGrid.classList.remove('list-view');
             gridViewBtn.classList.add('bg-amber-500', 'text-black');
-            gridViewBtn.classList.remove('bg-gray-800', 'text-white');
+            gridViewBtn.classList.remove('bg-white', 'text-gray-500');
             listViewBtn.classList.remove('bg-amber-500', 'text-black');
-            listViewBtn.classList.add('bg-gray-800', 'text-white');
+            listViewBtn.classList.add('bg-white', 'text-gray-500');
         });
 
         listViewBtn.addEventListener('click', () => {
             productsGrid.classList.add('list-view');
             listViewBtn.classList.add('bg-amber-500', 'text-black');
-            listViewBtn.classList.remove('bg-gray-800', 'text-white');
+            listViewBtn.classList.remove('bg-white', 'text-gray-500');
             gridViewBtn.classList.remove('bg-amber-500', 'text-black');
-            gridViewBtn.classList.add('bg-gray-800', 'text-white');
+            gridViewBtn.classList.add('bg-white', 'text-gray-500');
         });
     }
 });
@@ -344,7 +351,10 @@ function closeCheckout() {
 
 async function loadBankSettings() {
     try {
-        const res = await apiGet('/settings');
+        const [res, payRes] = await Promise.all([
+            apiGet('/settings'),
+            apiGet('/payments/status')
+        ]);
         if (res.success && res.data) {
             const s = res.data;
 
@@ -380,12 +390,16 @@ async function loadBankSettings() {
                 }
             }
 
+            // Cardnet enabled state comes from /payments/status (computed server-side)
+            // rather than raw settings value, so credential validation is included
+            const cardnetEnabled = payRes?.success && payRes.data?.cardnet?.enabled === true;
+
             // Show/hide payment methods based on settings
             const payMethods = {
                 cash: s.checkout_pay_cash,
                 card: s.checkout_pay_card,
                 transfer: s.checkout_pay_transfer,
-                card_online: (s.checkout_pay_card_online === '1' && s.cardnet_enabled === '1') ? '1' : '0'
+                card_online: (s.checkout_pay_card_online === '1' && cardnetEnabled) ? '1' : '0'
             };
             document.querySelectorAll('.ck-pay-btn').forEach(btn => {
                 const method = btn.dataset.method;

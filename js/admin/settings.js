@@ -519,8 +519,11 @@ async function loadSettings() {
     const taxEn = document.getElementById('setting-tax_enabled');
     if (taxEn) taxEn.checked = s.tax_enabled === '1';
     const ncfEn = document.getElementById('setting-ncf_enabled');
-    if (ncfEn) ncfEn.checked = s.ncf_enabled === '1';
-    ncfEnabled = s.ncf_enabled === '1';
+    if (ncfEn) {
+        ncfEn.checked = false;
+        ncfEn.disabled = true;
+    }
+    ncfEnabled = false;
 
     // Checkout payment method toggles
     ['checkout_pay_cash', 'checkout_pay_card', 'checkout_pay_transfer', 'checkout_pay_card_online'].forEach(f => {
@@ -534,8 +537,7 @@ async function loadSettings() {
 
     // Show/hide NCF sequences section
     const ncfSeqSection = document.getElementById('ncf-sequences-section');
-    if (ncfSeqSection) ncfSeqSection.style.display = ncfEnabled ? 'block' : 'none';
-    if (ncfEnabled) loadNcfSequences();
+    if (ncfSeqSection) ncfSeqSection.style.display = 'none';
 }
 
 async function saveSettings() {
@@ -547,7 +549,7 @@ async function saveSettings() {
     // Bank accounts are saved independently via the bank account modal
 
     settings.tax_enabled = document.getElementById('setting-tax_enabled')?.checked ? '1' : '0';
-    settings.ncf_enabled = document.getElementById('setting-ncf_enabled')?.checked ? '1' : '0';
+    settings.ncf_enabled = '0';
     settings.cardnet_enabled = document.getElementById('setting-cardnet_enabled')?.checked ? '1' : '0';
 
     // Checkout payment method toggles
@@ -566,10 +568,9 @@ async function saveSettings() {
         showNotification('Configuracion guardada exitosamente', 'success');
         taxPercent = parseFloat(settings.tax_percent) || 18;
         taxEnabled = settings.tax_enabled === '1';
-        ncfEnabled = settings.ncf_enabled === '1';
+        ncfEnabled = false;
         const ncfSeqSection = document.getElementById('ncf-sequences-section');
-        if (ncfSeqSection) ncfSeqSection.style.display = ncfEnabled ? 'block' : 'none';
-        if (ncfEnabled) loadNcfSequences();
+        if (ncfSeqSection) ncfSeqSection.style.display = 'none';
     } else showNotification(res?.message || 'Error al guardar configuracion', 'error');
 }
 
@@ -645,6 +646,25 @@ async function saveSettingsSmtp() {
         smtp_from_name: document.getElementById('setting-smtp_from_name')?.value || '',
         smtp_from_email: document.getElementById('setting-smtp_from_email')?.value || ''
     }, 'Configuracion SMTP');
+}
+
+async function testSmtpEmail() {
+    const toEmail = prompt('Email de destino para la prueba (deja vacio para usar tu email de usuario):');
+    if (toEmail === null) return; // cancelado
+
+    const btn = document.querySelector('[onclick="testSmtpEmail()"]');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin text-xs"></i> Enviando...'; }
+
+    const body = toEmail.trim() ? { email: toEmail.trim() } : {};
+    const res = await api('/settings/test-email', 'POST', body);
+
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane text-xs"></i>Probar'; }
+
+    if (res?.success) {
+        showNotification(res.message || 'Email de prueba enviado correctamente', 'success');
+    } else {
+        showNotification(res?.message || 'Error al enviar el email de prueba', 'error');
+    }
 }
 
 // ==================== CUENTAS BANCARIAS (multi-cuenta) ====================
@@ -783,8 +803,11 @@ async function saveSettingsPedidos() {
 }
 
 async function saveSettingsCardnet() {
+    const enabled = document.getElementById('setting-cardnet_enabled')?.checked ? '1' : '0';
     const fields = {
-        cardnet_enabled: document.getElementById('setting-cardnet_enabled')?.checked ? '1' : '0',
+        cardnet_enabled: enabled,
+        // Sync the checkout payment toggle so Cardnet appears/disappears automatically
+        checkout_pay_card_online: enabled,
         cardnet_environment: document.getElementById('setting-cardnet_environment')?.value || '',
         cardnet_currency_code: document.getElementById('setting-cardnet_currency_code')?.value || '',
         cardnet_merchant_number: document.getElementById('setting-cardnet_merchant_number')?.value || '',
@@ -797,6 +820,11 @@ async function saveSettingsCardnet() {
     };
     const secretEl = document.getElementById('setting-cardnet_secret_key');
     if (secretEl?.value.trim()) fields.cardnet_secret_key = secretEl.value.trim();
+
+    // Also update the checkout toggle UI to match
+    const ckToggle = document.getElementById('setting-checkout_pay_card_online');
+    if (ckToggle) ckToggle.checked = enabled === '1';
+
     await _saveSettingsGroup('save-settings-cardnet-btn', fields, 'Cardnet');
 }
 

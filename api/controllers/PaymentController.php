@@ -158,8 +158,33 @@ class PaymentController {
                 ':id'   => $order['id'],
             ]);
 
+            // Descontar stock si el pedido pasaba de pending a confirmed
+            if (($order['status'] ?? '') === 'pending') {
+                $stmtItems = $db->prepare(
+                    "SELECT product_id, quantity FROM order_items WHERE order_id = :oid"
+                );
+                $stmtItems->execute([':oid' => $order['id']]);
+                $orderItems = $stmtItems->fetchAll();
+
+                $stmtDeduct = $db->prepare(
+                    "UPDATE products SET stock = stock - :qty WHERE id = :pid"
+                );
+                foreach ($orderItems as $oi) {
+                    $stmtDeduct->execute([':qty' => $oi['quantity'], ':pid' => $oi['product_id']]);
+                }
+            }
+
             logActivity('payment_approved', 'order', $order['id'],
                 "Pago Cardnet aprobado: {$order['order_number']} Auth:{$result['authorization']}");
+
+            // Registrar venta en el sistema de ventas
+            require_once __DIR__ . '/OrderController.php';
+            $paidOrder = array_merge($order, [
+                'payment_method' => 'card_online',
+                'payment_status' => 'paid',
+                'status'         => 'confirmed',
+            ]);
+            OrderController::createSaleFromOrder($db, $paidOrder);
 
             self::redirectToResult('success', $order['order_number']);
         } else {
@@ -210,6 +235,68 @@ class PaymentController {
     }
 
     /**
+     * POST /payments/cardnet/refund
+     * Reembolsar un pedido pagado via Cardnet.
+     * Requiere permiso orders.manage (validado en el router).
+     * Body: { order_id: int, reason: string }
+     */
+    public static function cardnetRefund() {
+        $data    = getJsonInput();
+        $orderId = (int)($data['order_id'] ?? 0);
+        $reason  = trim($data['reason'] ?? 'Reembolso solicitado');
+
+        if (!$orderId) {
+            errorResponse('Falta el order_id.', 400);
+        }
+
+        $db   = getDB();
+        $stmt = $db->prepare(
+            "SELECT id, order_number, total, payment_status,
+                    payment_gateway, payment_transaction_id
+             FROM orders WHERE id = :id"
+        );
+        $stmt->execute([':id' => $orderId]);
+        $order = $stmt->fetch();
+
+        if (!$order) {
+            errorResponse('Pedido no encontrado.', 404);
+        }
+        if (($order['payment_status'] ?? '') !== 'paid') {
+            errorResponse('Solo se pueden reembolsar pedidos con pago confirmado (status = paid).', 400);
+        }
+
+        // Llamar a Cardnet para anular la transaccion
+        $amountCents = (int)round(((float)$order['total']) * 100);
+        $result = CardnetService::voidTransaction(
+            $order['payment_transaction_id'] ?? '',
+            $amountCents
+        );
+
+        if (!$result['success']) {
+            errorResponse('Error al procesar reembolso: ' . $result['message'], 502);
+        }
+
+        // Actualizar estado del pedido
+        $stmtUpd = $db->prepare(
+            "UPDATE orders SET
+                payment_status = 'refunded',
+                status = 'cancelled',
+                payment_response_raw = :raw,
+                updated_at = NOW()
+             WHERE id = :id"
+        );
+        $stmtUpd->execute([
+            ':raw' => json_encode($result['raw'] ?? []),
+            ':id'  => $orderId,
+        ]);
+
+        logActivity('payment_refunded', 'order', $orderId,
+            "Reembolso procesado: {$order['order_number']} - {$reason}");
+
+        successResponse(['order_id' => $orderId], 'Reembolso procesado correctamente.');
+    }
+
+    /**
      * GET /payments/cardnet/mock
      * Pagina HTML simulada que reemplaza la pasarela real cuando
      * cardnet_environment = 'simulator'. Permite al tester escoger
@@ -230,13 +317,15 @@ class PaymentController {
         // Si llega POST con la decision -> persistir resultado y redirigir al callback
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $decision = $_POST['decision'] ?? '';
-            $code     = $_POST['code']     ?? '00';
             $base     = CardnetService::getSiteBaseUrl();
 
             if ($decision === 'cancel') {
                 header('Location: ' . $base . '/api/payments/cardnet/cancel?order_id=' . $orderId);
                 exit;
             }
+
+            // 'approve' siempre usa codigo 00; 'reject' usa el codigo del dropdown
+            $code = ($decision === 'approve') ? '00' : ($_POST['code'] ?? '05');
 
             // Guardar outcome para que verifyTransaction() lo lea
             $file = sys_get_temp_dir() . '/bbr_sim_' . $session . '.json';
@@ -276,14 +365,25 @@ class PaymentController {
   .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #334155}
   .row:last-child{border:none}
   .total{font-size:24px;color:#fbbf24;font-weight:700}
-  .actions{display:grid;gap:10px;margin-top:24px}
-  button{font-size:15px;font-weight:600;padding:14px;border:none;border-radius:10px;cursor:pointer;
-         transition:transform .1s,opacity .2s}
-  button:hover{transform:translateY(-1px)}
-  .btn-ok{background:#16a34a;color:white}
-  .btn-fail{background:#dc2626;color:white}
-  .btn-cancel{background:#475569;color:white}
-  select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:10px;border-radius:8px;width:100%;margin-top:6px}
+  .radio-group{display:grid;gap:8px;margin-top:20px}
+  .radio-opt{display:flex;align-items:center;gap:12px;background:#0f172a;border:2px solid #334155;
+             border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color .15s}
+  .radio-opt:has(input:checked){border-color:#22c55e}
+  .radio-opt.opt-reject:has(input:checked){border-color:#ef4444}
+  .radio-opt.opt-cancel:has(input:checked){border-color:#64748b}
+  .radio-opt input[type=radio]{accent-color:#22c55e;width:18px;height:18px;flex-shrink:0;cursor:pointer}
+  .opt-reject input[type=radio]{accent-color:#ef4444}
+  .opt-cancel input[type=radio]{accent-color:#64748b}
+  .radio-label{flex:1}
+  .radio-label strong{display:block;font-size:15px}
+  .radio-label span{font-size:12px;color:#94a3b8}
+  #reject-codes{background:#0f172a;border:1px solid #334155;border-radius:8px;
+                padding:10px 12px;margin-top:4px;display:none}
+  select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:8px;border-radius:6px;
+         width:100%;margin-top:4px;font-size:13px}
+  .btn-submit{width:100%;margin-top:20px;font-size:15px;font-weight:700;padding:15px;border:none;
+              border-radius:10px;cursor:pointer;background:#22c55e;color:white;transition:background .15s,transform .1s}
+  .btn-submit:hover{background:#16a34a;transform:translateY(-1px)}
   .warn{background:#7c2d12;border:1px solid #ea580c;color:#fed7aa;padding:10px;border-radius:8px;
         font-size:12px;margin-top:16px}
 </style>
@@ -292,7 +392,7 @@ class PaymentController {
 <div class="card">
   <span class="badge">SIMULADOR</span>
   <h1>Cardnet - Pagina de Pago Hospedada</h1>
-  <p class="muted">Esta es una pagina <strong>simulada</strong> para probar el flujo end-to-end sin credenciales reales de Cardnet.</p>
+  <p class="muted">Pagina <strong>simulada</strong> para probar el flujo end-to-end sin credenciales reales.</p>
 
   <div style="margin:20px 0;background:#0f172a;border-radius:10px;padding:16px">
     <div class="row"><span>Comercio</span><span>BBR Fragrance</span></div>
@@ -301,36 +401,69 @@ class PaymentController {
     <div class="row"><span>Total</span><span class="total">RD\$ {$amountFmt}</span></div>
   </div>
 
-  <form method="POST" class="actions">
-    <button type="submit" name="decision" value="approve" class="btn-ok">
-      Aprobar pago (codigo 00)
-    </button>
+  <form method="POST" id="sim-form">
+    <p class="muted" style="margin-bottom:8px">Selecciona el resultado del pago:</p>
 
-    <label class="muted" style="margin-top:12px">Rechazar con codigo:
-      <select name="code">
-        <option value="05">05 - No autorizado</option>
-        <option value="14">14 - Tarjeta invalida</option>
-        <option value="51">51 - Fondos insuficientes</option>
-        <option value="54">54 - Tarjeta expirada</option>
-        <option value="61">61 - Excede limite</option>
-        <option value="91">91 - Emisor no disponible</option>
-        <option value="96">96 - Falla del sistema</option>
-      </select>
-    </label>
-    <button type="submit" name="decision" value="reject" class="btn-fail">
-      Rechazar pago
-    </button>
+    <div class="radio-group">
+      <label class="radio-opt">
+        <input type="radio" name="decision" value="approve" checked>
+        <div class="radio-label">
+          <strong style="color:#22c55e">Aprobada</strong>
+          <span>Codigo 00 — pago autorizado correctamente</span>
+        </div>
+      </label>
 
-    <button type="submit" name="decision" value="cancel" class="btn-cancel">
-      Cancelar y volver a la tienda
-    </button>
+      <label class="radio-opt opt-reject">
+        <input type="radio" name="decision" value="reject" id="radio-reject">
+        <div class="radio-label">
+          <strong style="color:#ef4444">Rechazada</strong>
+          <span>Simula un rechazo del banco emisor</span>
+          <div id="reject-codes">
+            <select name="code">
+              <option value="05">05 - No autorizado</option>
+              <option value="14">14 - Tarjeta invalida</option>
+              <option value="51">51 - Fondos insuficientes</option>
+              <option value="54">54 - Tarjeta expirada</option>
+              <option value="61">61 - Excede limite</option>
+              <option value="91">91 - Emisor no disponible</option>
+              <option value="96">96 - Falla del sistema</option>
+            </select>
+          </div>
+        </div>
+      </label>
+
+      <label class="radio-opt opt-cancel">
+        <input type="radio" name="decision" value="cancel">
+        <div class="radio-label">
+          <strong style="color:#94a3b8">Cancelada</strong>
+          <span>El cliente abandona sin pagar</span>
+        </div>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-submit" id="sim-btn">Continuar &rarr;</button>
   </form>
 
   <div class="warn">
-    Modo simulador activo. Para procesar cobros reales, cambia <code>cardnet_environment</code>
+    Modo simulador activo. Para cobros reales cambia <code>cardnet_environment</code>
     a <code>sandbox</code> o <code>production</code> y completa las credenciales.
   </div>
 </div>
+<script>
+  const radios   = document.querySelectorAll('input[name="decision"]');
+  const rejectEl = document.getElementById('reject-codes');
+  const btn      = document.getElementById('sim-btn');
+  const colors   = { approve: '#22c55e', reject: '#ef4444', cancel: '#475569' };
+
+  function sync() {
+    const val = document.querySelector('input[name="decision"]:checked').value;
+    rejectEl.style.display = val === 'reject' ? 'block' : 'none';
+    btn.style.background   = colors[val];
+    btn.textContent        = val === 'cancel' ? 'Cancelar y volver →' : 'Continuar →';
+  }
+  radios.forEach(r => r.addEventListener('change', sync));
+  sync();
+</script>
 </body>
 </html>
 HTML;

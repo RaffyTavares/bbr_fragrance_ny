@@ -3,9 +3,24 @@
  * BBR Fragrance - Auth Middleware
  */
 
+function generateCsrfToken() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
 function requireAuth() {
     if (!isset($_SESSION['user_id'])) {
         errorResponse('No autorizado. Inicie sesion.', 401);
+    }
+    // Validar CSRF en peticiones mutantes del panel admin
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    if (in_array($method, ['POST', 'PUT', 'DELETE', 'PATCH'])) {
+        $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+        if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
+            errorResponse('Token de seguridad invalido. Recarga la pagina e intenta de nuevo.', 403);
+        }
     }
 }
 

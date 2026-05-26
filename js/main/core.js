@@ -5,11 +5,15 @@
 // Premium Perfume Store (API Version)
 // ===================================
 
-const API_BASE = '/BBR_FRAGANCE/api';
+const API_BASE = (() => {
+    const src = document.currentScript && document.currentScript.src;
+    if (src) return new URL(src).pathname.replace(/\/js\/.*$/, '') + '/api';
+    return window.location.pathname.replace(/\/pages\/[^\/]*$/, '') + '/api';
+})();
 
 const CONFIG = {
-    whatsappNumber: '18094855693',
-    currency: 'RD$',
+    whatsappNumber: '16462285892',
+    currency: 'USD$',
     cartStorageKey: 'bbr_cart'
 };
 
@@ -18,7 +22,7 @@ const CONFIG = {
 // ===================================
 async function apiGet(endpoint) {
     try {
-        const response = await fetch(`${API_BASE}${endpoint}`);
+        const response = await fetch(`${API_BASE}${endpoint}`, { cache: 'no-store' });
         const data = await response.json();
         return data;
     } catch (error) {
@@ -32,7 +36,7 @@ async function apiGet(endpoint) {
 // ===================================
 function formatPrice(price) {
     const num = parseFloat(price);
-    return `${CONFIG.currency} ${num.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    return `${CONFIG.currency} ${num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 // ===================================
@@ -50,12 +54,22 @@ function getProductImage(product) {
 
 function getProductGradient(family) {
     const gradients = {
-        'dulce': 'from-pink-900 to-purple-900',
-        'amaderado': 'from-amber-900 to-orange-900',
-        'citrico': 'from-yellow-900 to-green-900',
-        'oriental': 'from-purple-900 to-indigo-900',
-        'fresco': 'from-cyan-900 to-blue-900',
-        'intenso': 'from-red-900 to-rose-900'
+        'dulce':               'from-pink-900 to-purple-900',
+        'amaderado':           'from-amber-900 to-orange-900',
+        'citrico':             'from-yellow-900 to-green-900',
+        'oriental':            'from-purple-900 to-indigo-900',
+        'fresco':              'from-cyan-900 to-blue-900',
+        'intenso':             'from-red-900 to-rose-900',
+        'floral':              'from-pink-800 to-rose-900',
+        'frutal':              'from-orange-700 to-yellow-900',
+        'ambar':               'from-amber-700 to-orange-900',
+        'fougere':             'from-green-800 to-emerald-900',
+        'chipre':              'from-lime-800 to-green-900',
+        'aromatica':           'from-teal-700 to-cyan-900',
+        'floral-afrutada':     'from-fuchsia-800 to-pink-900',
+        'oriental-amaderada':  'from-orange-900 to-red-900',
+        'gourmand':            'from-amber-800 to-red-900',
+        'cuero':               'from-stone-700 to-neutral-900'
     };
     return gradients[(family || '').toLowerCase()] || 'from-purple-900 to-pink-900';
 }
